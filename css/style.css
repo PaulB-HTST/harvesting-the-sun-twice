@@ -15,7 +15,7 @@
   --moss:      #4a7c5f;
   --sage:      #8aab96;
   --mist:      #d4e4d8;
-  --wheat:     #c8a84b;
+  --wheat:     #c8a84b
   --gold:      #e0b84e;
   --straw:     #f5edcc;
   --chalk:     #fafaf7;
@@ -230,7 +230,7 @@ em { font-style: italic; }
 /* ---- Hero ---- */
 .hero {
   background-color: var(--forest);
-  background-image: url('../images/hero-harvest-aerial.jpg');
+    background-image: url('../images/hero-harvest-vbpv.png');
   background-size: cover;
   background-position: center 40%;
   background-repeat: no-repeat;
