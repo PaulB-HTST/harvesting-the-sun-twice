@@ -1,0 +1,169 @@
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Cache-Control = "public, max-age=3600"
+
+[[headers]]
+  for = "/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+# Clean URLs — strip .html from links
+[[redirects]]
+  from = "/agriculture"
+  to = "/agriculture.html"
+  status = 200
+
+[[redirects]]
+  from = "/grid"
+  to = "/grid.html"
+  status = 200
+
+[[redirects]]
+  from = "/technology"
+  to = "/technology.html"
+  status = 200
+
+[[redirects]]
+  from = "/implementation"
+  to = "/implementation.html"
+  status = 200
+
+[[redirects]]
+  from = "/sources"
+  to = "/sources.html"
+  status = 200
+
+[[redirects]]
+  from = "/methodology"
+  to = "/methodology.html"
+  status = 200
+
+[[redirects]]
+  from = "/library"
+  to = "/library.html"
+  status = 200
+
+[[redirects]]
+  from = "/contact"
+  to = "/contact.html"
+  status = 200
+
+# Domain variant redirects — all point to canonical .org
+# Covers both "harvesting" and "harvest" variants, all TLDs
+[[redirects]]
+  from = "https://harvestingthesuntwice.com/*"
+  to = "https://harvestingthesuntwice.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.harvestingthesuntwice.com/*"
+  to = "https://harvestingthesuntwice.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://harvestingthesuntwice.co.uk/*"
+  to = "https://harvestingthesuntwice.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.harvestingthesuntwice.co.uk/*"
+  to = "https://harvestingthesuntwice.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://harvestingthesuntwice.uk/*"
+  to = "https://harvestingthesuntwice.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.harvestingthesuntwice.uk/*"
+  to = "https://harvestingthesuntwice.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://harvestingthesuntwice.info/*"
+  to = "https://harvestingthesuntwice.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.harvestingthesuntwice.info/*"
+  to = "https://harvestingthesuntwice.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://harvestthesuntwice.org/*"
+  to = "https://harvestingthesuntwice.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.harvestthesuntwice.org/*"
+  to = "https://harvestingthesuntwice.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://harvestthesuntwice.com/*"
+  to = "https://harvestingthesuntwice.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.harvestthesuntwice.com/*"
+  to = "https://harvestingthesuntwice.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://harvestthesuntwice.co.uk/*"
+  to = "https://harvestingthesuntwice.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.harvestthesuntwice.co.uk/*"
+  to = "https://harvestingthesuntwice.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://harvestthesuntwice.uk/*"
+  to = "https://harvestingthesuntwice.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.harvestthesuntwice.uk/*"
+  to = "https://harvestingthesuntwice.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://harvestthesuntwice.info/*"
+  to = "https://harvestingthesuntwice.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.harvestthesuntwice.info/*"
+  to = "https://harvestingthesuntwice.org/:splat"
+  status = 301
+  force = true

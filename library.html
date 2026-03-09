@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document Library — Harvesting the Sun Twice</title>
+  <meta name="description" content="Technical, economic, policy and agricultural reference documents supporting the case for Vertical Bifacial Photovoltaic agrivoltaic systems in the UK solar planning pipeline.">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* ---- Library page styles ---- */
+    .library-intro {
+      background: var(--chalk);
+      padding: 3rem 0 2rem;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .library-intro p {
+      max-width: 720px;
+      color: var(--ink);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin: 0.75rem 0 0;
+    }
+    .library-notice {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(200,168,75,0.12);
+      border: 1px solid rgba(200,168,75,0.35);
+      border-radius: 6px;
+      padding: 0.6rem 1rem;
+      font-size: 0.85rem;
+      color: #7a6020;
+      margin-top: 1.25rem;
+    }
+    .library-section {
+      padding: 3rem 0 1rem;
+    }
+    .library-section + .library-section {
+      border-top: 1px solid rgba(0,0,0,0.07);
+    }
+    .library-section__header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.75rem;
+    }
+    .library-section__icon {
+      font-size: 1.6rem;
+      line-height: 1;
+    }
+    .library-section__title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--forest);
+      margin: 0;
+    }
+    .library-section__count {
+      margin-left: auto;
+      font-size: 0.78rem;
+      color: var(--sage);
+      font-style: italic;
+    }
+    .doc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+    .doc-card {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.09);
+      border-radius: 10px;
+      padding: 1.25rem 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      transition: box-shadow 0.2s, border-color 0.2s;
+      position: relative;
+    }
+    .doc-card:hover {
+      box-shadow: 0 4px 18px rgba(0,0,0,0.10);
+      border-color: rgba(26,58,42,0.2);
+    }
+    .doc-card__badges {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.1rem;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+    }
+    .badge--pdf    { background: #fde8e8; color: #b91c1c; }
+    .badge--ext    { background: #e8f0fe; color: #1d4ed8; }
+    .badge--camp   { background: rgba(26,58,42,0.10); color: var(--forest); }
+    .badge--new    { background: rgba(200,168,75,0.18); color: #7a6020; }
+    .doc-card__title {
+      font-size: 0.97rem;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.35;
+      margin: 0;
+    }
+    .doc-card__meta {
+      font-size: 0.8rem;
+      color: #888;
+      margin: 0;
+    }
+    .doc-card__desc {
+      font-size: 0.875rem;
+      color: #555;
+      line-height: 1.55;
+      margin: 0.15rem 0 0.5rem;
+      flex: 1;
+    }
+    .doc-card__footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+      padding-top: 0.75rem;
+      border-top: 1px solid rgba(0,0,0,0.06);
+    }
+    .doc-card__source {
+      font-size: 0.75rem;
+      color: #aaa;
+      font-style: italic;
+    }
+    .btn-doc {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--forest);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.4rem 0.9rem;
+      border-radius: 5px;
+      text-decoration: none;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+    .btn-doc:hover { background: #2d5a3d; }
+    .btn-doc--placeholder {
+      background: #ccc;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+    .placeholder-note {
+      font-size: 0.75rem;
+      color: #bbb;
+      font-style: italic;
+      margin-top: 0.5rem;
+    }
+    @media (max-width: 600px) {
+      .doc-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body class="page-body">
+
+  <div id="nav-placeholder"></div>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero page-hero--has-image" style="background-image: url('images/agriculture-wheat-harvest-wide.jpg');">
+    <div class="container">
+      <span class="page-hero__label">Reference Materials</span>
+      <h1>Document Library</h1>
+      <p class="page-hero__lead">Technical papers, economic analyses, policy documents and campaign briefings supporting the case for VBPV agrivoltaic systems in the UK solar pipeline.</p>
+    </div>
+  </section>
+
+  <!-- INTRO -->
+  <div class="library-intro">
+    <div class="container">
+      <p>This library brings together the key reference materials underpinning the Harvesting the Sun Twice campaign. Documents are grouped by subject area. External links open peer-reviewed papers, government publications, and industry guidance at source. Campaign documents are hosted on Google Drive.</p>
+      <div class="library-notice">
+        📎 &nbsp;All campaign documents open via Google Drive. External research links open at their original source (journal, government, or industry website).
+      </div>
+    </div>
+  </div>
+
+  <!-- TECHNICAL -->
+  <section class="library-section">
+    <div class="container">
+      <div class="library-section__header">
+        <span class="library-section__icon">⚙️</span>
+        <h2 class="library-section__title">Technical — VBPV System Design &amp; Performance</h2>
+      </div>
+      <div class="doc-grid">
+
+        <div class="doc-card">
+          <div class="doc-card__badges"><span class="badge badge--ext">Journal</span><span class="badge badge--new">Key Paper</span></div>
+          <p class="doc-card__title">Vertical Bifacial PV Performance in the UK Climate</p>
+          <p class="doc-card__meta">Badran &amp; Dhimish · University of York · Nature Scientific Reports · 2024</p>
+          <p class="doc-card__desc">Primary UK field data. Documents 19–22% annual energy advantage, +24.52% winter performance, and improved morning/evening generation profile over conventional tilted solar.</p>
+          <div class="doc-card__footer">
+            <span class="doc-card__source">Nature Scientific Reports</span>
+            <a href="https://doi.org/10.1038/s41598-024-68018-1" target="_blank" rel="noopener" class="btn-doc">View Paper ↗</a>
+          </div>
+        </div>
+
+        <div class="doc-card">
+          <div class="doc-card__badges"><span class="badge badge--ext">Journal</span></div>
+          <p class="doc-card__title">Grid Hosting Capacity &amp; East-West PV Orientation</p>
+          <p class="doc-card__meta">Joutijärvi et al. · Solar Energy · 2023</p>
+          <p class="doc-card__desc">Demonstrates that east-west oriented VBPV systems increase grid hosting capacity by 46% compared to south-facing tilted installations, substantially reducing required grid reinforcement.</p>
+          <div class="doc-card__footer">
+            <span class="doc-card__source">Solar Energy (Elsevier)</span>
+            <a href="https://doi.org/10.1016/j.solener.2023.111819" target="_blank" rel="noopener" class="btn-doc">View Paper ↗</a>
+          </div>
+        </div>
+
+        <div class="doc-card">
+          <div class="doc-card__badges"><span class="badge badge--camp">Campaign</span><span class="badge badge--pdf">PDF</span></div>
+          <p class="doc-card__title">VBPV Inter-Row Spacing Analysis — UK Conditions</p>
+          <p class="doc-card__meta">Paul Bird · Harvesting the Sun Twice · 2026</p>
+          <p class="doc-card__desc">Technical analysis of optimal east-west row spacing for UK latitudes (50°N–58°N), covering shading geometry, agricultural machinery clearance, and seasonal irradiance trade-offs.</p>
+          <div class="doc-card__footer">
+            <span class="doc-card__source">Campaign Document</span>
+            <a href="#" class="btn-doc btn-doc--placeholder">Link Pending</a>
+          </div>
+          <p class="placeholder-note">📎 Replace href="#" with your Google Drive share link</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ECONOMIC -->
+  <section class="library-section">
+    <div class="container">
+      <div class="library-section__header">
+        <span class="library-section__icon">💷</span>
+        <h2 class="library-section__title">Economic — Cost, Savings &amp; Revenue Analysis</h2>
+      </div>
+      <div class="doc-grid">
+
+        <div class="doc-card">
+          <div class="doc-card__badges"><span class="badge badge--ext">Industry Data</span><span class="badge badge--new">Key Data</span></div>
+          <p class="doc-card__title">Battery Storage System Costs — Global Benchmark</p>
+          <p class="doc-card__meta">BloombergNEF · December 2025</p>
+          <p class="doc-card__desc">Establishes $117/kWh global turnkey BESS cost — the corrected figure used in the campaign's £9.5–10.5bn BESS savings calculation, superseding DESNZ's $70/kWh misrepresentation.</p>
+          <div class="doc-card__footer">
+            <span class="doc-card__source">Energy-Storage.News</span>
+            <a href="https://www.energy-storage.news/battery-storage-system-prices-continue-to-fall-sharply-bnef-and-ember-reports-find/" target="_blank" rel="noopener" class="btn-doc">View Source ↗</a>
+          </div>
+        </div>
+
+        <div class="doc-card">
+          <div class="doc-card__badges"><span class="badge badge--ext">Industry Data</span></div>
+          <p class="doc-card__title">How Cheap is Battery Storage? — Ember Analysis</p>
+          <p class="doc-card__meta">Ember · October 2025</p>
+          <p class="doc-card__desc">Confirms $125/kWh all-in BESS cost. Used alongside BloombergNEF data to establish the £9.5–10.5bn BESS infrastructure savings range across the UK's 2,641-farm solar pipeline.</p>
+          <div class="doc-card__footer">
+            <span class="doc-card__source">Ember Energy</span>
+            <a href="https://ember-energy.org/latest-insights/how-cheap-is-battery-storage/" target="_blank" rel="noopener" class="btn-doc">View Source ↗</a>
+          </div>
+        </div>
+
+        <div class="doc-card">
+          <div class="doc-card__badges"><span class="badge badge--camp">Campaign</span><span class="badge badge--pdf">PDF</span></div>
+          <p class="doc-card__title">UK Pipeline Economic Analysis — VBPV vs TMPV</p>
+          <p class="doc-card__meta">Paul Bird · Harvesting the Sun Twice · 2026</p>
+          <p class="doc-card__desc">Full economic modelling of £25–35bn total system savings across the UK solar pipeline — covering BESS avoided costs, grid reinforcement savings, and revenue premium from peak-time generation.</p>
+          <div class="doc-card__footer">
+            <span class="doc-card__source">Campaign Document</span>
+            <a href="#" class="btn-doc btn-doc--placeholder">Link Pending</a>
+          </div>
+          <p class="placeholder-note">📎 Replace href="#" with your Google Drive share link</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- POLICY & PLANNING -->
+  <section class="library-section">
+    <div class="container">
+      <div class="library-section__header">
+        <span class="library-section__icon">📋</span>
+        <h2 class="library-section__title">Policy &amp; Planning — BNG, NPPF, NSIPs</h2>
+      </div>
+      <div class="doc-grid">
+
+        <div class="doc-card">
+          <div class="doc-card__badges"><span class="badge badge--ext">Government</span></div>
+          <p class="doc-card__title">UK Solar Roadmap</p>
+          <p class="doc-card__meta">DESNZ · June 2025</p>
+          <p class="doc-card__desc">Government's strategic framework for solar deployment to 2035. Sets out the 70GW ambition and policy context within which the campaign operates — and against which VBPV arguments are framed.</p>
+          <div class="doc-card__footer">
+            <span class="doc-card__source">GOV.UK</span>
+            <a href="https://www.gov.uk/government/publications/solar-roadmap/" target="_blank" rel="noopener" class="btn-doc">View Document ↗</a>
+          </div>
+        </div>
+
+        <div class="doc-card">
+          <div class="doc-card__badges"><span class="badge badge--ext">Legal Guidance</span></div>
+          <p class="doc-card__title">Biodiversity Net Gain &amp; UK Renewable Energy</p>
+          <p class="doc-card__meta">Osborne Clarke · June 2025</p>
+          <p class="doc-card__desc">Legal analysis of mandatory BNG requirements for solar developments — including NSIPs from November 2025. Covers how agrivoltaic systems with wildflower strips can deliver the 10% uplift on-site.</p>
+          <div class="doc-card__footer">
+            <span class="doc-card__source">Osborne Clarke</span>
+            <a href="https://www.osborneclarke.com/insights/biodiversity-net-gain-will-play-crucial-role-development-uk-renewable-energy" target="_blank" rel="noopener" class="btn-doc">View Article ↗</a>
+          </div>
+        </div>
+
+        <div class="doc-card">
+          <div class="doc-card__badges"><span class="badge badge--camp">Campaign</span><span class="badge badge--pdf">PDF</span></div>
+          <p class="doc-card__title">VBPV Planning Representation — Template</p>
+          <p class="doc-card__meta">Paul Bird · Harvesting the Sun Twice · 2026</p>
+          <p class="doc-card__desc">Model representation for submission to local planning authorities and DCO examinations. Covers energy output, agricultural compatibility, BNG, and grid infrastructure arguments in planning policy language.</p>
+          <div class="doc-card__footer">
+            <span class="doc-card__source">Campaign Document</span>
+            <a href="#" class="btn-doc btn-doc--placeholder">Link Pending</a>
+          </div>
+          <p class="placeholder-note">📎 Replace href="#" with your Google Drive share link</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- AGRICULTURAL -->
+  <section class="library-section">
+    <div class="container">
+      <div class="library-section__header">
+        <span class="library-section__icon">🌾</span>
+        <h2 class="library-section__title">Agricultural — Land Use, Productivity &amp; Agri-Environment</h2>
+      </div>
+      <div class="doc-grid">
+
+        <div class="doc-card">
+          <div class="doc-card__badges"><span class="badge badge--ext">Journal</span></div>
+          <p class="doc-card__title">Spatial Potential for Agrivoltaics in the UK</p>
+          <p class="doc-card__meta">Randle-Boggis et al. · University of Sheffield · Applied Energy · 2025</p>
+          <p class="doc-card__desc">GIS-based spatial analysis of UK agrivoltaic potential. Quantifies suitable agricultural land area and models energy yield and food production trade-offs across different system configurations.</p>
+          <div class="doc-card__footer">
+            <span class="doc-card__source">Applied Energy</span>
+            <a href="#" class="btn-doc btn-doc--placeholder">Link Pending</a>
+          </div>
+          <p class="placeholder-note">📎 Add DOI link when confirmed</p>
+        </div>
+
+        <div class="doc-card">
+          <div class="doc-card__badges"><span class="badge badge--camp">Campaign</span><span class="badge badge--pdf">PDF</span></div>
+          <p class="doc-card__title">Specialist Crop Outreach Matrix</p>
+          <p class="doc-card__meta">Paul Bird · Harvesting the Sun Twice · 2026</p>
+          <p class="doc-card__desc">Analysis of VBPV compatibility across 12 UK crop sectors — including cereals, root vegetables, brassicas, and soft fruit. Covers light requirements, machinery access, and agri-environment scheme eligibility.</p>
+          <div class="doc-card__footer">
+            <span class="doc-card__source">Campaign Document</span>
+            <a href="#" class="btn-doc btn-doc--placeholder">Link Pending</a>
+          </div>
+          <p class="placeholder-note">📎 Replace href="#" with your Google Drive share link</p>
+        </div>
+
+        <div class="doc-card">
+          <div class="doc-card__badges"><span class="badge badge--camp">Campaign</span><span class="badge badge--pdf">PDF</span></div>
+          <p class="doc-card__title">Dairy Farm Solar Comparison Calculator</p>
+          <p class="doc-card__meta">Paul Bird · Harvesting the Sun Twice · 2026</p>
+          <p class="doc-card__desc">Interactive comparison of VBPV vs TMPV economics for a representative UK dairy farm — modelling energy revenue, grassland productivity, and combined farm income across a 25-year project life.</p>
+          <div class="doc-card__footer">
+            <span class="doc-card__source">Campaign Document</span>
+            <a href="#" class="btn-doc btn-doc--placeholder">Link Pending</a>
+          </div>
+          <p class="placeholder-note">📎 Replace href="#" with your Google Drive share link</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- BIODIVERSITY -->
+  <section class="library-section">
+    <div class="container">
+      <div class="library-section__header">
+        <span class="library-section__icon">🐝</span>
+        <h2 class="library-section__title">Biodiversity &amp; Ecology</h2>
+      </div>
+      <div class="doc-grid">
+
+        <div class="doc-card">
+          <div class="doc-card__badges"><span class="badge badge--ext">Journal</span><span class="badge badge--new">Key Paper</span></div>
+          <p class="doc-card__title">Vertical Agrivoltaics with Flowering Strips — Field Study</p>
+          <p class="doc-card__meta">Hájek et al. · Acta Fytotechnica et Zootechnica · Czech Republic · 2024</p>
+          <p class="doc-card__desc">The first multitaxonomic field study combining vertical agrivoltaics with sown flowering strips. Confirms invertebrate diversity benefits are compatible with continued arable production in winter wheat.</p>
+          <div class="doc-card__footer">
+            <span class="doc-card__source">Acta Fytotechnica et Zootechnica</span>
+            <a href="http://acta.fapz.uniag.sk/journal/article/view/650" target="_blank" rel="noopener" class="btn-doc">View Paper ↗</a>
+          </div>
+        </div>
+
+        <div class="doc-card">
+          <div class="doc-card__badges"><span class="badge badge--ext">Journal</span></div>
+          <p class="doc-card__title">Pollinator Biodiversity at UK Solar Parks</p>
+          <p class="doc-card__meta">Randle, Avenell et al. · Lancaster University · Ecological Solutions &amp; Evidence · 2024</p>
+          <p class="doc-card__desc">Surveys of 15 UK solar parks recording 1,400+ individual pollinators from 30+ species. Shows solar parks with diverse flowering vegetation function as critical refuges in intensive arable landscapes.</p>
+          <div class="doc-card__footer">
+            <span class="doc-card__source">British Ecological Society</span>
+            <a href="https://besjournals.onlinelibrary.wiley.com/doi/full/10.1002/2688-8319.12307" target="_blank" rel="noopener" class="btn-doc">View Paper ↗</a>
+          </div>
+        </div>
+
+        <div class="doc-card">
+          <div class="doc-card__badges"><span class="badge badge--camp">Campaign</span><span class="badge badge--pdf">PDF</span><span class="badge badge--new">New</span></div>
+          <p class="doc-card__title">VBPV Wildlife Strips — Briefing for Planning Authorities</p>
+          <p class="doc-card__meta">Paul Bird · Harvesting the Sun Twice · March 2026</p>
+          <p class="doc-card__desc">Evidence briefing for local planning authorities on pollinator habitat, natural pest control, and BNG delivery through wildflower strips beneath and alongside VBPV panel rows. Covers planning conditions and monitoring requirements.</p>
+          <div class="doc-card__footer">
+            <span class="doc-card__source">Campaign Document</span>
+            <a href="#" class="btn-doc btn-doc--placeholder">Link Pending</a>
+          </div>
+          <p class="placeholder-note">📎 Replace href="#" with your Google Drive share link</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- GRID & ENERGY -->
+  <section class="library-section">
+    <div class="container">
+      <div class="library-section__header">
+        <span class="library-section__icon">🔌</span>
+        <h2 class="library-section__title">Grid &amp; Energy System</h2>
+      </div>
+      <div class="doc-grid">
+
+        <div class="doc-card">
+          <div class="doc-card__badges"><span class="badge badge--ext">Government</span></div>
+          <p class="doc-card__title">Clean Power 2030 Action Plan</p>
+          <p class="doc-card__meta">DESNZ · 2025</p>
+          <p class="doc-card__desc">The government's plan for decarbonising the electricity system by 2030. Sets the 95GW renewable target context and the grid reform agenda within which VBPV's infrastructure-saving advantages are most relevant.</p>
+          <div class="doc-card__footer">
+            <span class="doc-card__source">GOV.UK</span>
+            <a href="https://www.gov.uk/government/publications/clean-power-2030-action-plan" target="_blank" rel="noopener" class="btn-doc">View Document ↗</a>
+          </div>
+        </div>
+
+        <div class="doc-card">
+          <div class="doc-card__badges"><span class="badge badge--camp">Campaign</span><span class="badge badge--pdf">PDF</span></div>
+          <p class="doc-card__title">Open Letters to DESNZ — VBPV Grid Savings Evidence</p>
+          <p class="doc-card__meta">Paul Bird · Harvesting the Sun Twice · 2025–2026</p>
+          <p class="doc-card__desc">Series of four formal letters to the Department for Energy Security and Net Zero presenting the corrected BESS cost data and £25–35bn total system savings case. Response deadline 23/03/2026.</p>
+          <div class="doc-card__footer">
+            <span class="doc-card__source">Campaign Document</span>
+            <a href="#" class="btn-doc btn-doc--placeholder">Link Pending</a>
+          </div>
+          <p class="placeholder-note">📎 Replace href="#" with your Google Drive share link</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CAMPAIGN DOCUMENTS -->
+  <section class="library-section" style="margin-bottom: 3rem;">
+    <div class="container">
+      <div class="library-section__header">
+        <span class="library-section__icon">📣</span>
+        <h2 class="library-section__title">Campaign Documents &amp; Briefings</h2>
+      </div>
+      <div class="doc-grid">
+
+        <div class="doc-card">
+          <div class="doc-card__badges"><span class="badge badge--camp">Campaign</span><span class="badge badge--pdf">PDF</span></div>
+          <p class="doc-card__title">Campaign Overview Briefing</p>
+          <p class="doc-card__meta">Paul Bird · Harvesting the Sun Twice · 2026</p>
+          <p class="doc-card__desc">Single-document summary of the Harvesting the Sun Twice campaign — suitable for sharing with developers, planners, MPs, and media contacts unfamiliar with VBPV technology.</p>
+          <div class="doc-card__footer">
+            <span class="doc-card__source">Campaign Document</span>
+            <a href="#" class="btn-doc btn-doc--placeholder">Link Pending</a>
+          </div>
+          <p class="placeholder-note">📎 Replace href="#" with your Google Drive share link</p>
+        </div>
+
+        <div class="doc-card">
+          <div class="doc-card__badges"><span class="badge badge--camp">Campaign</span><span class="badge badge--pdf">PDF</span></div>
+          <p class="doc-card__title">VBPV vs TMPV — Technical Comparison Briefing</p>
+          <p class="doc-card__meta">Paul Bird · Harvesting the Sun Twice · 2026</p>
+          <p class="doc-card__desc">Side-by-side technical and economic comparison of Vertical Bifacial PV and conventional Tilted Monofacial PV across energy output, agricultural compatibility, grid impact, biodiversity, and planning performance.</p>
+          <div class="doc-card__footer">
+            <span class="doc-card__source">Campaign Document</span>
+            <a href="#" class="btn-doc btn-doc--placeholder">Link Pending</a>
+          </div>
+          <p class="placeholder-note">📎 Replace href="#" with your Google Drive share link</p>
+        </div>
+
+        <div class="doc-card">
+          <div class="doc-card__badges"><span class="badge badge--camp">Campaign</span><span class="badge badge--pdf">PDF</span></div>
+          <p class="doc-card__title">Economic Analysis Methodology</p>
+          <p class="doc-card__meta">Paul Bird · Harvesting the Sun Twice · 2026</p>
+          <p class="doc-card__desc">Full methodology behind the £25–35bn system savings figure — covering BESS cost assumptions, pipeline data sources, grid reinforcement modelling, and corrections to DESNZ's superseded cost figures.</p>
+          <div class="doc-card__footer">
+            <span class="doc-card__source">Campaign Document</span>
+            <a href="methodology.html" class="btn-doc">View on Website →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div id="footer-placeholder"></div>
+  <script src="js/nav-footer.js"></script>
+</body>
+</html>
