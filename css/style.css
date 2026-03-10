@@ -52,6 +52,7 @@ a { color: var(--fern); text-decoration: none; transition: color var(--trans); }
 a:hover { color: var(--wheat); }
 
 /* ---- Typography ---- */
+
 h1, h2, h3, h4, h5 {
   font-family: 'Plus Jakarta Sans', sans-serif;
   line-height: 1.18;
