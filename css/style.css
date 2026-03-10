@@ -1,5 +1,5 @@
 /* ============================================
-   HARVESTING THE SUN TWICE Ã¢ÂÂ Global Stylesheet
+   HARVESTING THE SUN TWICE ÃÂ¢ÃÂÃÂ Global Stylesheet
    Design: Editorial / Agricultural / Authoritative
    Palette: Deep forest green, warm wheat gold, 
             chalk white, charcoal ink
@@ -355,14 +355,16 @@ em { font-style: italic; }
   box-shadow: var(--shadow-md);
 }
 .btn--outline {
-  background: rgba(0,0,0,0.2);
-  color: #ffffff;
-  border: 1.5px solid rgba(255,255,255,0.75);
-  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  background: rgba(0,0,0,0.45);
+  color: #ffffff !important;
+  border: 2px solid #ffffff;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+  font-weight: 700;
 }
 .btn--outline:hover {
+  background: rgba(255,255,255,0.15);
   border-color: var(--wheat);
-  color: var(--gold);
+  color: var(--gold) !important;
 }
 .btn--green {
   background: var(--fern);
