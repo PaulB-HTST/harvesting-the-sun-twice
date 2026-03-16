@@ -11,6 +11,7 @@ const NAV_HTML = `
       <li><a href="agriculture.html">Agriculture</a></li>
       <li><a href="grid.html">Grid Benefits</a></li>
       <li><a href="technology.html">Technology</a></li>
+      <li><a href="compare.html">Technology Comparison</a></li>
       <li><a href="implementation.html">Implementation</a></li>
       <li><a href="sources.html">Sources</a></li>
       <li><a href="methodology.html">Methodology</a></li>
