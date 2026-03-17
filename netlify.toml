@@ -19,10 +19,9 @@
 
 # Clean URLs — strip .html from links
 [[redirects]]
-  from = "/agriculture"
-  to = "/agriculture.html"
+  from = "/financial-model"
+  to = "/financial-model.html"
   status = 200
-
 [[redirects]]
   from = "/grid"
   to = "/grid.html"
