@@ -1,0 +1,10 @@
+{
+  "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/financial-model",
+      "destination": "/financial-model.html",
+      "permanent": false
+    }
+  ]
+}
