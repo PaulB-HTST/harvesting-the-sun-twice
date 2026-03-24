@@ -125,7 +125,239 @@ table.st tr.base td{font-weight:600}
   <div class="metric"><div class="metric-label">Total lifetime income</div><div class="metric-val" id="c-income">—</div><div class="metric-sub" id="c-income-sub">energy + agri</div></div>
   <div class="metric cost-m"><div class="metric-label">Total lifetime costs</div><div class="metric-val" id="c-costs">—</div><div class="metric-sub" id="c-costs-sub">CapEx + OpEx + replacements</div></div>
 </div>
-<p style="text-align:center;padding:40px;color:#666">Full V9.1 model loading... please see harvestingthesuntwice.org</p>
+<div class="panel">
+  <h2>Lifetime financial summary</h2>
+  <div class="row"><label>Installation lifetime (years)</label><input type="range" id="lifetime" min="25" max="35" step="5" value="25"><span class="val" id="lifetime-v">25 years</span></div>
+  <div class="note">Fiedler 40290 structure: 30-year guarantee &nbsp;·&nbsp; Panels: 25–30 year typical life &nbsp;·&nbsp; Inverters: replacement required — see costs section</div>
+  <div class="lt-wrap"><table class="lt"><thead><tr><th>Item</th><th>Low CapEx</th><th>Mid CapEx</th><th>High CapEx</th></tr></thead><tbody id="lt-body"></tbody></table></div>
 </div>
+<div class="panel">
+  <h2>Energy revenue scenarios</h2>
+  <div class="info" id="revenue-insight">—</div>
+  <div class="rev-grid" id="rev-cards"></div>
+  <hr>
+  <div class="row"><label>PPA export rate (£/MWh)</label><input type="range" id="ppa" min="40" max="120" step="1" value="65"><span class="val" id="ppa-v">£65/MWh</span></div>
+  <div class="note">Grid export via Power Purchase Agreement</div>
+  <div class="row"><label>Grid import rate (£/MWh)</label><input type="range" id="grid-import" min="80" max="300" step="5" value="160"><span class="val" id="grid-import-v">£160/MWh</span></div>
+  <div class="note">Commercial electricity import rate — confirm actual rate with Barry</div>
+  <div class="row"><label>AD production cost (£/MWh)</label><input type="range" id="ad-cost" min="60" max="200" step="1" value="110"><span class="val" id="ad-cost-v">£110/MWh</span></div>
+  <div class="note">Confirmed Barry Buntin 17/03/2026 — £0.11/kWh from AD plant</div>
+  <div class="row"><label>Grid / AD split (% from grid)</label><input type="range" id="grid-split" min="0" max="100" step="5" value="40"><span class="val" id="grid-split-v">40% grid</span></div>
+  <div class="note">Proportion of site electricity from grid vs AD — confirm with Barry</div>
+</div>
+<!-- BESS -->
+<div class="panel">
+  <h2>BESS option — Battery Energy Storage System</h2>
+  <div class="chk-row" onclick="toggleBESS()">
+    <input type="checkbox" id="bess-toggle">
+    <label for="bess-toggle">Include BESS in financial model</label>
+    <span class="sub">— adds storage CapEx, replacement costs and optional arbitrage revenue</span>
+  </div>
+  <div id="bess-content" style="display:none">
+    <div class="info-blue">VBPV BESS Paradox: the east-west generation profile reduces required BESS capacity by approximately 52% compared to equivalent TMPV — because generation is spread across the full day rather than peaking at midday. This significantly reduces the whole-system cost of adding storage.</div>
+    <h3>Site type <span id="preset-badge" class="preset-badge">presets applied</span></h3>
+    <div class="site-row">
+      <div class="site-btn active" id="site-ad" onclick="setSiteType('ad')">
+        <div>Off-grid with AD plant</div>
+        <div class="sub">Nocton · Carrington</div>
+      </div>
+      <div class="site-btn" id="site-grid" onclick="setSiteType('grid')">
+        <div>Grid-connected (no AD)</div>
+        <div class="sub">Dyson non-AD farm sites</div>
+      </div>
+    </div>
+    <div id="bess-site-note" class="warn2"></div>
+    <div id="bess-preset-summary" class="info" style="margin-bottom:14px"></div>
+    <div class="bess-row row"><label>BESS capacity — VBPV (kWh)</label><input type="range" id="bess-kwh" min="100" max="2000" step="50" value="500"><span class="val" id="bess-kwh-v">500 kWh</span></div>
+    <div class="note">VBPV requires ~52% less BESS than equivalent TMPV. Equivalent TMPV BESS: <span id="tmpv-bess">—</span></div>
+    <div class="bess-row row"><label>BESS installed cost (£/kWh)</label><input type="range" id="bess-cost" min="70" max="150" step="5" value="100"><span class="val" id="bess-cost-v">£100/kWh</span></div>
+    <div class="note">UK installed cost range £90–110/kWh (campaign reference)</div>
+    <div class="bess-row row"><label>BESS replacement cycle (years)</label><input type="range" id="bess-cycle" min="8" max="15" step="1" value="12"><span class="val" id="bess-cycle-v">12 years</span></div>
+    <div class="bess-row row"><label>BESS arbitrage / balancing revenue (£/yr)</label><input type="range" id="bess-rev" min="0" max="50000" step="1000" value="0"><span class="val" id="bess-rev-v">£0/yr</span></div>
+    <div class="note" id="bess-rev-note">Set based on site type — adjust if known</div>
+    <div class="grid3" id="bess-cards"></div>
+  </div>
+</div>
+<div class="panel">
+  <h2>Panel orientation & field geometry</h2>
+  <div class="toggle-row">
+    <div class="toggle-btn active" id="btn-portrait — single panel tall</div><div class="sub">Long edge vertical · standard VBPV</div></div>
+    <div class="toggle-btn" id="btn-landscape" onclick="setOrientation('landscape')"><div>Landscape — two panels tall</div><div class="sub">Long edge horizontal · 2 modules stacked</div></div>
+  </div>
+  <div class="compare-grid" id="compare-grid"></div>
+  <hr>
+  <h3>Field & spacing</h3>
+  <div class="row"><label>Field area (acres)</label><input type="range" id="acres" min="5" max="100" step="1" value="30"><span class="val" id="acres-v">30 acres</span></div>
+  <div class="row"><label>Field length (m)</label><input type="range" id="field-len" min="100" max="600" step="10" value="350"><span class="val" id="field-len-v">350 m</span></div>
+  <div class="row"><label>Row spacing — centre to centre (m)</label><input type="range" id="spacing" min="5" max="20" step="0.5" value="10"><span class="val" id="spacing-v">10.0 m</span></div>
+  <div class="note">Min ~8m for root crop machinery. 10–12m recommended for Dyson Farming fleet.</div>
+  <div class="row"><label>Clearance strip width (m)</label><input type="range" id="strip" min="0.5" max="2.0" step="0.1" value="1.0"><span class="val" id="strip-v">1.0 m</span></div>
+  <div class="note">Post/frame footprint. Cropable width = row spacing minus this value.</div>
+  <hr>
+  <h3>Module dimensions & power</h3>
+  <div class="row"><label>Module long edge (m)</label><input type="range" id="mod-long" min="1.8" max="2.8" step="0.05" value="2.4"><span class="val" id="mod-long-v">2.4 m</span></div>
+  <div class="row"><label>Module short edge (m)</label><input type="range" id="mod-short" min="0.9" max="1.3" step="0.05" value="1.1"><span class="val" id="mod-short-v">1.1 m</span></div>
+  <div class="row"><label>Module power (Wp/m²)</label><input type="range" id="wpm2" min="180" max="240" step="5" value="210"><span class="val" id="wpm2-v">210 Wp/m²</span></div>
+  <div class="row"><label>Ground clearance (m)</label><input type="range" id="clearance" min="0.5" max="1.5" step="0.05" value="1.0"><span class="val" id="clearance-v">1.0 m</span></div>
+  <div class="geom-grid" id="geom-outputs"></div>
+  <svg id="diagram" width="100%" height="160" style="border-radius:6px;margin-bottom:14px;display:block;border:1px solid #e8e8e8"></svg>
+  <hr>
+  <h3>Crop type</h3>
+  <div class="row">
+    <label>Crop type</label>
+    <select id="crop-select" onchange="render()">
+      <option value="potatoes">Potatoes</option>
+      <option value="sugarbeet">Sugar beet</option>
+      <option value="wheat">Winter wheat</option>
+      <option value="barley">Spring barley</option>
+      <option value="osr">Oilseed rape</option>
+      <option value="maize" selected>Forage maize (AD feedstock)</option>
+      <option value="grassland">Grassland / forage</option>
+      <option value="veg">Field vegetables / brassicas</option>
+    </select>
+    <span class="val" style="min-width:0"></span>
+  </div>
+  <div id="crop-card"></div>
+</div>
+<div class="panel">
+  <h2>Capital & operating costs</h2>
+  <h3>Installed CapEx (£/kWp)</h3>
+  <div class="row"><label>Low scenario</label><input type="range" id="cost-lo" min="500" max="1200" step="10" value="760"><span class="val" id="cost-lo-v">£760/kWp</span></div>
+  <div class="note">Next2Sun 1.9MW Austria reference ~£760/kWp</div>
+  <div class="row"><label>Mid scenario — base case</label><input type="range" id="cost-mid" min="500" max="1200" step="10" value="850"><span class="val" id="cost-mid-v">£850/kWp</span></div>
+  <div class="row"><label>High scenario</label><input type="range" id="cost-hi" min="500" max="1400" step="10" value="1000"><span class="val" id="cost-hi-v">£1,000/kWp</span></div>
+  <hr>
+  <h3>Annual operating costs</h3>
+  <div class="row"><label>Annual O&amp;M (£/year)</label><input type="range" id="opex" min="3000" max="20000" step="500" value="8000"><span class="val" id="opex-v">£8,000/yr</span></div>
+  <div class="note">Maintenance, monitoring, cabling — excludes insurance and inverter replacement</div>
+  <div class="row"><label>Annual insurance (£/year)</label><input type="range" id="insurance" min="2000" max="20000" step="500" value="6000"><span class="val" id="insurance-v">£6,000/yr</span></div>
+  <hr>
+  <h3>Inverter replacement</h3>
+  <div class="row"><label>Replacement cycle (years)</label><input type="range" id="inv-cycle" min="8" max="15" step="1" value="10"><span class="val" id="inv-cycle-v">10 years</span></div>
+  <div class="note">String inverters typically 8–12 years. Central inverters 12–15 years.</div>
+  <div class="row"><label>Replacement cost (£/kWp)</label><input type="range" id="inv-cost" min="8" max="30" step="1" value="15"><span class="val" id="inv-cost-v">£15/kWp</span></div>
+  <hr>
+  <h3>Panel performance</h3>
+  <div class="row"><label>Annual degradation (%/yr)</label><input type="range" id="degrade" min="0.3" max="1.0" step="0.05" value="0.5"><span class="val" id="degrade-v">0.50%/yr</span></div>
+  <div class="note">Bifacial panels 0.4–0.5%/yr typical. Year 25 output: <span id="degrade-yr25">—</span> of year 1.</div>
+  <div class="row"><label>VBPV specific yield yr 1 (kWh/kWp)</label><input type="range" id="yield" min="700" max="1200" step="10" value="950"><span class="val" id="yield-v">950 kWh/kWp</span></div>
+  <div class="note">University of York, Badran &amp; Dhimish 2024 — Lincolnshire latitude</div>
+  <hr>
+  <h3>Finance</h3>
+  <div class="row"><label>Discount rate (%)</label><input type="range" id="disc" min="2" max="12" step="0.5" value="6"><span class="val" id="disc-v">6.0%</span></div>
+</div>
+<div class="panel">
+  <h2>Scenario matrix</h2>
+  <div class="tabs">
+    <button class="tab active" onclick="setTab('uplift',this)">Net uplift vs farming alone</button>
+    <button class="tab" onclick="setTab('payback',this)">Simple payback</button>
+    <button class="tab" onclick="setTab('npv',this)">25-year NPV</button>
+    <button class="tab" onclick="setTab('annual',this)">Annual cash flow</button>
+  </div>
+  <p style="font-size:11px;color:#888;margin-bottom:10px;font-style:italic">Net uplift = energy revenue + retained agri income − agri income without VBPV − total annual OpEx</p>
+  <div id="table-area"></div>
+</div>
+<div class="panel">
+  <h2>Cumulative cash flow — Mid CapEx · all revenue scenarios</h2>
+  <div style="display:flex;gap:18px;margin-bottom:6px;font-size:11px;color:#666;flex-wrap:wrap">
+    <span><span style="display:inline-block;width:14px;height:2px;background:#378ADD;vertical-align:middle;margin-right:4px"></span>Export PPA</span>
+    <span><span style="display:inline-block;width:14px;height:2px;background:#BA7517;vertical-align:middle;margin-right:4px"></span>Displaces AD</span>
+    <span><span style="display:inline-block;width:14px;height:2px;background:#2D6A2D;vertical-align:middle;margin-right:4px"></span>Displaces grid</span>
+    <span><span style="display:inline-block;width:14px;height:2px;background:#7C3AED;vertical-align:middle;margin-right:4px"></span>Blended (base)</span>
+  </div>
+  <div class="chart-wrap"><canvas id="cashflow-chart"></canvas></div>
+</div>
+<div class="footer">Harvesting the Sun Twice &nbsp;·&nbsp; harvestingthesuntwice.org &nbsp;·&nbsp; harvestingthesuntwice@gmail.com &nbsp;·&nbsp; March 2026<br>Source: University of York (Badran &amp; Dhimish 2024) &nbsp;·&nbsp; IEA PVPS Task 13 (2026) &nbsp;·&nbsp; Next2Sun Austria reference project<br>Net profit = total lifetime income (energy + agri) − total lifetime costs (CapEx + OpEx + insurance + inverter replacements ± BESS)</div>
+</div>
+<script>
+const CROPS={potatoes:{name:'Potatoes',baseGM:2200,minCropWidth:8.0,shadeImpact:-0.05,badgeType:'cau',badge:'Shade sensitive',notes:'Moderately shade-sensitive. Ridge lifting requires full machinery clearance. 10m+ spacing recommended.',source:'Aarhus University; ADEME France'},sugarbeet:{name:'Sugar beet',baseGM:1400,minCropWidth:7.0,shadeImpact:-0.02,badgeType:'neu',badge:'Broadly tolerant',notes:'Reasonable shade tolerance. Harvester width 4.5–6m — 8m+ cropable width recommended.',source:'University of York; German field trials'},wheat:{name:'Winter wheat',baseGM:800,minCropWidth:5.0,shadeImpact:-0.01,badgeType:'pos',badge:'Very tolerant',notes:'Very tolerant of VBPV shading. Combine headers 6–9m — 8m+ cropable width recommended.',source:'Next2Sun Germany; Fraunhofer ISE'},barley:{name:'Spring barley',baseGM:650,minCropWidth:5.0,shadeImpact:-0.01,badgeType:'pos',badge:'Very tolerant',notes:'Performs well under VBPV. Nocton heath soils may benefit from moisture microclimate.',source:'Badran & Dhimish (2024); IEA PVPS Task 13'},osr:{name:'Oilseed rape',baseGM:700,minCropWidth:6.0,shadeImpact:-0.02,badgeType:'neu',badge:'Tolerant',notes:'Good shade tolerance. Similar machinery clearance to cereals.',source:'INRAE France; Fraunhofer ISE'},maize:{name:'Forage maize (AD feedstock)',baseGM:900,minCropWidth:7.0,shadeImpact:-0.04,badgeType:'cau',badge:'Moderate sensitivity',notes:'High-light-demand C4 crop. Relevant to Carrington AD plant — model energy gain vs feedstock reduction.',source:'Dupraz et al.; ADEME France'},grassland:{name:'Grassland / forage',baseGM:500,minCropWidth:3.0,shadeImpact:0.03,badgeType:'pos',badge:'Beneficial',notes:'Most compatible with VBPV. Shade reduces moisture stress and extends growing season.',source:'Next2Sun Switzerland; Agroscope'},veg:{name:'Field vegetables / brassicas',baseGM:3500,minCropWidth:6.0,shadeImpact:0.02,badgeType:'pos',badge:'Often beneficial',notes:'Many brassicas benefit from partial shading — reduced heat stress, lower moisture demand.',source:'Touil et al. (2021); Fraunhofer ISE'}};
+const PRESETS={ad:{gridSplit:0,bessRev:0,bessNote:'AD sites: the AD plant provides flexible on-site generation — AD throttling is a more cost-effective flexibility mechanism than BESS. BESS adds cost with limited additional benefit here.',summaryNote:'Preset applied for AD site: grid/AD split set to 0% grid (AD supplies all electricity). BESS arbitrage revenue set to £0 — AD throttling handles flexibility. Adjust manually if site conditions differ.',revNote:'Revenue scenario for AD site: VBPV generation displaces AD production cost (£110/MWh) or exports via PPA (£65/MWh). Grid import displacement not applicable.'},grid:{gridSplit:100,bessRev:15000,bessNote:'Grid-connected sites: BESS adds significant value — captures VBPV morning/evening peaks for grid arbitrage or avoided import costs. VBPV needs ~52% less BESS than TMPV, making VBPV+BESS materially cheaper than TMPV+BESS.',summaryNote:'Preset applied for grid-connected site: grid/AD split set to 100% grid. BESS arbitrage revenue set to £15,000/yr (typical grid balancing estimate — confirm with energy manager). Adjust manually if known.',revNote:'Revenue scenario for grid-connected site: VBPV generation primarily displaces grid imports (£160/MWh) — highest value use. BESS captures further arbitrage opportunity.'}};
+let orientation='portrait',activeTab='uplift',chart=null,bessOn=false,siteType='ad';
+const a2h=a=>a*0.404686;
+const fmt=n=>'£'+Math.round(Math.abs(n)).toLocaleString('en-GB');
+const fmtS=n=>(n>=0?'+':'-')+'£'+Math.round(Math.abs(n)).toLocaleString('en-GB');
+const pct=n=>(n>=0?'+':'')+n.toFixed(1)+'%';
+const ge=id=>document.getElementById(id);
+const sv=(id,v)=>{const e=ge(id);if(e)e.textContent=v};
+const setSlider=(id,v)=>{const e=ge(id);if(e)e.value=v;};
+function toggleBESS(){bessOn=!bessOn;ge('bess-toggle').checked=bessOn;ge('bess-content').style.display=bessOn?'block':'none';if(bessOn)applyPreset(siteType);render();}
+function applyPreset(type){const p=PRESETS[type];setSlider('grid-split',p.gridSplit);setSlider('bess-rev',p.bessRev);ge('bess-site-note').className=type==='ad'?'warn2':'info-blue';ge('bess-site-note').textContent=p.bessNote;ge('bess-preset-summary').textContent=p.summaryNote;ge('revenue-insight').textContent=p.revNote;}
+function setSiteType(t){siteType=t;ge('site-ad').classList.toggle('active',t==='ad');ge('site-grid').classList.toggle('active',t==='grid');applyPreset(t);render();}
+function getGeom(){const spacing=+ge('spacing').value,strip=+ge('strip').value,modL=+ge('mod-long').value,modS=+ge('mod-short').value,cl=+ge('clearance').value,wpm2=+ge('wpm2').value,fieldLen=+ge('field-len').value,ha=a2h(+ge('acres').value),cropableWidth=Math.round((spacing-strip)*10)/10,wpPerModule=modL*modS*wpm2,kWpPerModule=wpPerModule/1000;let panelH,totalStructH,kWpPerMetre,numModulesPerMetre;if(orientation==='portrait'){panelH=modL;totalStructH=cl+modL;numModulesPerMetre=1/modS;kWpPerMetre=kWpPerModule/modS;}else{panelH=2*modS;totalStructH=cl+2*modS;numModulesPerMetre=2/modL;kWpPerMetre=2*kWpPerModule/modL;}const totalRowM=(ha*10000)/spacing,kwp=Math.round(totalRowM*kWpPerMetre),totalPanels=Math.round(totalRowM*numModulesPerMetre),numRows=Math.floor(fieldLen/spacing);return{spacing,strip,modL,modS,cl,wpm2,fieldLen,ha,panelH,totalStructH:Math.round(totalStructH*100)/100,cropableWidth,kwp,totalPanels,numRows,panelsPerRow:Math.round(totalPanels/numRows),rowLengthM:Math.round(totalRowM/numRows),kWpPerModule:Math.round(kWpPerModule*1000)/1000,wpPerModule:Math.round(wpPerModule)};}
+function getBoth(gm){const r=(gm.ha*10000)/gm.spacing,k=gm.wpPerModule/1000;return{portrait:{kwp:Math.round(r*k/gm.modS),totalH:Math.round((gm.cl+gm.modL)*100)/100},landscape:{kwp:Math.round(r*2*k/gm.modL),totalH:Math.round((gm.cl+2*gm.modS)*100)/100}};}
+function getRevenues(mwh){const ppa=+ge('ppa').value,gi=+ge('grid-import').value,ad=+ge('ad-cost').value,gs=+ge('grid-split').value/100,bl=gi*gs+ad*(1-gs);return{rExp:Math.round(mwh*ppa),rAD:Math.round(mwh*ad),rGrid:Math.round(mwh*gi),rBln:Math.round(mwh*bl),ppa,adCost:ad,gridImport:gi,blendedRate:Math.round(bl),gridSplit:Math.round(gs*100)};}
+function countReplacements(years,cycle){let c=0;for(let y=cycle;y<years;y+=cycle)c++;return c;}
+function lifetimeSummary(cap,revYr1,mwhYr1,agri,totalAnnualOpex,invTotal,invReplCount,bessCapex,bessReplCount,bessRevYr,years,degrade){let totalEnergy=0;for(let y=1;y<=years;y++)totalEnergy+=Math.round(mwhYr1*Math.pow(1-degrade/100,y-1))*(revYr1/mwhYr1);totalEnergy=Math.round(totalEnergy);const totalAgri=agri*years,totalBessRev=bessOn?bessRevYr*years:0,totalIncome=totalEnergy+totalAgri+totalBessRev,totalOpex=totalAnnualOpex*years,invReplTotal=invReplCount*invTotal,bessReplTotal=bessOn?bessReplCount*bessCapex:0,totalCosts=cap+(bessOn?bessCapex:0)+totalOpex+invReplTotal+bessReplTotal,netProfit=totalIncome-totalCosts,roi=Math.round((netProfit/cap)*100),pb=(cap/Math.max(1,revYr1+agri-totalAnnualOpex)).toFixed(1);return{totalEnergy,totalAgri,totalBessRev,totalIncome,totalOpex,invReplTotal,bessReplTotal,totalCosts,netProfit,roi,pb};}
+function setOrientation(o){orientation=o;ge('btn-portrait').classList.toggle('active',o==='portrait');ge('btn-landscape').classList.toggle('active',o==='landscape');render();}
+function drawDiagram(gm){const svg=ge('diagram'),W=svg.clientWidth||700,H=160,scale=10,span=gm.spacing*scale,stripPx=gm.strip*scale,panelPx=gm.panelH*scale,clPx=gm.cl*scale,groundY=H-20,panelBot=groundY-clPx,panelTop=panelBot-panelPx,n=Math.floor(W/span)+2;let h=`<rect width="${W}" height="${H}" fill="#fafafa"/><rect x="0" y="${groundY+2}" width="${W}" height="${H-groundY}" fill="#e8d898"/><rect x="0" y="${groundY}" width="${W}" height="3" fill="#c8a850" rx="1"/>`;
+for(let i=-1;i<n;i++){const cx=i*span+(span*0.1);if(cx<-40||cx>W+40)continue;const nx=cx+span,px=stripPx/2,cs=cx+px+4,ce=nx-px-4;if(ce>cs){h+=`<rect x="${cs}" y="${groundY-42}" width="${ce-cs}" height="46" fill="rgba(60,180,60,0.1)" rx="2"/>`;
+if(ce-cs>50)h+=`<text x="${(cs+ce)/2}" y="${groundY-26}" text-anchor="middle" font-size="9" fill="#2D6A2D" font-weight="600">${gm.cropableWidth}m cropable</text>`;}}
+for(let i=-1;i<n;i++){const cx=i*span+(span*0.1);if(cx<-40||cx>W+40)continue;const px=stripPx/2,nx=cx+span;h+=`<rect x="${cx-3}" y="${panelTop}" width="6" height="${clPx+panelPx}" fill="#888" rx="1"/><rect x="${cx-px}" y="${panelBot-2}" width="${stripPx}" height="${clPx+4}" fill="rgba(255,220,100,0.25)"/>`;
+if(orientation==='landscape'){const h2=panelPx/2;h+=`<rect x="${cx-px}" y="${panelTop}" width="${stripPx}" height="${h2-1}" fill="#2D6A2D" rx="2"/><rect x="${cx-px}" y="${panelTop+h2+1}" width="${stripPx}" height="${h2-1}" fill="#2D6A2D" rx="2"/>`;}else h+=`<rect x="${cx-px}" y="${panelTop}" width="${stripPx}" height="${panelPx}" fill="#2D6A2D" rx="2"/>`;
+if(nx<W+20){const mx=(cx+nx)/2;h+=`<line x1="${cx+px+4}" y1="${groundY-12}" x2="${nx-px-4}" y2="${groundY-12}" stroke="#ccc" stroke-width="0.75" stroke-dasharray="4,3"/><text x="${mx}" y="${groundY-14}" text-anchor="middle" font-size="9" fill="#999">${gm.spacing}m</text>`;}
+if(i===0){h+=`<text x="${cx+px+6}" y="${panelTop+(panelPx/2)+3}" font-size="9" fill="#666">${gm.panelH.toFixed(1)}m</text><text x="${cx+px+6}" y="${panelBot-(clPx/2)+3}" font-size="9" fill="#888">${gm.cl.toFixed(1)}m clearance</text><text x="${cx+px+6}" y="${H-5}" font-size="9" fill="#888">Total: ${gm.totalStructH}m</text>`;}}
+h+=`<text x="6" y="13" font-size="10" fill="#666" font-weight="600">${orientation==='portrait'?'Portrait — single panel tall':'Landscape — two panels tall'} · cross-section to scale</text>`;svg.innerHTML=h;}
+function renderCropCard(gm,agri,agriNoVBPV){const ck=ge('crop-select').value,c=CROPS[ck],shadeEffect=c.shadeImpact*(10/gm.spacing),adjGM=Math.round(c.baseGM*(1+shadeEffect)),agriLoss=agri-agriNoVBPV,machineOk=gm.cropableWidth>=c.minCropWidth,yCol=shadeEffect>0?'pos':shadeEffect<-0.03?'neg':'neu';ge('crop-card').innerHTML=`<div class="crop-card"><div class="crop-header"><span class="crop-name">${c.name}</span><span class="badge-${c.badgeType}">${c.badge}</span></div><div class="crop-stats"><div class="cs"><div class="cs-label">Full-field GM (no VBPV)</div><div class="cs-val">£${c.baseGM.toLocaleString()}/ha</div><div class="cs-change neu">Baseline</div></div><div class="cs"><div class="cs-label">Shade effect at ${gm.spacing}m</div><div class="cs-val ${yCol}">${pct(shadeEffect*100)}</div></div><div class="cs"><div class="cs-label">Retained agri income</div><div class="cs-val">£${adjGM.toLocaleString()}/ha</div><div class="cs-change ${agriLoss>=0?'pos':'neg'}">${fmtS(agriLoss)} vs no VBPV</div></div><div class="cs"><div class="cs-label">Cropable width</div><div class="cs-val ${machineOk?'pos':'neg'}">${gm.cropableWidth}m</div><div class="cs-change ${machineOk?'pos':'neg'}">${machineOk?'✓ adequate':'⚠ check machinery'}</div></div><div class="cs"><div class="cs-label">Annual agri income</div><div class="cs-val">${fmt(agri)}/yr</div></div><div class="cs"><div class="cs-label">Agri income change</div><div class="cs-val ${agriLoss>=0?'pos':'neg'}">${fmtS(agriLoss)}/yr</div><div class="cs-change neu">Offset by energy revenue</div></div></div><div class="crop-note">${c.notes} <span style="font-size:10px;opacity:0.6">— ${c.source}</span></div></div>`;}
+function setTab(t,el){activeTab=t;document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));el.classList.add('active');render();}
+function render(){const gm=getGeom(),both=getBoth(gm),ck=ge('crop-select').value,c=CROPS[ck],shadeEffect=c.shadeImpact*(10/gm.spacing),agri=Math.round(gm.ha*Math.round(c.baseGM*(1+shadeEffect))),agriNoVBPV=Math.round(gm.ha*c.baseGM),cLo=+ge('cost-lo').value,cMid=+ge('cost-mid').value,cHi=+ge('cost-hi').value,capLo=gm.kwp*cLo,capMid=gm.kwp*cMid,capHi=gm.kwp*cHi,yld=+ge('yield').value,degrade=+ge('degrade').value,opex=+ge('opex').value,insurance=+ge('insurance').value,totalAnnualOpex=opex+insurance,invCycle=+ge('inv-cycle').value,invCostPerKwp=+ge('inv-cost').value,invTotal=gm.kwp*invCostPerKwp,disc=+ge('disc').value/100,years=+ge('lifetime').value,mwhYr1=Math.round(gm.kwp*yld/1000),rev=getRevenues(mwhYr1),bessKwh=+ge('bess-kwh').value,bessCostPerKwh=+ge('bess-cost').value,bessCapex=bessKwh*bessCostPerKwh,bessCycle=+ge('bess-cycle').value,bessRevYr=+ge('bess-rev').value,invReplCount=countReplacements(years,invCycle),bessReplCount=bessOn?countReplacements(years,bessCycle):0,tmpvBessKwh=Math.round(bessKwh/0.48);
+sv('lifetime-v',years+' years');sv('ppa-v','£'+rev.ppa+'/MWh');sv('grid-import-v','£'+rev.gridImport+'/MWh');sv('ad-cost-v','£'+rev.adCost+'/MWh');sv('grid-split-v',rev.gridSplit+'% grid / '+(100-rev.gridSplit)+'% AD');sv('cost-lo-v','£'+cLo+'/kWp');sv('cost-mid-v','£'+cMid+'/kWp');sv('cost-hi-v','£'+cHi+'/kWp');sv('yield-v',yld+' kWh/kWp');sv('opex-v','£'+opex.toLocaleString()+'/yr');sv('insurance-v','£'+insurance.toLocaleString()+'/yr');sv('inv-cycle-v',invCycle+' years');sv('inv-cost-v','£'+invCostPerKwp+'/kWp');sv('disc-v',(+ge('disc').value)+'%');sv('acres-v',ge('acres').value+' acres');sv('field-len-v',ge('field-len').value+' m');sv('spacing-v',gm.spacing.toFixed(1)+' m');sv('strip-v',gm.strip.toFixed(1)+' m');sv('mod-long-v',gm.modL.toFixed(2)+' m');sv('mod-short-v',gm.modS.toFixed(2)+' m');sv('wpm2-v',gm.wpm2+' Wp/m²');sv('clearance-v',gm.cl.toFixed(2)+' m');sv('degrade-v',(+ge('degrade').value).toFixed(2)+'%/yr');sv('degrade-yr25',Math.round(Math.pow(1-degrade/100,24)*100)+'%');if(bessOn){sv('bess-kwh-v',bessKwh.toLocaleString()+' kWh');sv('bess-cost-v','£'+bessCostPerKwh+'/kWh');sv('bess-cycle-v',bessCycle+' years');sv('bess-rev-v','£'+bessRevYr.toLocaleString()+'/yr');sv('tmpv-bess',tmpvBessKwh.toLocaleString()+' kWh');}
+if(!bessOn){const bestRate=Math.max(rev.ppa,rev.adCost,rev.gridImport),bestLabel=bestRate===rev.gridImport?'displacing grid imports (£'+rev.gridImport+'/MWh)':bestRate===rev.adCost?'displacing AD (£'+rev.adCost+'/MWh)':'export PPA (£'+rev.ppa+'/MWh)';ge('revenue-insight').textContent='Highest value use: '+bestLabel+'. Grid imports are '+(rev.gridImport/rev.ppa).toFixed(1)+'× more valuable than PPA. Blended rate ('+rev.gridSplit+'% grid / '+(100-rev.gridSplit)+'% AD): £'+rev.blendedRate+'/MWh.';}
+ge('rev-cards').innerHTML=`<div class="rev-card"><div class="rev-title">Export PPA</div><div class="rev-val">${fmt(rev.rExp)}/yr</div><div class="rev-sub">£${rev.ppa}/MWh</div></div><div class="rev-card"><div class="rev-title">Displaces AD</div><div class="rev-val">${fmt(rev.rAD)}/yr</div><div class="rev-sub">£${rev.adCost}/MWh · confirmed</div></div><div class="rev-card best"><div class="rev-title">Displaces grid ★</div><div class="rev-val">${fmt(rev.rGrid)}/yr</div><div class="rev-sub">£${rev.gridImport}/MWh</div></div>`;
+if(bessOn){const bessSaving=(tmpvBessKwh-bessKwh)*bessCostPerKwh;ge('bess-cards').innerHTML=`<div class="lc hi"><div class="lc-label">VBPV BESS CapEx</div><div class="lc-val">${fmt(bessCapex)}</div><div class="lc-sub">${bessKwh} kWh · £${bessCostPerKwh}/kWh</div></div><div class="lc hi"><div class="lc-label">TMPV equiv. BESS CapEx</div><div class="lc-val">${fmt(tmpvBessKwh*bessCostPerKwh)}</div><div class="lc-sub">${tmpvBessKwh} kWh · 52% more capacity needed</div></div><div class="lc"><div class="lc-label">BESS saving vs TMPV</div><div class="lc-val pos">${fmt(bessSaving)}</div><div class="lc-sub">Whole-system CapEx saving</div></div>`;}
+const caps=[{l:'Low (£'+cLo+'/kWp)',cap:capLo},{l:'Mid (£'+cMid+'/kWp)',cap:capMid},{l:'High (£'+cHi+'/kWp)',cap:capHi}],sums=caps.map(cp=>lifetimeSummary(cp.cap,rev.rBln,mwhYr1,agri,totalAnnualOpex,invTotal,invReplCount,bessCapex,bessReplCount,bessRevYr,years,degrade));
+const rows=[{label:'Installed CapEx'+(bessOn?' (incl. BESS)':''),cls:'cost',vals:caps.map((cp)=>fmt(cp.cap+(bessOn?bessCapex:0)))},{label:`Inverter replacements (×${invReplCount} @ £${invCostPerKwp}/kWp)`,cls:'cost',vals:caps.map(()=>fmt(invTotal*invReplCount))},...(bessOn&&bessReplCount>0?[{label:`BESS replacements (×${bessReplCount})`,cls:'cost',vals:caps.map(()=>fmt(bessCapex*bessReplCount))}]:[]),{label:`O&M + insurance (£${totalAnnualOpex.toLocaleString()}/yr × ${years} yrs)`,cls:'cost',vals:caps.map(()=>fmt(totalAnnualOpex*years))},{label:'TOTAL LIFETIME COSTS',cls:'total',vals:sums.map(s=>fmt(s.totalCosts))},{label:'',cls:'div',vals:['','','']},{label:`Energy revenue — blended (with degradation over ${years} yrs)`,cls:'income',vals:sums.map(s=>fmt(s.totalEnergy))},{label:`Retained agricultural income (${years} yrs)`,cls:'income',vals:sums.map(s=>fmt(s.totalAgri))},...(bessOn&&bessRevYr>0?[{label:`BESS revenue (${years} yrs)`,cls:'income',vals:caps.map(()=>fmt(bessRevYr*years))}]:[]),{label:'TOTAL LIFETIME INCOME',cls:'total',vals:sums.map(s=>fmt(s.totalIncome))},{label:'',cls:'div',vals:['','','']},{label:'NET PROFIT (blended revenue)',cls:'total',vals:sums.map(s=>fmtS(s.netProfit))},{label:'Return on Investment %',cls:'roi',vals:sums.map(s=>s.roi+'%')},{label:'Simple payback (blended)',cls:'roi',vals:sums.map(s=>s.pb+' years')}];
+ge('lt-body').innerHTML=rows.map(r=>`<tr class="${r.cls}"><td>${r.label}</td>${r.vals.map(v=>`<td>${v}</td>`).join('')}</tr>`).join('');
+const hero=sums[1];sv('c-kwp',gm.kwp.toLocaleString());sv('c-crop-width',gm.cropableWidth.toFixed(1)+'m');sv('c-payback',hero.pb+' yrs');sv('c-roi',hero.roi+'%');sv('c-roi-sub','over '+years+' yrs · mid CapEx · blended');sv('c-netprofit',fmtS(hero.netProfit));sv('c-netprofit-sub','mid CapEx · blended · '+years+' years');sv('c-income',fmt(hero.totalIncome));sv('c-income-sub','energy + agri · '+years+' years');sv('c-costs',fmt(hero.totalCosts));sv('c-costs-sub','CapEx + OpEx + replacements · '+years+' yrs');
+const isP=orientation==='portrait';ge('compare-grid').innerHTML=`<div class="compare-card ${isP?'active-card':''}"><div class="cc-title">Portrait${isP?' ★':''}</div><div class="cc-row"><span>Capacity</span><span>${both.portrait.kwp.toLocaleString()} kWp</span></div><div class="cc-row"><span>Structure height</span><span>${both.portrait.totalH}m</span></div><div class="cc-row"><span>Cropable width</span><span class="pos">${gm.cropableWidth}m — same for both</span></div></div><div class="compare-card ${!isP?'active-card':''}"><div class="cc-title">Landscape 2-tall${!isP?' ★':''}</div><div class="cc-row"><span>Capacity</span><span>${both.landscape.kwp.toLocaleString()} kWp</span></div><div class="cc-row"><span>Structure height</span><span>${both.landscape.totalH}m</span></div><div class="cc-row"><span>Cropable width</span><span class="pos">${gm.cropableWidth}m — same for both</span></div></div>`;
+const machineOk=gm.cropableWidth>=c.minCropWidth;ge('geom-outputs').innerHTML=`<div class="lc hi"><div class="lc-label">Total panels</div><div class="lc-val">${gm.totalPanels.toLocaleString()}</div><div class="lc-sub">${gm.wpPerModule}W each</div></div><div class="lc hi"><div class="lc-label">Number of rows</div><div class="lc-val">${gm.numRows}</div></div><div class="lc hi"><div class="lc-label">Panels per row</div><div class="lc-val">${gm.panelsPerRow}</div><div class="lc-sub">~${gm.rowLengthM}m avg</div></div><div class="lc"><div class="lc-label">Capacity</div><div class="lc-val">${gm.kwp.toLocaleString()} kWp</div></div><div class="lc ${machineOk?'':'warn-c'}"><div class="lc-label">Cropable width</div><div class="lc-val">${gm.cropableWidth}m</div><div class="lc-sub">${machineOk?'✓':'⚠ check'}</div></div><div class="lc"><div class="lc-label">Structure height</div><div class="lc-val">${gm.totalStructH}m</div></div>`;
+renderCropCard(gm,agri,agriNoVBPV);drawDiagram(gm);
+const scenarios=[{l:'Low CapEx / Export PPA',cap:capLo,rev:rev.rExp,b:false},{l:'Low CapEx / Blended',cap:capLo,rev:rev.rBln,b:false},{l:'Low CapEx / Grid displaced',cap:capLo,rev:rev.rGrid,b:false},{l:'Mid CapEx / Export PPA',cap:capMid,rev:rev.rExp,b:false},{l:'Mid CapEx / Blended',cap:capMid,rev:rev.rBln,b:true},{l:'Mid CapEx / Grid displaced',cap:capMid,rev:rev.rGrid,b:false},{l:'High CapEx / Export PPA',cap:capHi,rev:rev.rExp,b:false},{l:'High CapEx / Blended',cap:capHi,rev:rev.rBln,b:false},{l:'High CapEx / Grid displaced',cap:capHi,rev:rev.rGrid,b:false}];
+const annualNet=r=>r+agri-totalAnnualOpex,netUplift=r=>r+agri-agriNoVBPV-totalAnnualOpex,npv=(r,cap)=>{let n=-cap;const nn=annualNet(r);for(let y=1;y<=25;y++)n+=nn/Math.pow(1+disc,y);return Math.round(n);},pb2=(r,cap)=>(cap/Math.max(1,annualNet(r))).toFixed(1);
+let th3,td3;if(activeTab==='uplift'){th3='<th>Net uplift vs farming alone</th><th>Payback</th>';td3=s=>{const u=netUplift(s.rev);return`<td class="${u>=0?'pos':'neg'}" style="font-weight:600">${fmtS(u)}/yr</td><td>${pb2(s.rev,s.cap)} yrs</td>`;};}
+else if(activeTab==='payback'){th3='<th>Payback</th><th>Net uplift</th>';td3=s=>`<td>${pb2(s.rev,s.cap)} yrs</td><td class="${netUplift(s.rev)>=0?'pos':'neg'}">${fmtS(netUplift(s.rev))}/yr</td>`;}
+else if(activeTab==='npv'){th3='<th>25-yr NPV</th><th>Net uplift</th>';td3=s=>{const v=npv(s.rev,s.cap);return`<td class="${v>=0?'pos':'neg'}">${fmtS(v)}</td><td class="${netUplift(s.rev)>=0?'pos':'neg'}">${fmtS(netUplift(s.rev))}/yr</td>`;};}
+else{th3='<th>Annual net cash</th><th>Net uplift</th>';td3=s=>`<td>${fmt(annualNet(s.rev))}</td><td class="${netUplift(s.rev)>=0?'pos':'neg'}">${fmtS(netUplift(s.rev))}/yr</td>`;}
+ge('table-area').innerHTML=`<table class="st"><thead><tr><th>Scenario</th><th>CapEx</th><th>Energy rev. yr 1</th><th>Retained agri</th>${th3}</tr></thead><tbody>${scenarios.map(s=>`<tr class="${s.b?'base':''}"><td>${s.l}${s.b?'<span class="badge-sm">base</span>':''}</td><td>${fmt(s.cap)}</td><td>${fmt(s.rev)}</td><td>${fmt(agri)}</td>${td3(s)}</tr>`).join('')}</tbody></table>`;
+function cumDegraded(revYr1,cap){let c2=0,a=[];for(let y=0;y<=35;y++){if(y===0){c2=-cap-(bessOn?bessCapex:0);}else{const ef=Math.pow(1-degrade/100,y-1);let yr=Math.round(mwhYr1*ef)*(revYr1/mwhYr1)+agri-totalAnnualOpex;if(invCycle>0&&y%invCycle===0)yr-=invTotal;if(bessOn&&bessCycle>0&&y%bessCycle===0)yr-=bessCapex;if(bessOn)yr+=bessRevYr;c2+=yr;}a.push(Math.round(c2));}return a;}
+const yrs=Array.from({length:36},(_,i)=>i);if(chart)chart.destroy();
+chart=new Chart(ge('cashflow-chart'),{type:'line',data:{labels:yrs,datasets:[{label:'Export PPA',data:cumDegraded(rev.rExp,capMid),borderColor:'#378ADD',backgroundColor:'transparent',borderWidth:2,pointRadius:0,tension:0.2},{label:'Displaces AD',data:cumDegraded(rev.rAD,capMid),borderColor:'#BA7517',backgroundColor:'transparent',borderWidth:2,pointRadius:0,tension:0.2},{label:'Displaces grid',data:cumDegraded(rev.rGrid,capMid),borderColor:'#2D6A2D',backgroundColor:'transparent',borderWidth:2.5,pointRadius:0,tension:0.2},{label:'Blended',data:cumDegraded(rev.rBln,capMid),borderColor:'#7C3AED',backgroundColor:'transparent',borderWidth:2,pointRadius:0,tension:0.2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,callbacks:{label:c2=>`${c2.dataset.label}: £${Math.round(c2.raw).toLocaleString('en-GB')}`}}},scales:{x:{title:{display:true,text:'Year',font:{size:11}},ticks:{font:{size:11}}},y:{title:{display:true,text:'Cumulative cash flow (£)',font:{size:11}},ticks:{font:{size:11},callback:v=>'£'+Math.round(v/1000)+'k'}}}}});
+}
+['lifetime','ppa','grid-import','ad-cost','grid-split','cost-lo','cost-mid','cost-hi','yield','opex','insurance','inv-cycle','inv-cost','degrade','disc','acres','field-len','spacing','strip','mod-long','mod-short','wpm2','clearance','bess-kwh','bess-cost','bess-cycle','bess-rev'].forEach(id=>{const el=document.getElementById(id);if(el)el.addEventListener('input',render);});render();
+</script>
+<!-- BESS PANEL -->
+<template id="bess-panel-tmpl">
+<div class="panel">
+  <h2>BESS option — Battery Energy Storage System</h2>
+  <div class="chk-row" onclick="toggleBESS()">
+    <input type="checkbox" id="bess-toggle">
+    <label for="bess-toggle">Include BESS in financial model</label>
+    <span class="sub">— adds storage CapEx, replacement costs and optional arbitrage revenue</span>
+  </div>
+  <div id="bess-content" style="display:none">
+    <div class="info-blue">VBPV BESS Paradox: the east-west generation profile reduces required BESS capacity by approximately 52% compared to equivalent TMPV — because generation is spread across the full day rather than peaking at midday. This significantly reduces the whole-system cost of adding storage.</div>
+    <h3>Site type <span id="preset-badge" class="preset-badge">presets applied</span></h3>
+    <div class="site-row">
+      <div class="site-btn active" id="site-ad" onclick="setSiteType('ad')">
+        <div>Off-grid with AD plant</div>
+        <div class="sub">Nocton · Carrington</div>
+      </div>
+      <div class="site-btn" id="site-grid" onclick="setSiteType('grid')">
+        <div>Grid-connected (no AD)</div>
+        <div class="sub">Dyson non-AD farm sites</div>
+      </div>
+    </div>
+    <div id="bess-site-note" class="warn2"></div>
+    <div id="bess-preset-summary" class="info" style="margin-bottom:14px"></div>
+    <div class="bess-row row"><label>BESS capacity — VBPV (kWh)</label><input type="range" id="bess-kwh" min="100" max="2000" step="50" value="500"><span class="val" id="bess-kwh-v">500 kWh</span></div>
+    <div class="note">VBPV requires ~52% less BESS than equivalent TMPV. Equivalent TMPV BESS: <span id="tmpv-bess">—</span></div>
+    <div class="bess-row row"><label>BESS installed cost (£/kWh)</label><input type="range" id="bess-cost" min="70" max="150" step="5" value="100"><span class="val" id="bess-cost-v">£100/kWh</span></div>
+    <div class="note">UK installed cost range £90–110/kWh (campaign reference)</div>
+    <div class="bess-row row"><label>BESS replacement cycle (years)</label><input type="range" id="bess-cycle" min="8" max="15" step="1" value="12"><span class="val" id="bess-cycle-v">12 years</span></div>
+    <div class="bess-row row"><label>BESS arbitrage / balancing revenue (£/yr)</label><input type="range" id="bess-rev" min="0" max="50000" step="1000" value="0"><span class="val" id="bess-rev-v">£0/yr</span></div>
+    <div class="note" id="bess-rev-note">Set based on site type — adjust if known</div>
+    <div class="grid3" id="bess-cards"></div>
+  </div>
+</div>
+</template>
 </body>
-</html>
+  </html>
