@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VBPV Indicative Financial Model — Dyson Farming</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;font-size:14px;background:#f5f5f2;color:#222}
+.header{background:#2D6A2D;color:#fff;padding:20px 28px 16px}
+.header h1{font-size:22px;font-weight:600;margin-bottom:4px}
+.header p{font-size:13px;opacity:0.8}
+.wrap{max-width:1150px;margin:0 auto;padding:20px 16px}
+.warn-bar{background:#fff8e1;border-left:4px solid #f59e0b;padding:10px 14px;font-size:12px;color:#92400e;margin-bottom:18px;border-radius:0 6px 6px 0}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.metric{background:#fff;border-radius:8px;padding:14px 16px;border:1px solid #e0e0e0}
+.metric-label{font-size:10px;text-transform:uppercase;letter-spacing:0.05em;color:#666;margin-bottom:4px}
+.metric-val{font-size:24px;font-weight:600;color:#2D6A2D}
+.metric-sub{font-size:11px;color:#888;margin-top:2px}
+.metric.hero{background:#1b5e20}
+.metric.hero .metric-label{color:rgba(255,255,255,0.7)}
+.metric.hero .metric-val{color:#fff;font-size:28px}
+.metric.hero .metric-sub{color:rgba(255,255,255,0.6)}
+.metric.cost-m{background:#fff3e0}
+.metric.cost-m .metric-val{color:#e65100}
+.panel{background:#fff;border-radius:8px;padding:20px;margin-bottom:16px;border:1px solid #e0e0e0}
+.panel h2{font-size:15px;font-weight:600;color:#2D6A2D;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #e8e8e8}
+.panel h3{font-size:13px;font-weight:600;color:#444;margin:12px 0 8px}
+.row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.row label{font-size:13px;color:#555;width:260px;flex-shrink:0}
+.row input[type=range]{flex:1;accent-color:#2D6A2D}
+.row select{flex:1;font-size:13px;padding:6px 8px;border-radius:6px;border:1px solid #ccc;background:#fff}
+.row .val{font-size:13px;font-weight:600;min-width:130px;text-align:right;color:#222}
+.note{font-size:11px;color:#888;font-style:italic;margin:-4px 0 8px 272px}
+.info{background:#e8f5e9;border-radius:6px;padding:10px 14px;font-size:12px;color:#1b5e20;margin-bottom:14px}
+.info-blue{background:#e3f2fd;border-radius:6px;padding:10px 14px;font-size:12px;color:#0d47a1;margin-bottom:14px}
+.warn2{background:#fff3e0;border-radius:6px;padding:10px 14px;font-size:12px;color:#e65100;margin-bottom:14px}
+.toggle-row{display:flex;gap:8px;margin-bottom:14px}
+.toggle-btn{flex:1;padding:9px;border-radius:6px;border:1px solid #ccc;background:#f5f5f2;cursor:pointer;font-size:13px;font-weight:600;color:#666;text-align:center}
+.toggle-btn.active{background:#e8f5e9;color:#2D6A2D;border-color:#2D6A2D}
+.toggle-btn .sub{font-size:11px;opacity:0.75;margin-top:2px;font-weight:400}
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.compare-card{background:#f5f5f2;border-radius:6px;padding:12px 14px;border:1px solid #e0e0e0}
+.compare-card.active-card{background:#e8f5e9;border-color:#2D6A2D}
+.cc-title{font-size:11px;font-weight:600;color:#555;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.04em}
+.cc-row{display:flex;justify-content:space-between;font-size:12px;padding:3px 0;border-bottom:1px solid #e8e8e8}
+.cc-row:last-child{border-bottom:none;font-weight:600}
+.geom-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.lc{background:#f5f5f2;border-radius:6px;padding:10px 12px}
+.lc.hi{background:#e3f2fd}
+.lc.warn-c{background:#fff3e0}
+.lc-label{font-size:10px;text-transform:uppercase;letter-spacing:0.04em;color:#666;margin-bottom:2px}
+.lc-val{font-size:17px;font-weight:600;color:#222}
+.lc-sub{font-size:11px;color:#888}
+.rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.rev-card{border-radius:6px;padding:12px 14px;border:1px solid #e0e0e0;background:#f5f5f2}
+.rev-card.best{background:#e8f5e9;border-color:#2D6A2D}
+.rev-title{font-size:10px;font-weight:600;text-transform:uppercase;color:#555;margin-bottom:4px}
+.rev-val{font-size:18px;font-weight:600;color:#222}
+.rev-sub{font-size:11px;color:#888;margin-top:2px}
+.lt-wrap{overflow-x:auto;margin-bottom:14px}
+.lt{width:100%;border-collapse:collapse;font-size:12px;min-width:680px}
+.lt th{text-align:left;padding:7px 10px;font-weight:600;font-size:11px;color:#fff;background:#2D6A2D;text-transform:uppercase;letter-spacing:0.04em}
+.lt td{padding:7px 10px;border-bottom:1px solid #f0f0f0}
+.lt tr.cost td{background:#fff3e0;color:#c0392b}
+.lt tr.income td{background:#e8f5e9;color:#1b5e20}
+.lt tr.total td{background:#1b5e20;color:#fff;font-weight:700;font-size:13px}
+.lt tr.roi td{background:#e8f5e9;color:#2D6A2D;font-weight:600}
+.lt tr.div td{background:#f5f5f2;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.04em;color:#888;padding:4px 10px}
+.site-row{display:flex;gap:8px;margin-bottom:12px}
+.site-btn{flex:1;padding:10px;border-radius:6px;border:2px solid #1565c0;background:#f8f9ff;cursor:pointer;font-size:13px;font-weight:600;color:#1565c0;text-align:center;transition:all 0.15s}
+.site-btn.active{background:#1565c0;color:#fff}
+.site-btn .sub{font-size:11px;margin-top:2px;font-weight:400;opacity:0.8}
+.preset-badge{display:inline-block;font-size:10px;padding:2px 8px;border-radius:20px;background:#1565c0;color:#fff;margin-left:8px;vertical-align:middle}
+.crop-card{border:1px solid #e0e0e0;border-radius:8px;padding:14px;margin-bottom:14px}
+.crop-header{display:flex;align-items:baseline;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.crop-name{font-size:15px;font-weight:600}
+.badge-pos{font-size:11px;padding:3px 10px;border-radius:20px;background:#e8f5e9;color:#2D6A2D}
+.badge-neu{font-size:11px;padding:3px 10px;border-radius:20px;background:#f5f5f2;color:#555}
+.badge-cau{font-size:11px;padding:3px 10px;border-radius:20px;background:#fff3e0;color:#e65100}
+.crop-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+.cs{background:#f5f5f2;border-radius:6px;padding:8px 10px}
+.cs-label{font-size:10px;text-transform:uppercase;letter-spacing:0.04em;color:#666;margin-bottom:2px}
+.cs-val{font-size:14px;font-weight:600}
+.cs-change{font-size:11px;margin-top:1px}
+.crop-note{font-size:12px;color:#666;padding:8px 10px;background:#f5f5f2;border-radius:6px}
+.pos{color:#2D6A2D}.neg{color:#c0392b}.neu{color:#666}
+hr{border:none;border-top:1px solid #e8e8e8;margin:14px 0}
+.tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.tab{font-size:12px;padding:5px 14px;border-radius:20px;border:1px solid #ccc;background:transparent;cursor:pointer;color:#666}
+.tab.active{background:#e8f5e9;color:#2D6A2D;border-color:#2D6A2D}
+table.st{width:100%;border-collapse:collapse;font-size:13px}
+table.st th{text-align:left;padding:8px 10px;font-weight:600;font-size:11px;color:#555;border-bottom:1px solid #e0e0e0;text-transform:uppercase;letter-spacing:0.04em;background:#f5f5f2}
+table.st td{padding:8px 10px;border-bottom:1px solid #f0f0f0}
+table.st tr.base{background:#e8f5e9}
+table.st tr.base td{font-weight:600}
+.badge-sm{display:inline-block;font-size:10px;padding:2px 8px;border-radius:20px;background:#e8f5e9;color:#2D6A2D;margin-left:6px}
+.chart-wrap{position:relative;width:100%;height:300px;margin-top:12px}
+.footer{text-align:center;font-size:11px;color:#aaa;padding:20px}
+.chk-row{display:flex;align-items:center;gap:10px;margin-bottom:12px;padding:10px 14px;background:#e3f2fd;border-radius:6px;cursor:pointer}
+.chk-row input[type=checkbox]{width:18px;height:18px;accent-color:#1565c0;cursor:pointer}
+.chk-row label{font-size:13px;font-weight:600;color:#1565c0;cursor:pointer}
+.chk-row .sub{font-size:11px;color:#1565c0;opacity:0.75;margin-left:4px}
+.bess-row input[type=range]{accent-color:#1565c0}
+@media(max-width:700px){.grid4{grid-template-columns:1fr 1fr}.grid3{grid-template-columns:1fr}.row{flex-wrap:wrap}.row label{width:100%}.geom-grid{grid-template-columns:1fr 1fr}.crop-stats{grid-template-columns:1fr 1fr}.rev-grid{grid-template-columns:1fr}.compare-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>VBPV Indicative Financial Model — Dyson Farming</h1>
+  <p>Vertical Bifacial PV &nbsp;·&nbsp; Lincolnshire arable field &nbsp;·&nbsp; Version 9.1 &nbsp;·&nbsp; March 2026 &nbsp;·&nbsp; harvestingthesuntwice.org</p>
+</div>
+<div class="wrap">
+<div class="warn-bar">Indicative model only — not a formal quotation or investment appraisal. Validate all figures with a specialist VBPV installer before any investment decision.</div>
+<div class="grid4">
+  <div class="metric"><div class="metric-label">Installed capacity</div><div class="metric-val" id="c-kwp">—</div><div class="metric-sub">kWp total</div></div>
+  <div class="metric"><div class="metric-label">Cropable width</div><div class="metric-val" id="c-crop-width">—</div><div class="metric-sub">metres between rows</div></div>
+  <div class="metric"><div class="metric-label">Simple payback</div><div class="metric-val" id="c-payback">—</div><div class="metric-sub">years — base case</div></div>
+  <div class="metric"><div class="metric-label">ROI — base case</div><div class="metric-val" id="c-roi">—</div><div class="metric-sub" id="c-roi-sub">over lifetime</div></div>
+</div>
+<div class="grid3">
+  <div class="metric hero"><div class="metric-label">Net profit — base case</div><div class="metric-val" id="c-netprofit">—</div><div class="metric-sub" id="c-netprofit-sub">over lifetime</div></div>
+  <div class="metric"><div class="metric-label">Total lifetime income</div><div class="metric-val" id="c-income">—</div><div class="metric-sub" id="c-income-sub">energy + agri</div></div>
+  <div class="metric cost-m"><div class="metric-label">Total lifetime costs</div><div class="metric-val" id="c-costs">—</div><div class="metric-sub" id="c-costs-sub">CapEx + OpEx + replacements</div></div>
+</div>
+<p style="text-align:center;padding:40px;color:#666">Full V9.1 model loading... please see harvestingthesuntwice.org</p>
+</div>
+</body>
+</html>
