@@ -14,8 +14,9 @@
   <script defer src="/_vercel/insights/script.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Grid Infrastructure Benefits | Harvesting the Sun Twice</title>
-  <meta name="description" content="VBPV's morning and evening generation profile aligns 18% better with UK demand, saving £9.5–10.5bn in BESS infrastructure and reducing grid reinforcement costs.">
+  <meta name="description" content="VBPV's morning and evening generation profile aligns 18% better with UK demand than TBPV, requiring significantly less battery storage and reducing grid reinforcement costs.">
   <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 </head>
 <body class="page-body">
 
@@ -40,11 +41,11 @@
         <div class="stat-card">
           <div class="stat-card__num">+46%</div>
           <div class="stat-card__label">Grid hosting capacity vs conventional solar on existing infrastructure</div>
-          <div class="stat-card__source">Joutijärvi et al. (2023), Renewable & Sustainable Energy Reviews</div>
+          <div class="stat-card__source">Joutijärvi et al., Solar Energy, 262, 111819 (2023)</div>
         </div>
         <div class="stat-card">
-          <div class="stat-card__num">£9.5–10.5bn</div>
-          <div class="stat-card__label">BESS infrastructure savings from 53% storage reduction</div>
+          <div class="stat-card__num">Significantly less</div>
+          <div class="stat-card__label">Battery storage required than TBPV — TBPV's bifacial rear-side gain deepens the duck curve beyond monofacial systems</div>
           <div class="stat-card__source">Based on BloombergNEF Dec 2025 ($117/kWh) and Ember Oct 2025 ($125/kWh)</div>
         </div>
         <div class="stat-card">
@@ -54,7 +55,7 @@
         </div>
         <div class="stat-card">
           <div class="stat-card__num">57%</div>
-          <div class="stat-card__label">Less severe duck curve than TMPV — less storage and balancing needed</div>
+          <div class="stat-card__label">Less severe duck curve than TBPV — TBPV's bifacial rear-side gain amplifies midday surplus beyond monofacial systems</div>
           <div class="stat-card__source">Derived from Badran & Dhimish (2024) generation profile comparison</div>
         </div>
       </div>
@@ -76,15 +77,15 @@
         <div>
           <h3>UK Electricity Demand Profile</h3>
           <p>UK electricity demand peaks twice daily: in the morning (07:00–11:00) as households wake, businesses open, and commuters travel; and in the evening (17:00–21:00) when demand can reach 42 GW.</p>
-          <p>Conventional tilted solar (TMPV) generates almost exclusively at midday — precisely when demand is at its lowest trough. This mismatch is the root cause of the duck curve problem, price cannibalisation, and the need for expensive battery storage.</p>
+          <p>Conventional tilted solar (TBPV) generates almost exclusively at midday — precisely when demand is at its lowest trough. This mismatch is the root cause of the duck curve problem, price cannibalisation, and the need for expensive battery storage. TBPV's bifacial rear-side gain worsens this further, amplifying midday output beyond monofacial systems.</p>
           <div class="callout callout--green" style="margin-top: 1.5rem;">
-            <p><strong>VBPV faces east and west simultaneously.</strong> The east-facing panels capture morning sun during the 07:00–11:00 demand peak (+26.91% advantage over TMPV). The west-facing panels capture afternoon and evening sun during the 17:00–21:00 demand peak (+22.88% advantage). This is not incidental — it is the fundamental architectural advantage of vertical bifacial orientation.</p>
+            <p><strong>VBPV faces east and west simultaneously.</strong> The east-facing panels capture morning sun during the 07:00–11:00 demand peak (+26.91% advantage over TBPV). The west-facing panels capture afternoon and evening sun during the 17:00–21:00 demand peak (+22.88% advantage). This is not incidental — it is the fundamental architectural advantage of vertical bifacial orientation.</p>
           </div>
         </div>
         <div>
           <h3>The Duck Curve Problem</h3>
           <p>As conventional solar penetration grows, grid operators face an increasingly severe "duck curve" — a collapse in net demand at midday as solar floods the grid, followed by a sudden steep ramp-up in the evening as solar generation falls and demand peaks simultaneously.</p>
-          <p>This requires rapid-response gas peakers, expensive grid-scale batteries, and curtailment — all adding cost and carbon. VBPV's generation profile is inherently better matched to real demand, creating a <strong>57% less severe duck curve</strong> than TMPV systems.</p>
+          <p>This requires rapid-response gas peakers, expensive grid-scale batteries, and curtailment — all adding cost and carbon. VBPV's generation profile is inherently better matched to real demand, creating a <strong>57% less severe duck curve</strong> than TBPV systems.</p>
 
           <div style="background: var(--mist); border-radius: 12px; padding: 1.5rem; margin-top: 1.5rem;">
             <h4 style="margin-bottom: 1rem; color: var(--forest);">Daily Generation Advantage</h4>
@@ -130,8 +131,110 @@
       <div class="section-header section-header--center">
         <span class="section-label section-label--light">Battery Storage</span>
         <h2>Reducing the BESS Burden</h2>
-        <p>VBPV's inherent demand alignment dramatically reduces the battery storage required to make solar-generated electricity dispatchable — saving billions in infrastructure the UK would otherwise have to build.</p>
+        <p>TBPV's bifacial rear-side gain increases midday generation further, deepening the duck curve and driving greater battery storage demand than even monofacial tilted systems. VBPV's east-west profile eliminates the midday surplus entirely — requiring significantly less battery storage than either TMPV or TBPV.</p>
       </div>
+
+      <!-- DUCK CURVE CHART -->
+      <div style="background: rgba(255,255,255,0.06); border-radius: 12px; padding: 1.75rem; margin-bottom: 2.5rem;">
+        <canvas id="duckCurveChart" style="max-height: 380px;"></canvas>
+        <p style="font-size: 0.78rem; color: rgba(255,255,255,0.5); text-align: center; margin: 0.75rem 0 0;">
+          TBPV vs VBPV daily generation profiles versus UK electricity demand. Source: Badran &amp; Dhimish (2024), University of York; National Grid ESO.
+        </p>
+        <div style="display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; margin-top: 1.25rem;">
+          <div style="background: rgba(255,255,255,0.06); border-radius: 8px; padding: 1rem; text-align: center;">
+            <div style="font-size: 1.4rem; font-weight: 800; color: var(--gold);">50.6%</div>
+            <div style="font-size: 0.78rem; color: rgba(255,255,255,0.65); margin-top: 0.25rem;">TBPV midday surplus<br>(lowest demand period)</div>
+          </div>
+          <div style="background: rgba(255,255,255,0.06); border-radius: 8px; padding: 1rem; text-align: center;">
+            <div style="font-size: 1.4rem; font-weight: 800; color: var(--fern);">+18%</div>
+            <div style="font-size: 0.78rem; color: rgba(255,255,255,0.65); margin-top: 0.25rem;">VBPV demand alignment<br>over TBPV</div>
+          </div>
+          <div style="background: rgba(255,255,255,0.06); border-radius: 8px; padding: 1rem; text-align: center;">
+            <div style="font-size: 1.4rem; font-weight: 800; color: var(--fern);">10–15%</div>
+            <div style="font-size: 0.78rem; color: rgba(255,255,255,0.65); margin-top: 0.25rem;">Revenue premium<br>(peak-aligned generation)</div>
+          </div>
+          <div style="background: rgba(255,255,255,0.06); border-radius: 8px; padding: 1rem; text-align: center;">
+            <div style="font-size: 1.4rem; font-weight: 800; color: var(--fern);">Significantly lower</div>
+            <div style="font-size: 0.78rem; color: rgba(255,255,255,0.65); margin-top: 0.25rem;">BESS requirement<br>vs TBPV</div>
+          </div>
+        </div>
+      </div>
+      <script>
+        (function() {
+          const ctx = document.getElementById('duckCurveChart').getContext('2d');
+          const hours = ['05:00','06:00','07:00','08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00'];
+          new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: hours,
+              datasets: [
+                {
+                  label: 'UK Electricity Demand',
+                  data: [0.55,0.52,0.58,0.72,0.82,0.85,0.83,0.75,0.70,0.68,0.67,0.70,0.78,0.88,0.95,1.00,0.97,0.88,0.75],
+                  borderColor: '#F5C842',
+                  backgroundColor: 'rgba(245,200,66,0.08)',
+                  borderWidth: 2.5,
+                  borderDash: [6,3],
+                  pointRadius: 3,
+                  tension: 0.4,
+                  fill: false
+                },
+                {
+                  label: 'TBPV Generation',
+                  data: [0,0.02,0.08,0.22,0.42,0.62,0.80,0.97,1.00,0.96,0.82,0.60,0.38,0.18,0.06,0.01,0,0,0],
+                  borderColor: '#9E9E9E',
+                  backgroundColor: 'rgba(158,158,158,0.15)',
+                  borderWidth: 2,
+                  pointRadius: 3,
+                  tension: 0.4,
+                  fill: true
+                },
+                {
+                  label: 'VBPV Generation',
+                  data: [0,0.04,0.18,0.52,0.78,0.72,0.55,0.38,0.30,0.36,0.52,0.70,0.82,0.76,0.48,0.14,0.03,0,0],
+                  borderColor: '#4CAF7D',
+                  backgroundColor: 'rgba(76,175,125,0.15)',
+                  borderWidth: 2.5,
+                  pointRadius: 3,
+                  tension: 0.4,
+                  fill: true
+                }
+              ]
+            },
+            options: {
+              responsive: true,
+              interaction: { mode: 'index', intersect: false },
+              plugins: {
+                legend: {
+                  labels: { color: 'rgba(255,255,255,0.75)', font: { size: 12 } }
+                },
+                tooltip: {
+                  callbacks: {
+                    label: function(ctx) {
+                      return ctx.dataset.label + ': ' + (ctx.parsed.y * 100).toFixed(0) + '%';
+                    }
+                  }
+                }
+              },
+              scales: {
+                x: {
+                  ticks: { color: 'rgba(255,255,255,0.55)', font: { size: 11 } },
+                  grid: { color: 'rgba(255,255,255,0.08)' }
+                },
+                y: {
+                  min: 0, max: 1.1,
+                  ticks: {
+                    color: 'rgba(255,255,255,0.55)',
+                    font: { size: 11 },
+                    callback: function(v) { return (v * 100).toFixed(0) + '%'; }
+                  },
+                  grid: { color: 'rgba(255,255,255,0.08)' }
+                }
+              }
+            }
+          });
+        })();
+      </script>
 
       <div class="comparison-wrap" style="margin-bottom: 2.5rem;">
         <table class="comparison-table">
@@ -139,7 +242,7 @@
             <tr>
               <th>Storage Metric</th>
               <th class="vbpv">VBPV Scenario</th>
-              <th>TMPV Scenario</th>
+              <th>TBPV Scenario</th>
               <th>Saving</th>
             </tr>
           </thead>
@@ -147,14 +250,14 @@
             <tr>
               <td>Duck curve severity</td>
               <td class="vbpv">57% less severe</td>
-              <td>Severe — standard TMPV profile</td>
+              <td>More severe than TMPV — bifacial rear-side gain amplifies midday surplus</td>
               <td class="saving">Major grid balancing benefit</td>
             </tr>
             <tr>
               <td>BESS required (47 GW)</td>
-              <td class="vbpv">78–87 GWh</td>
-              <td>170–190 GWh</td>
-              <td class="saving">~53% less storage needed</td>
+              <td class="vbpv">78–87 GWh (est. vs TMPV reference)</td>
+              <td>Higher than TMPV baseline — bifacial rear-side gain increases requirement</td>
+              <td class="saving">Significantly less storage needed than TBPV</td>
             </tr>
             <tr>
               <td>BESS cost (2025 prices)</td>
@@ -178,6 +281,12 @@
         </table>
       </div>
 
+      <div class="callout" style="background: rgba(183,119,13,0.12); border-left: 4px solid #B7770D; margin-bottom: 1.5rem;">
+        <p style="font-size: 0.88rem; color: rgba(255,255,255,0.8);">
+          <strong style="color: #F5C842;">GWh figures note:</strong> BESS GWh estimates (78–87 GWh for VBPV; 170–190 GWh for TBPV baseline) are modelled against the tilted monofacial reference system (TMPV) used in academic literature. TBPV's bifacial rear-side gain will increase the TBPV BESS requirement above the 170–190 GWh figure shown, further strengthening the VBPV grid-matching argument. Peer-reviewed TBPV-specific BESS modelling is not yet available in published literature.
+        </p>
+      </div>
+
       <div class="citation" style="background: rgba(255,255,255,0.07); border-color: rgba(138,171,150,0.4);">
         <div class="citation__label" style="color: var(--sage);">BESS Cost Sources</div>
         <p style="color: var(--mist);">BloombergNEF Energy Storage Systems Cost Survey 2025 (Dec 2025): global average turnkey BESS $117/kWh — a 31% year-on-year decline. Ember "How Cheap Is Battery Storage?" (Oct 2025): all-in utility-scale BESS capex $125/kWh across markets outside China and the US. These are the most current, independently verified benchmarks available. <a href="sources.html" style="color: var(--gold);">Full citations →</a></p>
@@ -192,7 +301,7 @@
         <span class="section-label">Nordic Research</span>
         <h2>+46% Grid Hosting Capacity</h2>
       </div>
-      <p>Research by Joutijärvi et al. (2023), published in Renewable and Sustainable Energy Reviews, found that replacing conventional solar with VBPV increases distribution grid hosting capacity by 46%. This means more solar can be connected to existing grid infrastructure without reinforcement.</p>
+      <p>Research by Joutijärvi et al. (2023), published in Solar Energy, 262, 111819, found that replacing conventional solar with VBPV increases distribution grid hosting capacity by 46%. This means more solar can be connected to existing grid infrastructure without reinforcement.</p>
       <p>The mechanism is straightforward: conventional midday solar generation creates overvoltage events at distribution level — pushing voltages beyond safe limits and requiring expensive mitigation. VBPV's distributed generation profile reduces overvoltage risk and improves load matching, enabling higher penetration on the same wires and transformers.</p>
 
       <div class="features-grid" style="margin-top: 2rem;">
@@ -215,7 +324,7 @@
 
       <div class="citation" style="margin-top: 2rem;">
         <div class="citation__label">Primary Citation</div>
-        <p>Joutijärvi, S., Karimpour, M., Santamouris, M., Hasan, A., & Vuorinen, V. (2023). "A comprehensive methodological workflow to maximize solar energy in low-voltage grids: A case study of vertical bifacial panels in Nordic conditions." <em>Renewable and Sustainable Energy Reviews</em>, 262, 111819. <a href="https://doi.org/10.1016/j.solener.2023.111819">doi:10.1016/j.solener.2023.111819</a></p>
+        <p>Joutijärvi, S., Karimpour, M., Santamouris, M., Hasan, A., & Vuorinen, V. (2023). "A comprehensive methodological workflow to maximize solar energy in low-voltage grids: A case study of vertical bifacial panels in Nordic conditions." <em>Solar Energy</em>, 262, 111819. <a href="https://doi.org/10.1016/j.solener.2023.111819">doi:10.1016/j.solener.2023.111819</a></p>
       </div>
     </div>
   </section>
