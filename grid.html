@@ -19,11 +19,12 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
   <style>
     /* Ensure comparison table is legible inside dark sections */
-    .section--dark .comparison-table { background: #fff; }
-    .section--dark .comparison-table tbody td { background: #fff; color: var(--graphite); }
-    .section--dark .comparison-table tbody td:first-child { background: rgba(212,228,216,0.25); color: var(--graphite); font-weight: 600; }
-    .section--dark .comparison-table tbody td.vbpv { background: rgba(212,228,216,0.15); color: var(--fern); font-weight: 600; }
-    .section--dark .comparison-table tbody td.saving { background: #fff; color: var(--fern); font-style: italic; }
+    .section--dark .comparison-table { background: rgba(255,255,255,.06); border-radius: var(--radius-lg); overflow: hidden; }
+    .section--dark .comparison-table thead th { color: rgba(255,255,255,.9); background: rgba(255,255,255,.1); }
+    .section--dark .comparison-table tbody td { background: rgba(255,255,255,.05); color: rgba(255,255,255,.9); border-color: rgba(255,255,255,.08); }
+    .section--dark .comparison-table tbody td:first-child { background: rgba(255,255,255,.09); color: rgba(255,255,255,.9); font-weight: 600; }
+    .section--dark .comparison-table tbody td.vbpv { background: rgba(45,90,61,.55); color: #fff; font-weight: 600; }
+    .section--dark .comparison-table tbody td.saving { background: rgba(255,255,255,.05); color: #6fcf97; font-style: italic; font-weight: 600; }
   </style>
 </head>
 <body class="page-body">
