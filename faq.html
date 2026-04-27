@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SPCV546Z74"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-SPCV546Z74');
+  </script>
+  <!-- Vercel Web Analytics -->
+  <script defer src="/_vercel/insights/script.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Frequently Asked Questions | Harvesting the Sun Twice</title>
+  <meta name="description" content="Answers to the most common questions about Vertical Bifacial PV — the technology, the agricultural evidence, the economics, and the planning case. Based on peer-reviewed UK field research.">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* FAQ-specific styles */
+    .faq-nav {
+      background: var(--cream);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+      position: sticky;
+      top: 72px;
+      z-index: 90;
+    }
+    .faq-nav__inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .faq-nav__label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--stone);
+      margin-right: 0.5rem;
+    }
+    .faq-nav__link {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--forest);
+      text-decoration: none;
+      padding: 0.35rem 0.85rem;
+      border-radius: 20px;
+      border: 1.5px solid var(--border);
+      transition: all 0.18s;
+      white-space: nowrap;
+    }
+    .faq-nav__link:hover {
+      background: var(--forest);
+      color: white;
+      border-color: var(--forest);
+    }
+
+    .faq-section {
+      padding: 3.5rem 0 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .faq-section:last-of-type {
+      border-bottom: none;
+    }
+    .faq-section__header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .faq-section__icon {
+      font-size: 1.8rem;
+      line-height: 1;
+    }
+    .faq-section__title {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--forest);
+      margin: 0;
+    }
+
+    .faq-item {
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      overflow: hidden;
+      background: white;
+    }
+    .faq-item__q {
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      padding: 1.15rem 1.4rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--graphite);
+      line-height: 1.45;
+      transition: background 0.15s;
+    }
+    .faq-item__q:hover {
+      background: var(--cream);
+    }
+    .faq-item__q.open {
+      background: var(--forest);
+      color: white;
+    }
+    .faq-item__chevron {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid currentColor;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      transition: transform 0.25s;
+      margin-top: 1px;
+    }
+    .faq-item__q.open .faq-item__chevron {
+      transform: rotate(180deg);
+    }
+    .faq-item__a {
+      display: none;
+      padding: 0 1.4rem 1.4rem;
+      color: var(--graphite);
+      line-height: 1.75;
+      font-size: 0.97rem;
+      border-top: 1px solid var(--border);
+    }
+    .faq-item__a.open {
+      display: block;
+    }
+    .faq-item__a p {
+      margin: 0.85rem 0 0;
+    }
+    .faq-item__a p:first-child {
+      margin-top: 1rem;
+    }
+    .faq-item__a strong {
+      color: var(--forest);
+    }
+    .faq-item__a .faq-source {
+      display: inline-block;
+      margin-top: 0.85rem;
+      font-size: 0.8rem;
+      color: var(--stone);
+      font-style: italic;
+      border-left: 3px solid var(--gold);
+      padding-left: 0.75rem;
+    }
+    .faq-item__a .faq-callout {
+      background: rgba(200,168,75,0.1);
+      border-left: 3px solid var(--gold);
+      padding: 0.85rem 1rem;
+      margin-top: 1rem;
+      border-radius: 0 6px 6px 0;
+      font-size: 0.92rem;
+    }
+    .faq-item__a .faq-callout strong {
+      color: var(--graphite);
+    }
+    .faq-item__a ul {
+      margin: 0.7rem 0 0 1.2rem;
+      padding: 0;
+    }
+    .faq-item__a ul li {
+      margin-bottom: 0.4rem;
+    }
+    .faq-item__a a {
+      color: var(--forest);
+      font-weight: 600;
+    }
+
+    .faq-audience-bar {
+      background: var(--forest);
+      color: white;
+      padding: 1.1rem 0;
+    }
+    .faq-audience-bar__inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .faq-audience-bar__label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      opacity: 0.7;
+      flex-shrink: 0;
+    }
+    .faq-audience-pill {
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0.3rem 0.85rem;
+      border-radius: 20px;
+      border: 1.5px solid rgba(255,255,255,0.35);
+      color: white;
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+    .faq-audience-pill:hover,
+    .faq-audience-pill.active {
+      background: rgba(255,255,255,0.18);
+      border-color: rgba(255,255,255,0.7);
+    }
+
+    @media (max-width: 700px) {
+      .faq-nav { top: 60px; }
+      .faq-nav__inner { gap: 0.4rem; }
+      .faq-section__title { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body class="page-body">
+
+  <div id="nav-placeholder"></div>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero" style="background: linear-gradient(135deg, var(--forest) 0%, #1a4a2a 100%);">
+    <div class="container">
+      <span class="page-hero__label">Common Questions, Clear Answers</span>
+      <h1>Frequently Asked <em>Questions</em></h1>
+      <p class="page-hero__lead">
+        Everything you need to know about Vertical Bifacial PV — the technology, the agricultural
+        evidence, the economics, and the planning case. All answers grounded in peer-reviewed
+        UK field research and verified 2025 data.
+      </p>
+    </div>
+  </section>
+
+  <!-- JUMP NAV -->
+  <div class="faq-nav" aria-label="FAQ section navigation">
+    <div class="faq-nav__inner">
+      <span class="faq-nav__label">Jump to:</span>
+      <a href="#technology" class="faq-nav__link">Technology</a>
+      <a href="#agriculture" class="faq-nav__link">Agriculture</a>
+      <a href="#economics" class="faq-nav__link">Economics</a>
+      <a href="#grid" class="faq-nav__link">Grid &amp; Storage</a>
+      <a href="#environment" class="faq-nav__link">Environment</a>
+      <a href="#planning" class="faq-nav__link">Planning</a>
+      <a href="#getinvolved" class="faq-nav__link">Get Involved</a>
+    </div>
+  </div>
+
+  <!-- MAIN FAQ CONTENT -->
+  <div class="container" style="max-width: 860px; padding: 0 2rem 4rem;">
+
+    <!-- SECTION 1: TECHNOLOGY -->
+    <section class="faq-section" id="technology">
+      <div class="faq-section__header">
+        <span class="faq-section__icon">⚡</span>
+        <h2 class="faq-section__title">Technology &amp; Performance</h2>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" onclick="toggleFaq(this)">
+          What is VBPV technology?
+          <span class="faq-item__chevron">▼</span>
+        </button>
+        <div class="faq-item__a">
+          <p>Vertical Bifacial Photovoltaic (VBPV) systems mount solar panels vertically in an east-west orientation rather than at the conventional south-facing tilt. Crucially, the panels themselves are identical to those used in conventional solar farms — glass-glass bifacial modules. What changes is the configuration.</p>
+          <p>The east-facing side captures morning sun; the west-facing side captures evening sun. This produces two daily generation peaks that align closely with UK electricity demand — rather than one midday peak that coincides with the grid's daily demand minimum.</p>
+          <p>The campaign compares VBPV against <strong>Tilted Bifacial PV (TBPV)</strong> — the current UK industry standard, which uses the same bifacial panels on conventional south-facing tilted racking. Same panels, different mounting. The difference in outcome is substantial.</p>
+          <span class="faq-source">Badran &amp; Dhimish (2024), University of York, Nature Scientific Reports — primary UK field study</span>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" onclick="toggleFaq(this)">
+          How much more energy does VBPV generate?
+          <span class="faq-item__chevron">▼</span>
+        </button>
+        <div class="faq-item__a">
+          <p>UK field data from the University of York shows VBPV delivers <strong>8–12% more energy annually</strong> than conventional south-facing fixed tilted monofacial PV across all seasons. The advantage is most pronounced in winter, when the UK's energy needs are highest — reaching <strong>+24.52%</strong> during October–March.</p>
+          <p>This annual figure is accompanied by a significant revenue premium: VBPV's morning and evening generation peaks coincide with periods when wholesale electricity prices are 25–40% higher than at midday. This translates to <strong>10–15% higher revenue per kWh</strong> generated, on top of the output advantage.</p>
+          <div class="faq-callout">
+            <strong>A note on figures:</strong> The 8–12% annual advantage and the 24.52% winter peak are both measured against the tilted monofacial (TMPV) reference system used in the Badran &amp; Dhimish (2024) study. The UK industry is now transitioning to Tilted Bifacial PV (TBPV) as the default — TBPV's bifacial rear-side gain increases midday output but deepens the grid management problem further. The energy advantage of VBPV vs TBPV (rather than TMPV) is the subject of ongoing research.
+          </div>
+          <span class="faq-source">Badran &amp; Dhimish (2024), University of York; full-year empirical measurement Feb–Dec 2023</span>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" onclick="toggleFaq(this)">
+          Why does vertical mounting work particularly well in the UK?
+          <span class="faq-item__chevron">▼</span>
+        </button>
+        <div class="faq-item__a">
+          <p>The UK's latitude (50–59°N) creates two conditions that favour VBPV. First, the sun angle is lower than in southern Europe, meaning vertical panels intercept more usable irradiance per unit of panel area than they would in, say, Spain or California. Second, the UK has longer twilight periods — the morning and evening hours where VBPV's east-west orientation captures light that a south-facing tilted array largely misses.</p>
+          <p>The University of York study — conducted at a genuine UK latitude — confirms this advantage is real and field-measured, not modelled. The winter advantage of +24.52% is particularly important: UK grid demand peaks in winter, making winter generation more valuable to both the grid and to project revenue.</p>
+          <span class="faq-source">Badran &amp; Dhimish (2024), University of York; Joutijärvi et al. (2023), Solar Energy</span>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" onclick="toggleFaq(this)">
+          Do VBPV panels work on cloudy days?
+          <span class="faq-item__chevron">▼</span>
+        </button>
+        <div class="faq-item__a">
+          <p>Yes. Glass-glass bifacial panels capture diffuse light from overcast conditions effectively — both sides of the panel can receive scattered sky radiation. The UK's frequently overcast weather is therefore less of a disadvantage for VBPV than it might appear.</p>
+          <p>In conditions of very high diffuse irradiance (heavy cloud cover), the performance differential between VBPV and tilted configurations narrows. The biggest VBPV advantage comes on clear days with low sun angles — which in the UK means early morning, late afternoon, and winter months generally.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" onclick="toggleFaq(this)">
+          Is VBPV a proven technology or still experimental?
+          <span class="faq-item__chevron">▼</span>
+        </button>
+        <div class="faq-item__a">
+          <p>VBPV is a proven commercial technology with an operational track record in comparable northern European climates. Germany has the largest installed base — Next2Sun AG's Aasen installation (12 ha, ~4 MW, commissioned 2020) was Europe's largest VBPV installation at the time, with multi-year performance data now published. Austrian and US installations provide further operational evidence.</p>
+          <p>In the UK, the University of York study provides a full year of field-measured empirical data at a real UK latitude, published in Nature Scientific Reports (August 2024) — a peer-reviewed, open-access journal. This is not modelling or extrapolation: it is measured field performance.</p>
+          <p>The technology itself — bifacial glass-glass solar panels on vertical east-west mounting structures — uses mature, widely manufactured components. There is no novel materials science involved. The innovation is in the configuration.</p>
+          <span class="faq-source">Next2Sun AG commercial deployment data; Badran &amp; Dhimish (2024), Nature Scientific Reports</span>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" onclick="toggleFaq(this)">
+          How resilient is VBPV to storms and high winds?
+          <span class="faq-item__chevron">▼</span>
+        </button>
+        <div class="faq-item__a">
+          <p>Vertical mounting offers a structural advantage in high-wind events. Because the panels are edge-on to the predominant wind direction (east-west), they present a much smaller cross-section to wind loads than south-facing tilted arrays. This reduces both wind loading forces and the risk of panel damage or uplift in storm conditions.</p>
+          <p>Next2Sun's systems use a post-and-beam frame engineered for high wind loads, with posts driven 2.5m into the ground. German commercial installations have operated through multiple winter storm seasons without structural incident. UK-specific structural engineering to local wind loading standards is required for any installation, as with any agricultural structure.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: AGRICULTURE -->
+    <section class="faq-section" id="agriculture">
+      <div class="faq-section__header">
+        <span class="faq-section__icon">🌾</span>
+        <h2 class="faq-section__title">Agriculture &amp; Land Use</h2>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" onclick="toggleFaq(this)">
+          Can you genuinely farm between the panels?
+          <span class="faq-item__chevron">▼</span>
+        </button>
+        <div class="faq-item__a">
+          <p>Yes — and this is not a marginal or modified form of farming. With 10–12m row spacing, standard full-width agricultural machinery — combine harvesters, sprayers, tractors with wide implements — operates freely between the rows without modification. The panel posts have a footprint of approximately 100mm diameter, and clearance strips of around 450mm either side of the post row are maintained. Approximately 92% of the inter-row land remains in active production.</p>
+          <p>Peer-reviewed research confirms <strong>80–90% of agricultural productivity is maintained</strong> under optimal row spacing configurations. Existing farm tenancy arrangements, crop rotations, and agri-environment scheme eligibility are compatible with VBPV.</p>
+          <span class="faq-source">Riaz et al. (2021), IEEE Journal of Photovoltaics; Next2Sun commercial installation data</span>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" onclick="toggleFaq(this)">
+          What does "80–90% agricultural productivity" actually mean?
+          <span class="faq-item__chevron">▼</span>
+        </button>
+        <div class="faq-item__a">
+          <p>The 80–90% figure is a conservative estimate applied to UK arable conditions, derived from the Riaz et al. (2021) study which found 80–95% productivity retention across all configurations tested. The 80–90% range reflects the proportion of land area that remains in full arable production — accounting for the narrow clearance strips alongside each panel row.</p>
+          <p>It does not mean crop yield per hectare falls to 80–90% of a field without panels. The unaffected land between rows continues to yield at normal rates. The reduction is a land-area effect, not a per-hectare yield penalty on the farmed land itself.</p>
+          <p>For comparison, conventional Tilted Bifacial PV (TBPV) — the current UK industry default — removes effectively <strong>100% of the land from agricultural production</strong> for the 25–30 year project lifetime. Ground-level racking covers 40–50% of the surface and prevents any machinery access.</p>
+          <span class="faq-source">Riaz et al. (2021), IEEE Journal of Photovoltaics — 80–95% across all configurations; 80–90% applied as conservative UK arable estimate</span>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" onclick="toggleFaq(this)">
+          Which crops work best with VBPV?
+          <span class="faq-item__chevron">▼</span>
+        </button>
+        <div class="faq-item__a">
+          <p>Arable crops — cereals, oilseed rape, root vegetables — are compatible with VBPV provided row spacing allows machinery access. The vertical panel configuration provides partial east-west shading, which can benefit some crops (reducing heat stress and water requirements) while having minimal impact on others that are not light-limited under UK conditions.</p>
+          <p>Shade-tolerant crops (leafy vegetables, soft fruit under canopy systems) show the most benefit. Grazing livestock — particularly sheep — integrate extremely well; operational data from Germany shows cattle also habituate quickly to VBPV installations.</p>
+          <p>The campaign's Specialist Crop Outreach Matrix covers 12 UK crop sectors in detail, including cereals, root vegetables, brassicas, and soft fruit. Available in the <a href="library.html">Document Library</a>.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" onclick="toggleFaq(this)">
+          Will VBPV affect my agricultural subsidies or ELM eligibility?
+          <span class="faq-item__chevron">▼</span>
+        </button>
+        <div class="faq-item__a">
+          <p>VBPV systems are designed to maintain the agricultural character of the land, which is directly relevant to subsidy eligibility. Where arable cropping, horticulture, or livestock grazing continues at meaningful levels, the land may retain its agricultural classification.</p>
+          <p>England's Land Use Framework (CP 1545, March 2026) explicitly endorses agrivoltaic systems on Best and Most Versatile land and establishes multifunctionality as a formal government principle — signalling policy alignment with VBPV's dual land-use model.</p>
+          <p>ELM scheme eligibility for land under VBPV panels requires confirmation from the Rural Payments Agency on a scheme-by-scheme and site-specific basis. Early engagement with RPA is recommended for any project on land with existing or prospective ELM agreements. This is an area where policy is actively developing.</p>
+          <div class="faq-callout"><strong>Note:</strong> This is general information, not agricultural subsidy advice. Always obtain professional advice specific to your scheme, land, and project.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" onclick="toggleFaq(this)">
+          Does solar grazing beneath conventional solar panels solve the land use problem?
+          <span class="faq-item__chevron">▼</span>
+        </button>
+        <div class="faq-item__a">
+          <p>Solar grazing — keeping sheep beneath conventional TBPV arrays — is routinely cited as evidence of agricultural compatibility. The campaign's view is that it partially addresses the visual land use objection but does not resolve the underlying issues, for three reasons.</p>
+          <p>First, the land is still removed from arable production. Sheep grazing for vegetation management is not equivalent to maintaining an arable or horticultural system on Grade 1 or 2 land — which is what those classifications exist to protect.</p>
+          <p>Second, the microplastic evidence base raises a serious concern about grazing beneath conventional panels with polymer backsheets. Grazing animals are exposed to soil microplastics through soil ingestion, pasture ingestion, and drinking water. Peer-reviewed research has confirmed microplastic presence in cattle meat and sheep meat; milk contamination pathways are also confirmed. If a developer argues food production as a co-benefit of solar grazing, the planning authority should scrutinise whether that food production pathway is compatible with the accumulation of polymer degradation products over a 25–40 year project life.</p>
+          <p>Third, VBPV using glass-glass panels eliminates the polymer backsheet pathway entirely. No backsheet means no microplastic accumulation source from that pathway.</p>
+          <span class="faq-source">McConnachie et al. (2025), Animal Production Science; Mohammadi et al. (2024) — MPs confirmed in cattle and sheep tissues</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: ECONOMICS -->
+    <section class="faq-section" id="economics">
+      <div class="faq-section__header">
+        <span class="faq-section__icon">💷</span>
+        <h2 class="faq-section__title">Economics &amp; Cost</h2>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" onclick="toggleFaq(this)">
+          Does VBPV cost more than conventional solar?
+          <span class="faq-item__chevron">▼</span>
+        </button>
+        <div class="faq-item__a">
+          <p>At the project level, VBPV has a capital cost premium of approximately <strong>16% over conventional tilted solar</strong>. This sits in the mounting structure and wider row spacing — not in the panels themselves, which are the same glass-glass bifacial modules used in conventional systems.</p>
+          <p>At the whole-system level, this upfront premium is substantially outweighed by savings elsewhere. VBPV's dual morning/evening generation profile is worth 10–15% more revenue per kWh than midday-concentrated TBPV output. It requires significantly less battery storage infrastructure. And it increases grid hosting capacity by 46%, deferring costly network reinforcement.</p>
+          <p>The whole-system saving across the UK pipeline is estimated at <strong>£25–35 billion</strong> using verified 2025 BESS cost benchmarks.</p>
+          <span class="faq-source">BloombergNEF $117/kWh (Dec 2025); Ember $125/kWh (Oct 2025); Joutijärvi et al. (2023)</span>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" onclick="toggleFaq(this)">
+          Where does the £25–35 billion whole-system saving come from?
+          <span class="faq-item__chevron">▼</span>
+        </button>
+        <div class="faq-item__a">
+          <p>The saving has two main components:</p>
+          <ul>
+            <li><strong>Battery storage (BESS) savings: £9.5–10.5bn.</strong> VBPV's dual-peak generation profile is 57% less severe in terms of duck curve impact than conventional tilted solar, meaning significantly less battery capacity is needed to manage the grid. Avoided storage of approximately 92–103 GWh across the pipeline, costed at verified 2025 benchmarks of $117–125/kWh.</li>
+            <li><strong>Grid infrastructure savings: £15–25bn.</strong> VBPV increases grid hosting capacity by 46% on existing infrastructure, deferring distribution network reinforcement, substation upgrades, and balancing service costs over 30 years.</li>
+          </ul>
+          <p>Full methodology, including all assumptions, caveats, and uncertainty ranges, is published on the <a href="methodology.html">Methodology page</a>. The campaign actively encourages independent verification.</p>
+          <div class="faq-callout"><strong>Correction note:</strong> Earlier campaign materials cited total system savings of £161–187bn. Those figures used pre-2025 BESS cost assumptions of £250–300/kWh which have since been superseded by dramatic market cost reductions. The corrected figures of £25–35bn use verified 2025 benchmarks and were first published in our fourth formal representation to DESNZ (02/03/2026).</div>
+          <span class="faq-source">BloombergNEF (Dec 2025); Ember (Oct 2025); Joutijärvi et al. (2023), Solar Energy; campaign modelling</span>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" onclick="toggleFaq(this)">
+          What is the typical payback period for VBPV?
+          <span class="faq-item__chevron">▼</span>
+        </button>
+        <div class="faq-item__a">
+          <p>Project-level economics depend heavily on site-specific factors — grid connection cost, land lease terms, revenue route (merchant, PPA, CfD), and local irradiance. General figures should be treated as indicative only.</p>
+          <p>The revenue premium from peak-time generation (10–15% higher per kWh) partially offsets the higher capital cost. Dual revenue from continued agricultural production on the same land provides a further income stream that conventional solar cannot offer. For serious project assessment, site-specific financial modelling is essential.</p>
+          <p>The campaign's interactive financial model is available at <a href="financial-model-protected.html">harvestingthesuntwice.org/financial-model-protected</a>.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" onclick="toggleFaq(this)">
+          How much can farmers earn from VBPV?
+          <span class="faq-item__chevron">▼</span>
+        </button>
+        <div class="faq-item__a">
+          <p>Revenue varies significantly by project scale, electricity prices, and land quality. VBPV's key economic distinction from conventional solar is that it enables <strong>two revenue streams from the same land simultaneously</strong> — energy generation revenue and continued agricultural income.</p>
+          <p>The energy revenue premium from peak-time generation (07:00–11:00 and 17:00–21:00) makes VBPV output worth more per kWh than conventional solar output — relevant for both merchant sales and CfD bidding strategy. The agricultural income retained (from 80–90% of land area continuing in production) represents a meaningful additional return on a per-hectare basis compared to conventional solar where all agricultural income is forgone.</p>
+          <p>For project-specific revenue modelling, contact <a href="contact.html">the campaign</a> or a specialist agrivoltaic consultancy.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: GRID -->
+    <section class="faq-section" id="grid">
+      <div class="faq-section__header">
+        <span class="faq-section__icon">🔌</span>
+        <h2 class="faq-section__title">Grid &amp; Battery Storage</h2>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" onclick="toggleFaq(this)">
+          What is the duck curve and why does it matter?
+          <span class="faq-item__chevron">▼</span>
+        </button>
+        <div class="faq-item__a">
+          <p>The duck curve describes a grid management problem caused by conventional south-facing solar: midday oversupply (when solar peaks but demand is low) followed by a steep demand surge in the early evening (when solar drops rapidly but domestic and commercial demand peaks). The shape of the resulting net demand curve resembles a duck in profile — hence the name.</p>
+          <p>The UK is approaching this problem as its solar pipeline grows. The solution is expensive: large quantities of battery storage to absorb midday surplus and release it in the evening. Tilted Bifacial PV (TBPV) — the current UK default — actually <strong>worsens</strong> the duck curve compared to older monofacial systems, because bifacial rear-side gain amplifies midday generation further.</p>
+          <p>VBPV's east-west orientation avoids this entirely. Generation peaks at 07:00–10:00 and again at 15:00–18:00, closely matching household and commercial demand. VBPV's duck curve impact is 57% less severe than the conventional tilted reference system — significantly reducing battery storage requirements.</p>
+          <span class="faq-source">Badran &amp; Dhimish (2024), University of York; Ember (2025)</span>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" onclick="toggleFaq(this)">
+          How does VBPV reduce battery storage requirements?
+          <span class="faq-item__chevron">▼</span>
+        </button>
+        <div class="faq-item__a">
+          <p>By generating in two peaks that align with demand rather than one trough-time midday peak, VBPV reduces the volume of energy that needs to be stored and discharged to balance supply with demand. The duck curve severity reduction of 57% (vs TMPV reference) translates to an estimated 92–103 GWh of avoided battery storage across the 47 GW UK pipeline.</p>
+          <p>This produces a whole-system BESS saving of <strong>£9.5–10.5bn</strong> using verified 2025 cost benchmarks — even after the significant BESS cost reductions of 2024–2025. As BESS costs continue to fall, the absolute saving will reduce further; but the proportional grid-matching advantage of VBPV remains unchanged.</p>
+          <span class="faq-source">BloombergNEF $117/kWh (Dec 2025); Ember $125/kWh (Oct 2025); campaign modelling</span>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" onclick="toggleFaq(this)">
+          How does VBPV increase grid hosting capacity?
+          <span class="faq-item__chevron">▼</span>
+        </button>
+        <div class="faq-item__a">
+          <p>One of the most significant constraints on solar deployment in the UK is overvoltage risk on distribution networks — when solar generation exceeds local demand, voltage rises can exceed safe limits, forcing curtailment or requiring expensive grid reinforcement.</p>
+          <p>VBPV's distributed generation across the day dramatically reduces peak injection into the network. Research from the University of Turku — in directly comparable Nordic grid conditions — found VBPV increases grid hosting capacity by <strong>46%</strong> compared to conventional south-facing solar. This means significantly more VBPV capacity can be connected to existing grid infrastructure without reinforcement, deferring billions in DNO capital expenditure.</p>
+          <span class="faq-source">Joutijärvi et al. (2023), Solar Energy, 262, 111819</span>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" onclick="toggleFaq(this)">
+          Is VBPV better suited to grid connection in constrained areas?
+          <span class="faq-item__chevron">▼</span>
+        </button>
+        <div class="faq-item__a">
+          <p>Yes — and this is increasingly relevant as the most constrained areas of the UK grid coincide with the best agricultural land in the east of England, including Lincolnshire and Cambridgeshire where the largest NSIP-scale solar proposals are now concentrated.</p>
+          <p>VBPV's 46% higher grid hosting capacity means that in areas where conventional solar would require expensive grid reinforcement to connect, VBPV may be able to connect to existing infrastructure — reducing project costs, accelerating timescales, and reducing the infrastructure burden on DNOs and National Grid.</p>
+          <p>This is an active argument in discussions about large-scale solar projects in fenland and similar constrained grid areas.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: ENVIRONMENT -->
+    <section class="faq-section" id="environment">
+      <div class="faq-section__header">
+        <span class="faq-section__icon">🌿</span>
+        <h2 class="faq-section__title">Environment &amp; Safety</h2>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" onclick="toggleFaq(this)">
+          Do conventional solar panels pose a microplastic risk to agricultural soil?
+          <span class="faq-item__chevron">▼</span>
+        </button>
+        <div class="faq-item__a">
+          <p>Yes — and five peer-reviewed sources now define the evidence base, including the only published study of microplastics in UK agricultural soils.</p>
+          <p>Conventional TMPV panels use a polymer backsheet — typically PET or PVF film. Under UV radiation, moisture, and mechanical stress across a 25–40 year operational lifetime, this degrades through photo-oxidation, producing microplastic fragments that enter the soil beneath.</p>
+          <p>The UK field study (Harrison, 2022, Staffordshire University) — the only published study of microplastics in UK agricultural soil — found all 24 sampled fields contained MPs, with polyester dominant at 41% of all types, and germination reductions of 5–17% in rapeseed, wheat, and barley. Harrison explicitly warns: current UK concentrations are not yet high enough to cause yield impacts — but if plastic continues to be added at the current rate, these effects are expected to emerge.</p>
+          <p>No EIA has ever required assessment of backsheet-specific soil loading. No monitoring condition has ever been imposed on any UK solar farm. The specific annual accumulation rate from solar farm backsheets has never been quantified — because no standardised methodology exists and none has ever been required.</p>
+          <p><strong>VBPV uses glass-glass panels. No polymer backsheet. No microplastic pathway. No monitoring gap to close.</strong></p>
+          <div class="faq-callout"><strong>Note on bifacial panels generally:</strong> Tilted Bifacial PV (TBPV) also uses glass-glass construction, eliminating the direct backsheet pathway. However it does not address generation profile, BESS dependency, land loss, or the existing UK soil microplastic trajectory — and its midday-concentrated generation worsens grid storage economics.</div>
+          <span class="faq-source">Harrison (2022), Staffordshire University PhD; Yang et al. (2021), Sci. Total Environ.; Kang et al. (2025); En-Nejmy et al. (2024); Gündoğdu et al. (2025)</span>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" onclick="toggleFaq(this)">
+          When a solar farm is decommissioned, can the land genuinely be returned to agriculture?
+          <span class="faq-item__chevron">▼</span>
+        </button>
+        <div class="faq-item__a">
+          <p>Solar farm planning consents routinely include a condition requiring 'restoration to agricultural use' at decommissioning. Legally, this means removal of panels, racking, cabling, and infrastructure. It does not mean — has never meant, and cannot mean — restoration of the soil to its pre-installation microplastic condition. What has entered the soil cannot be taken out.</p>
+          <p>The closest scientific analogue for long-term polymer accumulation in agricultural soil — plastic mulch film — shows that microplastic concentrations rise from a UK baseline of 664–874 particles/kg to approximately 8,885 particles/kg average in the topsoil after 32 years of plastic presence (Li et al., 2022). At 80–100cm depth — root depth — concentrations average 2,899 particles/kg. No solar farm equivalent figure exists, because no monitoring has ever been required.</p>
+          <p>There is currently no field-scale technology capable of removing microplastics from agricultural soil. Remediation is not possible. The land that is 'returned' carries whatever was deposited during the operating life.</p>
+          <p>The campaign's planning ask — <strong>"leave no trace"</strong> — establishes a specific planning condition framework: baseline soil microplastic assessment at commissioning, annual monitoring at drip-line, soil condition report at decommissioning. For VBPV with glass-glass panels, this condition is met by design.</p>
+          <span class="faq-source">Li et al. (2022), Environ. Pollut. 300:118945; Harrison (2022), Staffordshire University</span>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" onclick="toggleFaq(this)">
+          How do solar farm fires start, and why can a single fault escalate?
+          <span class="faq-item__chevron">▼</span>
+        </button>
+        <div class="faq-item__a">
+          <p>The Building Research Establishment (BRE), funded by BEIS, conducted a three-year forensic investigation into 80 UK PV fire incidents. Key findings from the government-commissioned investigation:</p>
+          <ul>
+            <li><strong>DC connectors are the second largest cause of UK PV fires</strong>, responsible for up to 12 of the 80 incidents — ranked behind DC isolators but ahead of inverters and cables.</li>
+            <li><strong>DC arc flash is the primary ignition mechanism.</strong> A DC arc on a solar system burns at temperatures easily sufficient to melt glass, copper, and aluminium, and to ignite surrounding materials. Unlike AC arcs, DC arcs are self-sustaining — they do not extinguish at a zero-crossing.</li>
+            <li><strong>22 of 58 PV-caused fires spread beyond the area of origin</strong>, classified as 'serious' and difficult to extinguish.</li>
+            <li><strong>Solar farm fires are systematically under-reported.</strong> Only 6 solar farm incidents appear in the BRE database. The report notes: 'Anecdotal evidence indicates that many solar farm incidents have occurred that have not been reported.'</li>
+            <li>Live DC circuits constrain firefighting: 19 Fire and Rescue Service incidents reported inability to safely isolate live PV cabling.</li>
+          </ul>
+          <p>The cascade risk arises because conventional TMPV panel backsheets are combustible polymer — once ignited by a DC arc, the material provides a continuous fuel path along panel rows. Glass-glass VBPV panels eliminate this fuel path. The rear face is tempered glass, not plastic — non-combustible, contributing nothing to fire propagation.</p>
+          <span class="faq-source">BRE/BEIS Report P100874-1004 Issue 2.9 (2018) — 80 UK PV fire incidents, forensically investigated</span>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" onclick="toggleFaq(this)">
+          How does VBPV benefit biodiversity and support Biodiversity Net Gain obligations?
+          <span class="faq-item__chevron">▼</span>
+        </button>
+        <div class="faq-item__a">
+          <p>Wildflower strips sown beneath each VBPV panel row provide nectar and pollen for bumblebees, butterflies, and hoverflies, while attracting ladybirds, parasitoid wasps, and predatory beetles that naturally suppress aphids and other crop pests in adjacent inter-row land.</p>
+          <p>A global synthesis (Dainese et al., 2019, Science Advances) found that diversified vegetation schemes including flower strips increase natural enemy abundance by approximately <strong>44%</strong>, raise pest mortality by approximately <strong>54%</strong>, and reduce crop damage by approximately <strong>23%</strong> compared with monoculture systems.</p>
+          <p>A Czech field study (Hájek et al., 2024) — the first multitaxonomic study explicitly combining vertical agrivoltaics with sown flowering strips — confirmed these benefits are compatible with continued arable production.</p>
+          <p>Under the Environment Act 2021, mandatory Biodiversity Net Gain (BNG) requires a minimum 10% biodiversity increase for new developments; NSIPs became subject to BNG from November 2025. VBPV with wildlife strips offers a credible on-site route to achieving 15–20% BNG through species-rich grassland, reducing or eliminating the need for off-site credits.</p>
+          <span class="faq-source">Dainese et al. (2019), Science Advances; Hájek et al. (2024), Acta Fytotechnica et Zootechnica; Randle et al. (2024), Ecological Solutions &amp; Evidence</span>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" onclick="toggleFaq(this)">
+          Can VBPV panels be recycled at end of life?
+          <span class="faq-item__chevron">▼</span>
+        </button>
+        <div class="faq-item__a">
+          <p>Yes. Solar panels are 90%+ recyclable — glass (the dominant component by weight), aluminium frames, silicon, and metals are all recovered. EU and UK regulations require manufacturers to fund end-of-life recycling. With 25–30 year operational lifetimes, recycling infrastructure is well-established for the panel technologies used in VBPV.</p>
+          <p>The glass-glass construction of VBPV panels simplifies the recycling process relative to backsheet-based panels, where polymer separation from the glass and silicon adds complexity. The mounting posts — driven steel — are recoverable with minimal ground disturbance at decommissioning.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: PLANNING -->
+    <section class="faq-section" id="planning">
+      <div class="faq-section__header">
+        <span class="faq-section__icon">📋</span>
+        <h2 class="faq-section__title">Planning &amp; Policy</h2>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" onclick="toggleFaq(this)">
+          Does the Land Use Framework (March 2026) support the VBPV case?
+          <span class="faq-item__chevron">▼</span>
+        </button>
+        <div class="faq-item__a">
+          <p>Yes — significantly. England's first Land Use Framework (CP 1545, Defra, March 2026) makes three commitments that directly support the case for VBPV over conventional solar on Best and Most Versatile agricultural land.</p>
+          <ul>
+            <li>It <strong>dissolves the false choice</strong> between energy and food: clean energy, food production, nature recovery and housing are explicitly described as "complementary" rather than competing demands.</li>
+            <li>It <strong>endorses agrivoltaic systems on BMV land</strong> — stating that where solar is proposed on Grades 1, 2 and 3a land, "there may be the potential for multifunctionality such as through agrivoltaic systems."</li>
+            <li>It <strong>establishes Multifunctionality as a formal government principle</strong> — that land "should be planned and managed to deliver greater benefits across a range of outcomes," with solar generation enabling continued grazing as the named example.</li>
+          </ul>
+          <p>The specification gap: the Framework endorses the agrivoltaic outcome but does not yet specify the technology characteristics required to genuinely deliver it. Without published productivity retention thresholds, the endorsement risks being claimed by conventional TBPV with minimal biodiversity enhancements. Filling this gap is the campaign's central current objective.</p>
+          <span class="faq-source">CP 1545, Defra, March 2026 — The Land Use Framework for England</span>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" onclick="toggleFaq(this)">
+          Can existing solar farm planning applications be converted to VBPV?
+          <span class="faq-item__chevron">▼</span>
+        </button>
+        <div class="faq-item__a">
+          <p>Yes, in principle — and this is the primary campaign opportunity given the 6–12 month window before pipeline applications lock in technology choices for 25–30 year asset lives.</p>
+          <p>Projects at pre-application or early application stage can incorporate VBPV without significant delay. Projects at post-consent pre-construction stage may be able to vary their consent. The planning argument — that VBPV meets the Multifunctionality Principle of the Land Use Framework while conventional TBPV does not — is increasingly available following CP 1545.</p>
+          <p>For NSIP-scale projects, the DCO process involves an Examining Authority and Secretary of State decision — there is scope for VBPV arguments to be made in examination, particularly where Inspectors are weighing energy need against agricultural land protection. The campaign has produced a model planning representation template, available in the <a href="library.html">Document Library</a>.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" onclick="toggleFaq(this)">
+          Why aren't solar developers already choosing VBPV?
+          <span class="faq-item__chevron">▼</span>
+        </button>
+        <div class="faq-item__a">
+          <p>Several factors explain the current gap between the evidence and deployment practice:</p>
+          <ul>
+            <li><strong>Inertia and procurement:</strong> Conventional TBPV has an established supply chain, standardised EPC contracts, and familiar bankability assessments. VBPV requires new procurement routes, structural engineering to different specifications, and different agricultural management arrangements.</li>
+            <li><strong>Upfront cost visibility:</strong> The 16% capital cost premium is visible at the project appraisal stage; the whole-system savings of £25–35bn are invisible to an individual developer's financial model.</li>
+            <li><strong>Evidence lag:</strong> The primary UK field study (Badran &amp; Dhimish) was only published in August 2024. The commercial and policy implications are still working through the system.</li>
+            <li><strong>No policy requirement:</strong> Planning policy does not yet specify productivity retention thresholds for solar on BMV land, so developers can assert agrivoltaic compatibility without demonstrating it.</li>
+          </ul>
+          <p>This is precisely the window the campaign exists to address — before technology choices are locked in at scale for 25–30 year asset lives.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" onclick="toggleFaq(this)">
+          What is the "leave no trace" planning condition?
+          <span class="faq-item__chevron">▼</span>
+        </button>
+        <div class="faq-item__a">
+          <p>"Leave no trace" is the campaign's planning condition ask, developed in April 2026. It replaces the conventional "restoration to agricultural use" decommissioning condition, which is structurally inadequate because it requires only the removal of above-ground infrastructure — not soil condition restoration.</p>
+          <p>The leave no trace condition has three specific elements:</p>
+          <ul>
+            <li>A <strong>baseline soil microplastic assessment</strong> at commissioning — establishing the documented soil condition against which decommissioning is measured.</li>
+            <li><strong>Annual monitoring at drip-line</strong> — the highest-risk accumulation zone beneath panel rows throughout the operational life.</li>
+            <li>A <strong>soil condition report at decommissioning</strong> — demonstrating what the land is being returned in.</li>
+          </ul>
+          <p>For VBPV with glass-glass panels, this condition is met by design — there is no polymer backsheet accumulation pathway to monitor. For conventional TMPV or TBPV with polymer backsheets, it creates an accountable record of what the land receives over the project lifetime.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: GET INVOLVED -->
+    <section class="faq-section" id="getinvolved">
+      <div class="faq-section__header">
+        <span class="faq-section__icon">📣</span>
+        <h2 class="faq-section__title">Get Involved</h2>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" onclick="toggleFaq(this)">
+          How can I support the campaign?
+          <span class="faq-item__chevron">▼</span>
+        </button>
+        <div class="faq-item__a">
+          <p>There are several effective ways to support the campaign, depending on your background:</p>
+          <ul>
+            <li><strong>Write to your MP</strong> using the template letter available in the <a href="library.html">Document Library</a> — asking them to raise VBPV with the DESNZ Select Committee or the Minister for Energy.</li>
+            <li><strong>Submit a planning representation</strong> on a solar farm application in your area, using the campaign's planning representation template.</li>
+            <li><strong>Share the evidence</strong> with farmers, community groups, and planning authorities — particularly in areas where solar farm proposals are active.</li>
+            <li><strong>If you are a developer or landowner</strong>, contact the campaign directly to discuss VBPV as an option for your site or pipeline project.</li>
+            <li><strong>If you are a researcher or journalist</strong>, we welcome enquiries about the evidence base and are happy to provide briefings.</li>
+          </ul>
+          <p>All enquiries: <a href="mailto:harvestingthesuntwice@gmail.com">harvestingthesuntwice@gmail.com</a></p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" onclick="toggleFaq(this)">
+          Where can I find technical documentation and evidence?
+          <span class="faq-item__chevron">▼</span>
+        </button>
+        <div class="faq-item__a">
+          <p>The <a href="library.html">Document Library</a> contains the full evidence base — peer-reviewed papers, campaign analysis documents, planning templates, and economic modelling — organised by subject area.</p>
+          <p>The <a href="sources.html">Research Sources</a> page provides complete academic citations with DOI links. The <a href="methodology.html">Methodology page</a> gives full transparency on all economic assumptions and calculations. The <a href="technology.html">Technology page</a> provides the comprehensive feature-by-feature comparison.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" onclick="toggleFaq(this)">
+          Can I arrange a site visit to see VBPV in operation?
+          <span class="faq-item__chevron">▼</span>
+        </button>
+        <div class="faq-item__a">
+          <p>The University of York research installation (the subject of the Badran &amp; Dhimish 2024 study) is the primary UK reference site. UK commercial VBPV installations are at an early stage — the campaign is actively working to identify and document demonstration sites as they develop.</p>
+          <p>For serious developers and policymakers, visits to commercial VBPV installations in Germany (Next2Sun AG's Aasen project and others) can be explored through specialist contacts. Contact the campaign at <a href="mailto:harvestingthesuntwice@gmail.com">harvestingthesuntwice@gmail.com</a> to discuss.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__q" onclick="toggleFaq(this)">
+          What is the campaign's relationship with developers and equipment suppliers?
+          <span class="faq-item__chevron">▼</span>
+        </button>
+        <div class="faq-item__a">
+          <p>Harvesting the Sun Twice is an independent evidence-based advocacy campaign. It does not have commercial relationships with specific developers or equipment manufacturers — the campaign makes the case for the VBPV configuration, not for any particular supplier's product.</p>
+          <p>The campaign engages with developers, landowners, planners, MPs, and government departments on the merits of the technology evidence. All campaign documents and economic analysis are published openly and the campaign actively encourages independent scrutiny and verification.</p>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- end container -->
+
+  <!-- BOTTOM CTA -->
+  <section class="section section--dark">
+    <div class="container" style="text-align: center; max-width: 760px;">
+      <span class="section-label section-label--light">Still have questions?</span>
+      <h2>Get in Touch</h2>
+      <p style="color: rgba(255,255,255,0.8); margin-bottom: 2rem;">If your question isn't answered here, the campaign welcomes enquiries from developers, landowners, planners, MPs, researchers, and journalists.</p>
+      <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+        <a href="contact.html" class="btn btn--primary">Contact the Campaign</a>
+        <a href="library.html" class="btn btn--outline">Document Library</a>
+        <a href="technology.html" class="btn btn--outline">Technical Detail</a>
+      </div>
+    </div>
+  </section>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="js/nav-footer.js"></script>
+  <script>
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      const answer = item.querySelector('.faq-item__a');
+      const isOpen = btn.classList.contains('open');
+
+      // Close all others in same section
+      const section = item.closest('.faq-section');
+      section.querySelectorAll('.faq-item__q.open').forEach(openBtn => {
+        openBtn.classList.remove('open');
+        openBtn.closest('.faq-item').querySelector('.faq-item__a').classList.remove('open');
+      });
+
+      // Toggle this one
+      if (!isOpen) {
+        btn.classList.add('open');
+        answer.classList.add('open');
+        // Smooth scroll into view if needed
+        setTimeout(() => {
+          const rect = btn.getBoundingClientRect();
+          if (rect.top < 140) {
+            window.scrollBy({ top: rect.top - 140, behavior: 'smooth' });
+          }
+        }, 50);
+      }
+    }
+  </script>
+</body>
+</html>

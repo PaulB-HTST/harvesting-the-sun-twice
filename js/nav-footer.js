@@ -16,6 +16,7 @@ const NAV_HTML = `
       <li><a href="sources.html">Sources</a></li>
       <li><a href="methodology.html">Methodology</a></li>
       <li><a href="library.html">Library</a></li>
+      <li><a href="faq.html">FAQ</a></li>
       <li><a href="contact.html" class="nav__cta">Contact Us</a></li>
     </ul>
     <button class="nav__hamburger" onclick="toggleMenu()" aria-label="Toggle menu">
@@ -32,6 +33,7 @@ const NAV_HTML = `
   <a href="sources.html">Sources</a>
   <a href="methodology.html">Methodology</a>
   <a href="library.html">Library</a>
+  <a href="faq.html">FAQ</a>
   <a href="contact.html">Contact Us</a>
 </div>`;
 
