@@ -40,7 +40,8 @@
 
 /* ---- Reset ---- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; font-size: 16px; }
+html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; }
+body { overflow-x: hidden; }
 body {
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 1.05rem;
@@ -232,6 +233,20 @@ em { font-style: italic; }
 }
 .nav__mobile a:last-child { border-bottom: none; }
 .page-body { padding-top: var(--nav-h); }
+
+/* ---- Contact grid ---- */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+@media (max-width: 720px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
 
 /* ---- Hero ---- */
 .hero {
