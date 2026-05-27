@@ -129,11 +129,14 @@ em { font-style: italic; }
   align-items: center;
   gap: 0.65rem;
   text-decoration: none;
+  flex-shrink: 0;
+  min-width: 120px;
 }
 .nav__logo-img {
   height: 80px;
   width: auto;
   display: block;
+  flex-shrink: 0;
 }
 .nav__logo-mark {
   width: 32px; height: 32px;
