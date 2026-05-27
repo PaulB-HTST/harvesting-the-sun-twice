@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CfD Revenue Model — VBPV vs TBPV | Harvesting the Sun Twice</title>
+  <meta name="description" content="Interactive model showing how Vertical Bifacial PV outperforms conventional tilted solar under UK Contracts for Difference — seasonal generation profiles, CfD top-up analysis, and BESS requirement comparison.">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .cfd-hero{background:var(--forest);color:var(--chalk);padding:3rem 0 2.5rem}
+    .cfd-hero .section-label{color:var(--wheat);opacity:1}
+    .cfd-hero h1{color:var(--chalk);font-size:clamp(1.6rem,3.5vw,2.4rem);margin:.5rem 0 1rem}
+    .cfd-hero p{color:var(--mist);max-width:700px;line-height:1.65}
+    .controls-wrap{background:var(--straw);border-bottom:1px solid var(--rule)}
+    .controls-inner{max-width:var(--max-w);margin:0 auto;padding:1.25rem 2rem;display:flex;flex-wrap:wrap;gap:1.5rem;align-items:flex-end}
+    .ctrl-block{display:flex;flex-direction:column;gap:.35rem}
+    .ctrl-label{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--graphite)}
+    .ctrl-value{font-size:1.25rem;font-weight:700;color:var(--forest);line-height:1}
+    .ctrl-unit{font-size:.75rem;color:var(--stone);font-weight:400}
+    input[type=range]{-webkit-appearance:none;width:180px;height:5px;border-radius:3px;background:var(--rule);outline:none}
+    input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--forest);cursor:pointer}
+    .scen-group{display:flex;flex-direction:column;gap:.35rem}
+    .scen-btns{display:flex;gap:6px}
+    .scen-btn{padding:6px 14px;border-radius:4px;border:1px solid var(--rule);background:var(--chalk);color:var(--graphite);font-size:.8rem;font-weight:500;cursor:pointer;transition:all .18s}
+    .scen-btn.active{background:var(--forest);color:var(--chalk);border-color:var(--forest)}
+    .cfd-main{background:var(--chalk);padding:2rem 0 3rem}
+    .cfd-grid{max-width:var(--max-w);margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+    @media(max-width:800px){.cfd-grid{grid-template-columns:1fr}}
+    .chart-panel{background:var(--chalk);border:1px solid var(--rule);border-radius:var(--radius-lg);padding:1.25rem 1.25rem 1rem}
+    .chart-title{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--graphite);margin-bottom:.2rem}
+    .chart-sub{font-size:.72rem;color:var(--stone);margin-bottom:1rem}
+    canvas{display:block;width:100%!important;height:180px!important}
+    .legend{display:flex;gap:1rem;margin-top:.6rem;flex-wrap:wrap}
+    .leg-item{display:flex;align-items:center;gap:5px;font-size:.72rem;color:var(--graphite)}
+    .leg-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+    .leg-line{width:18px;height:2px;flex-shrink:0}
+    .leg-dash{width:18px;height:2px;flex-shrink:0;background:repeating-linear-gradient(90deg,currentColor 0 4px,transparent 4px 7px)}
+    .metrics-row{max-width:var(--max-w);margin:1.5rem auto 0;padding:0 2rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem}
+    .metric-card{background:var(--chalk);border:1px solid var(--rule);border-radius:var(--radius-lg);padding:1rem 1.1rem}
+    .metric-card.highlight{border-color:var(--wheat);background:#fefdf5}
+    .metric-label{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--stone);margin-bottom:.3rem}
+    .metric-val{font-size:1.5rem;font-weight:700;color:var(--forest);line-height:1.1}
+    .metric-sub{font-size:.72rem;color:var(--stone);margin-top:.2rem}
+    .metric-badge{display:inline-block;font-size:.68rem;padding:2px 7px;border-radius:20px;margin-top:.4rem;font-weight:600}
+    .badge-green{background:rgba(45,90,61,.12);color:var(--fern)}
+    .badge-amber{background:rgba(200,168,75,.18);color:#7a6020}
+    .badge-red{background:rgba(180,30,30,.1);color:#b41e1e}
+    .bess-section{max-width:var(--max-w);margin:1.5rem auto 0;padding:0 2rem}
+    .bess-card{background:var(--chalk);border:1px solid var(--rule);border-radius:var(--radius-lg);padding:1.25rem}
+    .bess-title{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--graphite);margin-bottom:1rem}
+    .bess-row{margin-bottom:.9rem}
+    .bess-head{display:flex;justify-content:space-between;font-size:.78rem;color:var(--graphite);margin-bottom:5px}
+    .bess-name{font-weight:500}
+    .bess-mwh{font-weight:700}
+    .bess-bar{height:10px;border-radius:5px;background:var(--mist);overflow:hidden}
+    .bess-fill{height:100%;border-radius:5px;transition:width .4s ease}
+    .disclaimer{max-width:var(--max-w);margin:2rem auto 0;padding:0 2rem}
+    .disclaimer p{font-size:.78rem;color:var(--stone);line-height:1.55;background:var(--straw);padding:1rem 1.25rem;border-radius:var(--radius);border-left:3px solid var(--wheat)}
+    .chart-caption{font-size:.68rem;color:var(--stone);margin-top:.4rem}
+  </style>
+</head>
+<body class="page-body">
+  <div id="nav-placeholder"></div>
+  <section class="cfd-hero">
+    <div class="container">
+      <span class="section-label">Interactive Analysis</span>
+      <h1>CfD Revenue Model — VBPV vs TBPV</h1>
+      <p>Under UK Contracts for Difference, revenue is withheld when wholesale prices go negative. VBPV’s morning and evening generation peaks avoid the midday glut where negative prices occur — capturing more of the strike price and requiring significantly less battery storage.</p>
+    </div>
+  </section>
+  <div class="controls-wrap">
+    <div class="controls-inner">
+      <div class="scen-group">
+        <div class="ctrl-label">Season</div>
+        <div class="scen-btns">
+          <button class="scen-btn" data-s="winter">Winter</button>
+          <button class="scen-btn active" data-s="spring">Spring / Autumn</button>
+          <button class="scen-btn" data-s="summer">Summer</button>
+        </div>
+      </div>
+      <div class="ctrl-block">
+        <div class="ctrl-label">CfD Strike Price</div>
+        <div class="ctrl-value"><span id="strike-out">52</span> <span class="ctrl-unit">£/MWh</span></div>
+        <input type="range" id="strike-sl" min="35" max="75" value="52" step="1">
+      </div>
+      <div class="ctrl-block">
+        <div class="ctrl-label">Farm Capacity</div>
+        <div class="ctrl-value"><span id="cap-out">50</span> <span class="ctrl-unit">MW</span></div>
+        <input type="range" id="cap-sl" min="10" max="200" value="50" step="5">
+      </div>
+    </div>
+  </div>
+  <div class="cfd-main">
+    <div class="cfd-grid">
+      <div class="chart-panel">
+        <div class="chart-title">Hourly Generation Profile</div>
+        <div class="chart-sub" id="chart1-sub">Spring / Autumn — generation as fraction of peak capacity</div>
+        <canvas id="genChart"></canvas>
+        <div class="legend">
+          <div class="leg-item"><div class="leg-dot" style="background:#1a5c3a"></div>TBPV (south-facing)</div>
+          <div class="leg-item"><div class="leg-dot" style="background:#c8a84b"></div>VBPV (east-west vertical)</div>
+        </div>
+        <div class="chart-caption" id="sunrise-text">☀️ Sunrise 06:00 · Sunset 19:30</div>
+      </div>
+      <div class="chart-panel">
+        <div class="chart-title">Wholesale Price &amp; CfD Zones</div>
+        <div class="chart-sub" id="chart2-sub">Strike price <span id="strike-label">£52/MWh</span> — shaded = revenue withheld</div>
+        <canvas id="priceChart"></canvas>
+        <div class="legend">
+          <div class="leg-item"><div class="leg-line" style="background:#1a5c3a;height:2px"></div>Market price</div>
+          <div class="leg-item"><div class="leg-dash" style="color:#c8a84b"></div>Strike price</div>
+          <div class="leg-item"><div class="leg-dot" style="background:rgba(180,30,30,.35);border-radius:2px"></div>Revenue withheld</div>
+        </div>
+        <div class="chart-caption">CfD top-up paid when market price &lt; strike. Revenue withheld when market price &lt; £0.</div>
+      </div>
+    </div>
+    <div class="metrics-row" id="metricsRow"></div>
+    <div class="bess-section">
+      <div class="bess-card">
+        <div class="bess-title">⚡ Daily BESS Requirement — Generation During Negative-Price Hours</div>
+        <div id="bess-rows"></div>
+        <div style="font-size:.75rem;color:var(--stone);margin-top:.5rem">VBPV BESS reduction based on Next2Sun / Schüler et al. (IPV Conference 2026) — Löffingen, Germany.</div>
+      </div>
+    </div>
+    <div class="disclaimer">
+      <p><strong>Illustrative model.</strong> Price profiles are stylised UK seasonal archetypes based on Elexon/N2EX day-ahead data. Generation profiles use empirical seasonal ratios from Badran &amp; Dhimish (2024, University of York) and Next2Sun operational data. Strike price range reflects AR6/AR7 solar CfD levels. BESS ~52% reduction is attributed to Next2Sun field data; independent verification pending.</p>
+    </div>
+  </div>
+  <div id="footer-placeholder"></div>
+  <script src="js/nav-footer.js"></script>
+  <script>
+  const PRICES={winter:[55,50,45,42,42,50,85,115,120,100,80,70,65,65,72,85,105,130,125,105,90,80,70,60],spring:[40,35,32,30,32,45,75,90,85,70,58,50,45,48,55,70,90,105,100,82,65,55,48,42],summer:[25,22,20,18,18,28,52,62,55,40,20,-5,-15,-20,-10,5,28,55,68,60,45,35,28,26]};
+  const TBPV={winter:[0,0,0,0,0,0,0,0.02,0.10,0.30,0.54,0.72,0.80,0.76,0.62,0.42,0.20,0.05,0,0,0,0,0,0],spring:[0,0,0,0,0,0,0.05,0.20,0.45,0.68,0.84,0.94,1.00,0.96,0.88,0.74,0.54,0.28,0.10,0.02,0,0,0,0],summer:[0,0,0,0,0.02,0.12,0.30,0.52,0.70,0.84,0.93,0.98,1.00,0.98,0.93,0.84,0.72,0.56,0.38,0.20,0.08,0.02,0,0]};
+  const VBPV={winter:[0,0,0,0,0,0,0,0.04,0.16,0.42,0.52,0.46,0.38,0.42,0.50,0.56,0.48,0.24,0.06,0,0,0,0,0],spring:[0,0,0,0,0,0,0.08,0.30,0.62,0.76,0.76,0.68,0.56,0.62,0.72,0.82,0.76,0.56,0.30,0.10,0.02,0,0,0],summer:[0,0,0,0,0.05,0.20,0.44,0.68,0.82,0.82,0.72,0.58,0.48,0.54,0.66,0.80,0.86,0.84,0.68,0.44,0.18,0.06,0.01,0]};
+  const META={winter:{label:'Winter (December)',sun:'☀️ Sunrise 08:06 · Sunset 15:54'},spring:{label:'Spring / Autumn (April / October)',sun:'☀️ Sunrise 06:00 · Sunset 19:30'},summer:{label:'Summer (June)',sun:'☀️ Sunrise 04:45 · Sunset 21:15'}};
+  let season='spring',strike=52,cap=50;
+  function xP(h,w,p){return p+(h/23)*(w-p*2)}
+  function yP(v,mn,mx,h,pt,pb){return pt+(1-(v-mn)/(mx-mn))*(h-pt-pb)}
+  function axis(ctx,w,h,pl,pb,pt){
+    ctx.strokeStyle='#d0d0c8';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(pl,pt);ctx.lineTo(pl,h-pb);ctx.lineTo(w-8,h-pb);ctx.stroke();
+    ctx.fillStyle='#7a7a75';ctx.font='10px "Plus Jakarta Sans",sans-serif';ctx.textAlign='center';
+    [0,3,6,9,12,15,18,21,23].forEach(hr=>{ctx.fillText(hr<10?'0'+hr:''+hr,xP(hr,w,pl),h-6);});
+  }
+  function genChart(){
+    const cv=document.getElementById('genChart'),dpr=devicePixelRatio||1,r=cv.getBoundingClientRect();
+    cv.width=r.width*dpr;cv.height=r.height*dpr;
+    const ctx=cv.getContext('2d'),w=r.width,h=r.height,pad=36;
+    ctx.scale(dpr,dpr);axis(ctx,w,h,pad,24,12);
+    ['100%','50%','0%'].forEach((lb,i)=>{const y=yP([1,.5,0][i],0,1,h,12,24);ctx.fillStyle='#7a7a75';ctx.font='10px "Plus Jakarta Sans",sans-serif';ctx.textAlign='right';ctx.fillText(lb,pad-4,y+3);ctx.strokeStyle='#eeeee8';ctx.lineWidth=.5;ctx.beginPath();ctx.moveTo(pad,y);ctx.lineTo(w-8,y);ctx.stroke();});
+    function fill(d,fc,sc){ctx.save();ctx.beginPath();ctx.moveTo(xP(0,w,pad),yP(0,0,1,h,12,24));d.forEach((v,i)=>ctx.lineTo(xP(i,w,pad),yP(v,0,1,h,12,24)));ctx.lineTo(xP(23,w,pad),yP(0,0,1,h,12,24));ctx.closePath();ctx.fillStyle=fc;ctx.fill();ctx.beginPath();d.forEach((v,i)=>{const x=xP(i,w,pad),y=yP(v,0,1,h,12,24);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});ctx.strokeStyle=sc;ctx.lineWidth=2;ctx.lineJoin='round';ctx.stroke();ctx.restore();}
+    fill(TBPV[season],'rgba(26,92,58,.12)','#1a5c3a');fill(VBPV[season],'rgba(200,168,75,.18)','#c8a84b');
+  }
+  function priceChart(){
+    const cv=document.getElementById('priceChart'),dpr=devicePixelRatio||1,r=cv.getBoundingClientRect();
+    cv.width=r.width*dpr;cv.height=r.height*dpr;
+    const ctx=cv.getContext('2d'),w=r.width,h=r.height,pad=42,pr=PRICES[season];
+    ctx.scale(dpr,dpr);
+    const mn=Math.min(-25,...pr),mx=Math.max(140,...pr);
+    axis(ctx,w,h,pad,24,12);
+    ctx.fillStyle='#7a7a75';ctx.font='10px "Plus Jakarta Sans",sans-serif';ctx.textAlign='right';
+    [-20,0,50,100,130].filter(v=>v>=mn&&v<=mx).forEach(val=>{const y=yP(val,mn,mx,h,12,24);ctx.fillText(''+val,pad-4,y+3);ctx.strokeStyle=val===0?'#d0d0c8':'#eeeee8';ctx.lineWidth=val===0?1:.5;ctx.beginPath();ctx.moveTo(pad,y);ctx.lineTo(w-8,y);ctx.stroke();});
+    const y0=yP(0,mn,mx,h,12,24);
+    ctx.strokeStyle='rgba(180,30,30,.4)';ctx.lineWidth=1;ctx.setLineDash([4,4]);ctx.beginPath();ctx.moveTo(pad,y0);ctx.lineTo(w-8,y0);ctx.stroke();ctx.setLineDash([]);
+    pr.forEach((p,i)=>{if(p<0){const x1=xP(i===0?0:i-.5,w,pad),x2=xP(i===23?23:i+.5,w,pad);ctx.fillStyle='rgba(180,30,30,.1)';ctx.fillRect(x1,yP(Math.min(p,0),mn,mx,h,12,24),x2-x1,y0-yP(Math.min(p,0),mn,mx,h,12,24));}});
+    const ys=yP(strike,mn,mx,h,12,24);ctx.strokeStyle='#c8a84b';ctx.lineWidth=1.5;ctx.setLineDash([5,4]);ctx.beginPath();ctx.moveTo(pad,ys);ctx.lineTo(w-8,ys);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle='rgba(26,92,58,.08)';pr.forEach((p,i)=>{if(p>=0&&p<strike){const x1=xP(i===0?0:i-.5,w,pad),x2=xP(i===23?23:i+.5,w,pad),yp=yP(p,mn,mx,h,12,24);ctx.fillRect(x1,ys,x2-x1,yp-ys);}});
+    ctx.beginPath();pr.forEach((p,i)=>{const x=xP(i,w,pad),y=yP(p,mn,mx,h,12,24);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});ctx.strokeStyle='#1a5c3a';ctx.lineWidth=2;ctx.lineJoin='round';ctx.stroke();
+  }
+  function metrics(){
+    const pr=PRICES[season],tp=TBPV[season],vp=VBPV[season];
+    let tr=0,vr=0,tn=0,vn=0,te=0,ve=0;
+    pr.forEach((p,i)=>{const tg=tp[i]*cap,vg=vp[i]*cap;te+=tg;ve+=vg;if(p>=0){tr+=strike*tg;vr+=strike*vg;}else{tn+=tg;vn+=vg;}});
+    const up=((vr/Math.max(tr,1)-1)*100).toFixed(1),uc=parseFloat(up)>0?'badge-green':parseFloat(up)<0?'badge-red':'badge-amber';
+    document.getElementById('metricsRow').innerHTML=`<div class="metric-card"><div class="metric-label">Daily CfD Revenue — TBPV</div><div class="metric-val">£${Number(tr.toFixed(0)).toLocaleString()}</div><div class="metric-sub">${te.toFixed(1)} MWh · £${strike}/MWh strike</div></div><div class="metric-card highlight"><div class="metric-label">Daily CfD Revenue — VBPV</div><div class="metric-val">£${Number(vr.toFixed(0)).toLocaleString()}</div><div class="metric-sub">${ve.toFixed(1)} MWh · £${strike}/MWh strike</div><span class="metric-badge ${uc}">${parseFloat(up)>=0?'+':''}${up}% vs TBPV</span></div><div class="metric-card"><div class="metric-label">TBPV in Negative-Price Hours</div><div class="metric-val">${tn.toFixed(2)} MWh</div><div class="metric-sub">Revenue withheld — CfD not paid</div><span class="metric-badge badge-red">Revenue £0 these hours</span></div><div class="metric-card"><div class="metric-label">VBPV in Negative-Price Hours</div><div class="metric-val">${vn.toFixed(2)} MWh</div><div class="metric-sub">Structurally lower exposure</div><span class="metric-badge badge-green">−${Math.max(0,tn-vn).toFixed(2)} MWh vs TBPV</span></div>`;
+    const vm=tn*.48;
+    document.getElementById('bess-rows').innerHTML=`<div class="bess-row"><div class="bess-head"><span class="bess-name">TBPV — corrective BESS requirement</span><span class="bess-mwh">${tn.toFixed(1)} MWh/day</span></div><div class="bess-bar"><div class="bess-fill" style="width:100%;background:#1a5c3a"></div></div></div><div class="bess-row"><div class="bess-head"><span class="bess-name">VBPV — corrective BESS (−52% structural)</span><span class="bess-mwh" style="color:var(--wheat)">${vm.toFixed(1)} MWh/day</span></div><div class="bess-bar"><div class="bess-fill" style="width:${(vm/Math.max(tn,.01)*100).toFixed(0)}%;background:#c8a84b"></div></div></div><div style="font-size:.78rem;color:var(--graphite);margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--rule)"><strong>BESS Paradox:</strong> TBPV’s midday-heavy profile generates more energy when prices are negative. VBPV’s dual morning/evening peaks structurally reduce this exposure by ~52%.</div>`;
+  }
+  function update(){
+    document.getElementById('chart1-sub').textContent=META[season].label+' — generation as fraction of peak capacity';
+    document.getElementById('chart2-sub').innerHTML='Strike price <span id="strike-label">£'+strike+'/MWh</span> — shaded = revenue withheld';
+    document.getElementById('sunrise-text').textContent=META[season].sun;
+    genChart();priceChart();metrics();
+  }
+  document.querySelectorAll('.scen-btn').forEach(b=>b.addEventListener('click',()=>{season=b.dataset.s;document.querySelectorAll('.scen-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');update();}));
+  document.getElementById('strike-sl').addEventListener('input',e=>{strike=+e.target.value;document.getElementById('strike-out').textContent=strike;update();});
+  document.getElementById('cap-sl').addEventListener('input',e=>{cap=+e.target.value;document.getElementById('cap-out').textContent=cap;update();});
+  window.addEventListener('load',update);
+  window.addEventListener('resize',update);
+  </script>
+</body>
+</html>
