@@ -12,7 +12,7 @@ const NAV_HTML = `
       <li><a href="grid.html">Grid Benefits</a></li>
       <li><a href="cfd.html">CfD Model</a></li>
       <li><a href="technology.html">Technology</a></li>
-      <li><a href="compare.html">Technology Comparison</a></li>
+      <li><a href="compare.html">Tech Comparison</a></li>
       <li><a href="implementation.html">Implementation</a></li>
       <li><a href="sources.html">Sources</a></li>
       <li><a href="methodology.html">Methodology</a></li>
@@ -20,17 +20,18 @@ const NAV_HTML = `
       <li><a href="faq.html">FAQ</a></li>
       <li><a href="contact.html" class="nav__cta">Contact Us</a></li>
     </ul>
-    <button class="nav__hamburger" onclick="toggleMenu()" aria-label="Toggle menu">
+    <button class="nav__hamburger" id="nav__hamburger" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span><span></span>
     </button>
   </div>
 </nav>
-<div class="nav_mobile" id="mobileMenu">
+<div class="nav__mobile" id="mobileMenu">
   <a href="index.html">Home</a>
   <a href="agriculture.html">Agriculture</a>
   <a href="grid.html">Grid Benefits</a>
   <a href="cfd.html">CfD Model</a>
   <a href="technology.html">Technology</a>
+  <a href="compare.html">Tech Comparison</a>
   <a href="implementation.html">Implementation</a>
   <a href="sources.html">Sources</a>
   <a href="methodology.html">Methodology</a>
@@ -67,6 +68,8 @@ const FOOTER_HTML = `
         <h4>Campaign</h4>
         <ul>
           <li><a href="implementation.html">Policy Pathway</a></li>
+          <li><a href="library.html">Document Library</a></li>
+          <li><a href="faq.html">FAQ</a></li>
           <li><a href="contact.html">Contact Us</a></li>
         </ul>
       </div>
@@ -74,40 +77,37 @@ const FOOTER_HTML = `
         <h4>Key Research</h4>
         <ul>
           <li><a href="sources.html#york">University of York (2024)</a></li>
-          <li><a href="sources.html#turku">University of Turku (2026)</a></li>
-          <li><a href="sources.html#sheffield">Sheffield Spatial (2025)</a></li>
+          <li><a href="sources.html#szarek">Szarek et al. (2026)</a></li>
+          <li><a href="sources.html#next2sun">Next2Sun/Schüler (2026)</a></li>
           <li><a href="sources.html#bloombergnef">BloombergNEF (2025)</a></li>
         </ul>
       </div>
     </div>
     <div class="footer__bottom">
-      <p>&copy; 2026 Harvesting the Sun Twice. Campaign for evidence-based UK solar policy.</p>
+      <p>© 2026 Harvesting the Sun Twice. Evidence-based advocacy for UK solar land use policy.</p>
     </div>
   </div>
 </footer>`;
 
-function toggleMenu() {
-  const menu = document.getElementById('mobileMenu');
-  if (menu) menu.classList.toggle('open');
-}
+// Inject nav and footer
+document.getElementById('nav-placeholder').innerHTML = NAV_HTML;
+document.getElementById('footer-placeholder').innerHTML = FOOTER_HTML;
 
-function injectNav() {
-  const navPH = document.getElementById('nav-placeholder');
-  if (navPH) navPH.innerHTML = NAV_HTML;
-  const footerPH = document.getElementById('footer-placeholder');
-  if (footerPH) footerPH.innerHTML = FOOTER_HTML;
-  // Set active nav link
-  const current = window.location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll('.nav__links a, .nav_mobile a').forEach(link => {
-    const href = link.getAttribute('href');
-    if (href === current || (current === '' && href === 'index.html')) {
-      link.classList.add('active');
-    }
+// Mobile menu toggle — uses CSS .open class (matches nav__mobile.open rule)
+(function() {
+  var btn = document.getElementById('nav__hamburger');
+  var menu = document.getElementById('mobileMenu');
+  if (!btn || !menu) return;
+  btn.addEventListener('click', function() {
+    var isOpen = menu.classList.toggle('open');
+    btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    btn.classList.toggle('is-active', isOpen);
   });
-}
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', injectNav);
-} else {
-  injectNav();
-}
+  menu.querySelectorAll('a').forEach(function(a) {
+    a.addEventListener('click', function() {
+      menu.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+      btn.classList.remove('is-active');
+    });
+  });
+})();
