@@ -26,7 +26,7 @@
 
 
    
-   --nav-h: 68px;
+   --nav-h: 90px;
   --max-w: 1140px;
   --radius: 4px;
   --radius-lg: 12px;
@@ -131,7 +131,7 @@ em { font-style: italic; }
   text-decoration: none;
 }
 .nav__logo-img {
-  height: 48px;
+  height: 80px;
   width: auto;
   display: block;
 }
@@ -170,7 +170,7 @@ em { font-style: italic; }
 }
 .nav__links a {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.88rem;
+  font-size: 0.80rem;
   color: var(--mist);
   padding: 0.4rem 0.75rem;
   border-radius: var(--radius);
