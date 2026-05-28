@@ -1,5 +1,20 @@
 // nav-footer.js — injects navigation and footer into every page
 
+function htst_toggleMenu(btn) {
+  var menu = document.getElementById('mobileMenu');
+  if (!menu) return;
+  var isOpen = menu.classList.toggle('open');
+  btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  btn.classList.toggle('is-active', isOpen);
+}
+
+function htst_closeMenu() {
+  var menu = document.getElementById('mobileMenu');
+  var btn = document.getElementById('nav__hamburger');
+  if (menu) menu.classList.remove('open');
+  if (btn) { btn.setAttribute('aria-expanded', 'false'); btn.classList.remove('is-active'); }
+}
+
 const NAV_HTML = `
 <nav class="nav" role="navigation" aria-label="Main navigation">
   <div class="nav__inner">
@@ -20,24 +35,27 @@ const NAV_HTML = `
       <li><a href="faq.html">FAQ</a></li>
       <li><a href="contact.html" class="nav__cta">Contact Us</a></li>
     </ul>
-    <button class="nav__hamburger" id="nav__hamburger" aria-label="Toggle menu" aria-expanded="false">
+    <button class="nav__hamburger" id="nav__hamburger"
+      aria-label="Toggle menu"
+      aria-expanded="false"
+      onclick="htst_toggleMenu(this)">
       <span></span><span></span><span></span><span></span>
     </button>
   </div>
 </nav>
 <div class="nav__mobile" id="mobileMenu">
-  <a href="index.html">Home</a>
-  <a href="agriculture.html">Agriculture</a>
-  <a href="grid.html">Grid Benefits</a>
-  <a href="cfd.html">CfD Model</a>
-  <a href="technology.html">Technology</a>
-  <a href="compare.html">Tech Comparison</a>
-  <a href="implementation.html">Implementation</a>
-  <a href="sources.html">Sources</a>
-  <a href="methodology.html">Methodology</a>
-  <a href="library.html">Library</a>
-  <a href="faq.html">FAQ</a>
-  <a href="contact.html">Contact Us</a>
+  <a href="index.html" onclick="htst_closeMenu()">Home</a>
+  <a href="agriculture.html" onclick="htst_closeMenu()">Agriculture</a>
+  <a href="grid.html" onclick="htst_closeMenu()">Grid Benefits</a>
+  <a href="cfd.html" onclick="htst_closeMenu()">CfD Model</a>
+  <a href="technology.html" onclick="htst_closeMenu()">Technology</a>
+  <a href="compare.html" onclick="htst_closeMenu()">Tech Comparison</a>
+  <a href="implementation.html" onclick="htst_closeMenu()">Implementation</a>
+  <a href="sources.html" onclick="htst_closeMenu()">Sources</a>
+  <a href="methodology.html" onclick="htst_closeMenu()">Methodology</a>
+  <a href="library.html" onclick="htst_closeMenu()">Library</a>
+  <a href="faq.html" onclick="htst_closeMenu()">FAQ</a>
+  <a href="contact.html" onclick="htst_closeMenu()">Contact Us</a>
 </div>`;
 
 const FOOTER_HTML = `
@@ -89,28 +107,5 @@ const FOOTER_HTML = `
   </div>
 </footer>`;
 
-// Inject nav and footer
 document.getElementById('nav-placeholder').innerHTML = NAV_HTML;
 document.getElementById('footer-placeholder').innerHTML = FOOTER_HTML;
-
-// Mobile menu toggle — event delegation works on all pages regardless of DOM re-renders
-document.addEventListener('click', function(e) {
-  var btn = e.target.closest('#nav__hamburger');
-  if (btn) {
-    var menu = document.getElementById('mobileMenu');
-    if (!menu) return;
-    var isOpen = menu.classList.toggle('open');
-    btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    btn.classList.toggle('is-active', isOpen);
-    return;
-  }
-  if (e.target.closest('#mobileMenu a')) {
-    var menu = document.getElementById('mobileMenu');
-    var hamburger = document.getElementById('nav__hamburger');
-    if (menu) menu.classList.remove('open');
-    if (hamburger) {
-      hamburger.setAttribute('aria-expanded', 'false');
-      hamburger.classList.remove('is-active');
-    }
-  }
-});
