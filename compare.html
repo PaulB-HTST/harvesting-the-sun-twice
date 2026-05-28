@@ -38,7 +38,7 @@
     .compare-section__title{font-size:1.6rem;font-weight:700;color:var(--forest);margin-bottom:8px}
     .compare-section__verdict{display:inline-block;background:var(--gold);color:var(--forest);font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 14px;border-radius:20px}
     .cards-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:900px;margin:0 auto}
-    @media(max-width:640px){.cards-grid{grid-template-columns:1fr}.scoreboard__inner{grid-template-columns:1fr;gap:16px}}
+    @media(max-width:720px){.cards-grid{grid-template-columns:1fr}.scoreboard__inner{grid-template-columns:1fr;gap:16px}}
     .cmp-card{background:#fff;border-radius:var(--radius-lg);border:1.5px solid var(--rule);padding:24px;position:relative;transition:box-shadow var(--trans),transform var(--trans)}
     .cmp-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
     .cmp-card--vbpv{border-color:var(--moss);border-width:2px}
@@ -56,7 +56,7 @@
     .bar-compare__row{display:grid;grid-template-columns:160px 1fr 80px;gap:12px;align-items:center;margin-bottom:16px}
     .bar-compare__row:last-child{margin-bottom:0}
     .bar-compare__label{font-size:.82rem;font-weight:600;color:var(--graphite);text-align:right}
-    .bar-compare__track{height:28px;background:var(--mist);border-radius:4px;overflow:hidden}
+    .bar-compare__track{height:28px;background:var(--mist);border-radius:4px;overflow:clip}
     .bar-compare__fill{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:10px;font-size:.75rem;font-weight:700;color:#fff}
     .bar-compare__fill--vbpv{background:var(--fern)}
     .bar-compare__fill--tmpv{background:var(--stone)}
@@ -64,7 +64,7 @@
     .summary-section{background:var(--forest);padding:56px 0}
     .summary-section h2{color:#fff;text-align:center;margin-bottom:8px}
     .summary-section .section-sub{color:rgba(255,255,255,.6);text-align:center;margin-bottom:36px}
-    .summary-table{width:100%;max-width:860px;margin:0 auto;border-collapse:separate;border-spacing:0;border-radius:var(--radius-lg);overflow:hidden}
+    .summary-table{width:100%;max-width:860px;margin:0 auto;border-collapse:separate;border-spacing:0;border-radius:var(--radius-lg);overflow:visible}
     .summary-table th{padding:14px 18px;font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
     .summary-table th:first-child{background:rgba(255,255,255,.06);color:rgba(255,255,255,.9);text-align:left}
     .summary-table th:nth-child(2){background:var(--fern);color:#fff;text-align:center}
