@@ -93,21 +93,24 @@ const FOOTER_HTML = `
 document.getElementById('nav-placeholder').innerHTML = NAV_HTML;
 document.getElementById('footer-placeholder').innerHTML = FOOTER_HTML;
 
-// Mobile menu toggle — uses CSS .open class (matches nav__mobile.open rule)
-(function() {
-  var btn = document.getElementById('nav__hamburger');
-  var menu = document.getElementById('mobileMenu');
-  if (!btn || !menu) return;
-  btn.addEventListener('click', function() {
+// Mobile menu toggle — event delegation works on all pages regardless of DOM re-renders
+document.addEventListener('click', function(e) {
+  var btn = e.target.closest('#nav__hamburger');
+  if (btn) {
+    var menu = document.getElementById('mobileMenu');
+    if (!menu) return;
     var isOpen = menu.classList.toggle('open');
     btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     btn.classList.toggle('is-active', isOpen);
-  });
-  menu.querySelectorAll('a').forEach(function(a) {
-    a.addEventListener('click', function() {
-      menu.classList.remove('open');
-      btn.setAttribute('aria-expanded', 'false');
-      btn.classList.remove('is-active');
-    });
-  });
-})();
+    return;
+  }
+  if (e.target.closest('#mobileMenu a')) {
+    var menu = document.getElementById('mobileMenu');
+    var hamburger = document.getElementById('nav__hamburger');
+    if (menu) menu.classList.remove('open');
+    if (hamburger) {
+      hamburger.setAttribute('aria-expanded', 'false');
+      hamburger.classList.remove('is-active');
+    }
+  }
+});
