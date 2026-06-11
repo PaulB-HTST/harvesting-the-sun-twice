@@ -26,7 +26,7 @@
   }).join('');
 
   // ── Inject nav ──
-  const navEl = document.getElementById('site-nav');
+  const navEl = document.getElementById('site-nav') || document.getElementById('nav-placeholder');
   if (navEl) {
     navEl.innerHTML = `
       <div class="nav-inner">
@@ -42,7 +42,7 @@
   }
 
   // ── Inject footer ──
-  const footerEl = document.getElementById('site-footer');
+  const footerEl = document.getElementById('site-footer') || document.getElementById('footer-placeholder');
   if (footerEl) {
     footerEl.innerHTML = `
       <div class="footer-inner">
