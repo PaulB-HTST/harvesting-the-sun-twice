@@ -1,6 +1,7 @@
-// nav-footer.js — Updated 10/06/2026
+// nav-footer.js — Updated 11/06/2026
 // Added: Analysis Tool nav link (dashboard.html)
-// This file is loaded by all pages via <script src="/nav-footer.js"></script>
+// Fixed: class names corrected to match style.css BEM conventions
+// This file is loaded by all pages via <script src="/js/nav-footer.js"></script>
 
 (function() {
   // ── Determine current page for active state ──
@@ -22,21 +23,22 @@
   const navLinks = navItems.map(item => {
     const isActive = page === item.id || (page === '' && item.id === 'index');
     const badge = item.badge ? `<span style="background:#C9A227;color:#fff;font-size:9px;font-weight:600;padding:1px 5px;border-radius:3px;margin-left:5px;vertical-align:middle;letter-spacing:0.03em">${item.badge}</span>` : '';
-    return `<a href="${item.href}" class="nav-link${isActive ? ' nav-link--active' : ''}">${item.label}${badge}</a>`;
+    return `<a href="${item.href}"${isActive ? ' class="active"' : ''}>${item.label}${badge}</a>`;
   }).join('');
 
   // ── Inject nav ──
   const navEl = document.getElementById('site-nav') || document.getElementById('nav-placeholder');
   if (navEl) {
+    navEl.className = 'nav';
     navEl.innerHTML = `
-      <div class="nav-inner">
-        <a href="/index.html" class="nav-logo">
-          <img src="/images/htst-logo-3colour.png" alt="Harvesting the Sun Twice" height="36">
+      <div class="nav__inner">
+        <a href="/index.html" class="nav__logo">
+          <img src="/images/htst-logo-3colour.png" alt="Harvesting the Sun Twice" class="nav__logo-img">
         </a>
-        <nav class="nav-links" aria-label="Main navigation">
+        <div class="nav__links" aria-label="Main navigation">
           ${navLinks}
-        </nav>
-        <a href="https://harvestingthesuntwice@gmail.com" class="nav-cta">Contact</a>
+        </div>
+        <a href="mailto:harvestingthesuntwice@gmail.com" class="nav__cta">Contact</a>
       </div>
     `;
   }
