@@ -1,111 +1,77 @@
-// nav-footer.js — injects navigation and footer into every page
+// nav-footer.js — Updated 10/06/2026
+// Added: Analysis Tool nav link (dashboard.html)
+// This file is loaded by all pages via <script src="/nav-footer.js"></script>
 
-function htst_toggleMenu(btn) {
-  var menu = document.getElementById('mobileMenu');
-  if (!menu) return;
-  var isOpen = menu.classList.toggle('open');
-  btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-  btn.classList.toggle('is-active', isOpen);
-}
+(function() {
+  // ── Determine current page for active state ──
+  const path = window.location.pathname.replace(/\/$/, '') || '/index';
+  const page = path.split('/').pop().replace('.html', '') || 'index';
 
-function htst_closeMenu() {
-  var menu = document.getElementById('mobileMenu');
-  var btn = document.getElementById('nav__hamburger');
-  if (menu) menu.classList.remove('open');
-  if (btn) { btn.setAttribute('aria-expanded', 'false'); btn.classList.remove('is-active'); }
-}
+  // ── Navigation items ──
+  const navItems = [
+    { href: '/index.html',      label: 'Home',          id: 'index' },
+    { href: '/technology.html', label: 'Technology',    id: 'technology' },
+    { href: '/compare.html',    label: 'Compare',       id: 'compare' },
+    { href: '/dashboard.html',  label: 'Analysis Tool', id: 'dashboard', badge: 'New' },
+    { href: '/sources.html',    label: 'Evidence',      id: 'sources' },
+    { href: '/library.html',    label: 'Library',       id: 'library' },
+    { href: '/faq.html',        label: 'FAQ',           id: 'faq' },
+  ];
 
-const NAV_HTML = `
-<nav class="nav" role="navigation" aria-label="Main navigation">
-  <div class="nav__inner">
-    <a href="index.html" class="nav__logo">
-      <img src="HTST_Logo_transparent.png" alt="Harvesting the Sun Twice" class="nav__logo-img">
-    </a>
-    <ul class="nav__links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="agriculture.html">Agriculture</a></li>
-      <li><a href="grid.html">Grid Benefits</a></li>
-      <li><a href="cfd.html">CfD Model</a></li>
-      <li><a href="technology.html">Technology</a></li>
-      <li><a href="compare.html">Tech Comparison</a></li>
-      <li><a href="implementation.html">Implementation</a></li>
-      <li><a href="sources.html">Sources</a></li>
-      <li><a href="methodology.html">Methodology</a></li>
-      <li><a href="library.html">Library</a></li>
-      <li><a href="faq.html">FAQ</a></li>
-      <li><a href="contact.html" class="nav__cta">Contact Us</a></li>
-    </ul>
-    <button class="nav__hamburger" id="nav__hamburger"
-      aria-label="Toggle menu"
-      aria-expanded="false"
-      onclick="htst_toggleMenu(this)">
-      <span></span><span></span><span></span><span></span>
-    </button>
-  </div>
-</nav>
-<div class="nav__mobile" id="mobileMenu">
-  <a href="index.html" onclick="htst_closeMenu()">Home</a>
-  <a href="agriculture.html" onclick="htst_closeMenu()">Agriculture</a>
-  <a href="grid.html" onclick="htst_closeMenu()">Grid Benefits</a>
-  <a href="cfd.html" onclick="htst_closeMenu()">CfD Model</a>
-  <a href="technology.html" onclick="htst_closeMenu()">Technology</a>
-  <a href="compare.html" onclick="htst_closeMenu()">Tech Comparison</a>
-  <a href="implementation.html" onclick="htst_closeMenu()">Implementation</a>
-  <a href="sources.html" onclick="htst_closeMenu()">Sources</a>
-  <a href="methodology.html" onclick="htst_closeMenu()">Methodology</a>
-  <a href="library.html" onclick="htst_closeMenu()">Library</a>
-  <a href="faq.html" onclick="htst_closeMenu()">FAQ</a>
-  <a href="contact.html" onclick="htst_closeMenu()">Contact Us</a>
-</div>`;
+  // ── Build nav HTML ──
+  const navLinks = navItems.map(item => {
+    const isActive = page === item.id || (page === '' && item.id === 'index');
+    const badge = item.badge ? `<span style="background:#C9A227;color:#fff;font-size:9px;font-weight:600;padding:1px 5px;border-radius:3px;margin-left:5px;vertical-align:middle;letter-spacing:0.03em">${item.badge}</span>` : '';
+    return `<a href="${item.href}" class="nav-link${isActive ? ' nav-link--active' : ''}">${item.label}${badge}</a>`;
+  }).join('');
 
-const FOOTER_HTML = `
-<footer class="footer" role="contentinfo">
-  <div class="container">
-    <div class="footer__grid">
-      <div class="footer__brand">
-        <img src="HTST_Logo_Blue_transparent.png" alt="Harvesting the Sun Twice" style="height:80px; margin-bottom:1rem; display:block;">
-        <h3>Harvesting the Sun Twice</h3>
-        <p>A UK-wide advocacy campaign promoting Vertical Bifacial Photovoltaic (VBPV) agrivoltaic systems as the evidence-based alternative to conventional solar in the UK's solar planning pipeline.</p>
-        <div class="footer__contact">
-          <a href="mailto:harvestingthesuntwice@gmail.com">harvestingthesuntwice@gmail.com</a>
-          <a href="https://harvestingthesuntwice.org">harvestingthesuntwice.org</a>
+  // ── Inject nav ──
+  const navEl = document.getElementById('site-nav');
+  if (navEl) {
+    navEl.innerHTML = `
+      <div class="nav-inner">
+        <a href="/index.html" class="nav-logo">
+          <img src="/images/htst-logo-3colour.png" alt="Harvesting the Sun Twice" height="36">
+        </a>
+        <nav class="nav-links" aria-label="Main navigation">
+          ${navLinks}
+        </nav>
+        <a href="https://harvestingthesuntwice@gmail.com" class="nav-cta">Contact</a>
+      </div>
+    `;
+  }
+
+  // ── Inject footer ──
+  const footerEl = document.getElementById('site-footer');
+  if (footerEl) {
+    footerEl.innerHTML = `
+      <div class="footer-inner">
+        <div class="footer-col">
+          <img src="/images/htst-logo-blue-mono.png" alt="Harvesting the Sun Twice" height="28" style="margin-bottom:10px;opacity:0.7">
+          <p style="font-size:12px;color:#888;line-height:1.6">A UK campaign advocating for Vertical Bifacial PV agrivoltaic systems on Best and Most Versatile agricultural land.</p>
+        </div>
+        <div class="footer-col">
+          <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:#666;margin-bottom:8px">Pages</div>
+          <div style="display:flex;flex-direction:column;gap:5px">
+            <a href="/technology.html" class="footer-link">Technology</a>
+            <a href="/compare.html" class="footer-link">Compare</a>
+            <a href="/dashboard.html" class="footer-link">Analysis Tool</a>
+            <a href="/sources.html" class="footer-link">Evidence</a>
+            <a href="/library.html" class="footer-link">Library</a>
+            <a href="/faq.html" class="footer-link">FAQ</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:#666;margin-bottom:8px">Contact</div>
+          <a href="mailto:harvestingthesuntwice@gmail.com" class="footer-link">harvestingthesuntwice@gmail.com</a>
+          <div style="margin-top:8px;font-size:11px;color:#888">Campaign Director: Paul Bird</div>
+          <div style="font-size:11px;color:#888">Sawtry, Cambridgeshire</div>
         </div>
       </div>
-      <div class="footer__col">
-        <h4>Evidence</h4>
-        <ul>
-          <li><a href="technology.html">Technology Comparison</a></li>
-          <li><a href="agriculture.html">Agricultural Benefits</a></li>
-          <li><a href="grid.html">Grid Benefits</a></li>
-          <li><a href="cfd.html">CfD Model</a></li>
-          <li><a href="sources.html">Research Sources</a></li>
-          <li><a href="methodology.html">Methodology</a></li>
-        </ul>
+      <div class="footer-base">
+        <span>© 2026 Harvesting the Sun Twice</span>
+        <span>All figures indicative — not a substitute for a site-specific EYA</span>
       </div>
-      <div class="footer__col">
-        <h4>Campaign</h4>
-        <ul>
-          <li><a href="implementation.html">Policy Pathway</a></li>
-          <li><a href="library.html">Document Library</a></li>
-          <li><a href="faq.html">FAQ</a></li>
-          <li><a href="contact.html">Contact Us</a></li>
-        </ul>
-      </div>
-      <div class="footer__col">
-        <h4>Key Research</h4>
-        <ul>
-          <li><a href="sources.html#york">University of York (2024)</a></li>
-          <li><a href="sources.html#szarek">Szarek et al. (2026)</a></li>
-          <li><a href="sources.html#next2sun">Next2Sun/Schüler (2026)</a></li>
-          <li><a href="sources.html#bloombergnef">BloombergNEF (2025)</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer__bottom">
-      <p>© 2026 Harvesting the Sun Twice. Evidence-based advocacy for UK solar land use policy.</p>
-    </div>
-  </div>
-</footer>`;
-
-document.getElementById('nav-placeholder').innerHTML = NAV_HTML;
-document.getElementById('footer-placeholder').innerHTML = FOOTER_HTML;
+    `;
+  }
+})();
