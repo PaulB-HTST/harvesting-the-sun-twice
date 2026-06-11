@@ -1,0 +1,1685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VBPV vs TBPV Project Analysis Tool | Harvesting the Sun Twice</title>
+<meta name="description" content="Interactive UK solar project analysis tool. Compare Vertical Bifacial PV (VBPV) against Tilted Bifacial PV (TBPV) across energy yield, seasonal performance, revenue, and BESS economics. Enter your site area or target capacity.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500&family=Google+Sans+Flex:wght@100..900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+/* ── CSS Custom Properties ── */
+:root {
+  --color-background-primary: #ffffff;
+  --color-background-secondary: #f5f4ef;
+  --color-background-tertiary: #eceae4;
+  --color-text-primary: #1c1c1a;
+  --color-text-secondary: #5f5e5a;
+  --color-text-tertiary: #888780;
+  --color-border-primary: rgba(0,0,0,0.35);
+  --color-border-secondary: rgba(0,0,0,0.22);
+  --color-border-tertiary: rgba(0,0,0,0.12);
+  --color-background-info: #e6f1fb;
+  --color-text-info: #185fa5;
+  --color-border-info: #85b7eb;
+  --color-background-success: #eaf3de;
+  --color-text-success: #3b6d11;
+  --color-border-success: #97c459;
+  --color-background-warning: #faeeda;
+  --color-text-warning: #854f0b;
+  --color-border-warning: #ba7517;
+  --color-background-danger: #fcebeb;
+  --color-text-danger: #a32d2d;
+  --color-border-danger: #f09595;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-xl: 16px;
+  --font-sans: 'Google Sans Flex', 'Google Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'SF Mono', 'Consolas', 'Monaco', 'Fira Code', monospace;
+  --campaign-green: #0F6E56;
+  --campaign-gold: #C9A227;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background-primary: #2c2c2a;
+    --color-background-secondary: #3a3a37;
+    --color-background-tertiary: #444441;
+    --color-text-primary: #f1efe8;
+    --color-text-secondary: #b4b2a9;
+    --color-text-tertiary: #888780;
+    --color-border-primary: rgba(255,255,255,0.35);
+    --color-border-secondary: rgba(255,255,255,0.22);
+    --color-border-tertiary: rgba(255,255,255,0.12);
+    --color-background-info: #0c447c;
+    --color-text-info: #85b7eb;
+    --color-border-info: #378add;
+    --color-background-success: #27500a;
+    --color-text-success: #97c459;
+    --color-border-success: #639922;
+    --color-background-warning: #633806;
+    --color-text-warning: #fac775;
+    --color-border-warning: #ef9f27;
+    --color-background-danger: #791f1f;
+    --color-text-danger: #f09595;
+    --color-border-danger: #e24b4a;
+    --campaign-green: #5DCAA5;
+    --campaign-gold: #EF9F27;
+  }
+}
+
+/* ── Reset & Base ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;-webkit-text-size-adjust:100%}
+body{font-family:var(--font-sans);font-size:15px;line-height:1.6;color:var(--color-text-primary);background:var(--color-background-tertiary);min-height:100vh}
+input,select,button{font-family:var(--font-sans)}
+
+/* ── Campaign Header ── */
+.site-header{background:var(--campaign-green);color:#fff;padding:0}
+.header-inner{max-width:1140px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.header-brand{display:flex;align-items:center;gap:12px}
+.header-icon{width:36px;height:36px;background:rgba(255,255,255,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.header-icon svg{width:22px;height:22px;fill:#fff}
+.header-title{font-size:16px;font-weight:500;letter-spacing:-0.01em;color:#fff}
+.header-sub{font-size:11px;color:rgba(255,255,255,0.7);margin-top:1px}
+.header-links{display:flex;gap:16px;align-items:center}
+.header-links a{color:rgba(255,255,255,0.8);text-decoration:none;font-size:12px;transition:color .15s}
+.header-links a:hover{color:#fff}
+.doc-badge{background:rgba(255,255,255,0.15);border-radius:4px;padding:3px 8px;font-size:10px;color:rgba(255,255,255,0.8);font-family:var(--font-mono)}
+
+/* ── Main Container ── */
+.container{max-width:1140px;margin:0 auto;padding:24px 24px 40px}
+
+/* ── Tool Header ── */
+.tool-header{margin-bottom:20px}
+.tool-title{font-size:20px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px}
+.tool-desc{font-size:13px;color:var(--color-text-secondary);line-height:1.5;max-width:720px}
+
+/* ── Shared Control Bar ── */
+.control-bar{display:grid;grid-template-columns:minmax(0,2.2fr) minmax(0,1.2fr) minmax(0,1fr) minmax(0,1fr);gap:12px;align-items:end;margin-bottom:12px}
+.ctrl-group{display:flex;flex-direction:column;gap:4px}
+
+/* ── Pitch Row ── */
+.pitch-row{display:flex;align-items:center;gap:10px;margin-bottom:16px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 14px;border:0.5px solid var(--color-border-tertiary)}
+.pitch-row-label{font-size:11px;font-weight:500;white-space:nowrap;color:var(--color-text-primary)}
+
+/* ── Labels & Inputs ── */
+.lbl{font-size:11px;color:var(--color-text-secondary);margin-bottom:3px}
+.sm{font-size:10px;color:var(--color-text-tertiary);line-height:1.4;margin-top:2px}
+.big{font-size:24px;font-weight:500;font-family:var(--font-mono);line-height:1.1}
+.med{font-size:16px;font-weight:500;font-family:var(--font-mono)}
+.cv{color:#0F6E56}.ct{color:#854F0B}
+@media(prefers-color-scheme:dark){.cv{color:#5DCAA5}.ct{color:#EF9F27}}
+
+select,input[type="number"]{background:var(--color-background-primary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:7px 10px;font-size:13px;color:var(--color-text-primary);font-family:var(--font-sans);outline:none;transition:border-color .15s}
+select:focus,input[type="number"]:focus{border-color:var(--color-border-primary)}
+select{width:100%;cursor:pointer}
+input[type="range"]{flex:1;accent-color:var(--campaign-green);cursor:pointer}
+.inp-large{font-size:16px;font-weight:500;font-family:var(--font-mono);width:90px}
+
+/* ── Buttons ── */
+.btn-group{display:flex}
+.mb{flex:1;padding:7px 10px;font-size:12px;cursor:pointer;border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-secondary);font-family:var(--font-sans);transition:.1s}
+.mb:first-child{border-radius:var(--border-radius-md) 0 0 var(--border-radius-md)}
+.mb:last-child{border-radius:0 var(--border-radius-md) var(--border-radius-md) 0}
+.mb.on{background:var(--color-background-info);color:var(--color-text-info);border-color:var(--color-border-info);font-weight:500}
+.sb{background:var(--color-background-primary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:4px 9px;font-size:11px;cursor:pointer;color:var(--color-text-secondary);font-family:var(--font-sans);transition:.1s;white-space:nowrap}
+.sb.on{background:var(--color-background-info);color:var(--color-text-info);border-color:var(--color-border-info)}
+.sb:hover{background:var(--color-background-secondary)}
+
+/* ── Badges ── */
+.badge{display:inline-block;padding:2px 8px;border-radius:var(--border-radius-md);font-size:10px;font-weight:500}
+.bg{background:var(--color-background-success);color:var(--color-text-success)}
+.bw{background:var(--color-background-warning);color:var(--color-text-warning)}
+
+/* ── Tab Navigation ── */
+.tab-nav{display:flex;border-bottom:0.5px solid var(--color-border-tertiary);margin-bottom:20px;gap:0;overflow-x:auto}
+.tab-btn{padding:9px 16px;font-size:12px;cursor:pointer;border:none;border-bottom:2px solid transparent;background:transparent;color:var(--color-text-secondary);font-family:var(--font-sans);white-space:nowrap;transition:.15s;margin-bottom:-0.5px}
+.tab-btn.on{color:var(--campaign-green);border-bottom-color:var(--campaign-green);font-weight:500}
+.tab-btn:hover:not(.on){color:var(--color-text-primary);background:var(--color-background-secondary)}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+
+/* ── Cards ── */
+.mc{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 13px}
+.cc{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:13px 15px}
+.rc{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px}
+.info-box{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:12px 16px;margin-bottom:14px}
+.info-box-title{font-size:12px;font-weight:500;margin-bottom:4px}
+.info-box-text{font-size:11px;color:var(--color-text-secondary);line-height:1.6}
+.warn-box{background:var(--color-background-warning);border:0.5px solid var(--color-border-warning);border-radius:var(--border-radius-md);padding:10px 14px;font-size:10px;color:var(--color-text-warning);line-height:1.5}
+.info-alert{background:var(--color-background-info);border:0.5px solid var(--color-border-info);border-radius:var(--border-radius-md);padding:10px 14px;font-size:11px;color:var(--color-text-info);line-height:1.6}
+
+/* ── Grids ── */
+.g4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.g2{display:grid;grid-template-columns:minmax(0,1fr) 18px minmax(0,1fr);gap:10px}
+.s3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:9px}
+.smc{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:7px 10px}
+.vsep{width:0.5px;background:var(--color-border-tertiary);align-self:stretch}
+.mb-13{margin-bottom:13px}
+.mb-14{margin-bottom:14px}
+.mb-16{margin-bottom:16px}
+.mb-18{margin-bottom:18px}
+.mb-20{margin-bottom:20px}
+
+/* ── Peak bars ── */
+.pb-t{flex:1;height:4px;background:var(--color-background-secondary);border-radius:2px;overflow:hidden}
+.pb-f{height:100%;border-radius:2px;transition:width .25s}
+.vf-fill{background:#0F6E56}.tf-fill{background:#BA7517}
+@media(prefers-color-scheme:dark){.vf-fill{background:#5DCAA5}.tf-fill{background:#FAC775}}
+
+/* ── Price inputs ── */
+.pi{display:flex;flex-direction:column;gap:3px}
+.pi label{font-size:10px;color:var(--color-text-secondary)}
+.pi input{font-size:13px;font-weight:500;font-family:var(--font-mono)}
+
+/* ── Legend dots ── */
+.ln-v{width:15px;height:3px;background:#0F6E56;display:inline-block;border-radius:2px;vertical-align:middle}
+.ln-t{width:15px;height:3px;background:#BA7517;display:inline-block;border-radius:2px;vertical-align:middle}
+.ln-d{width:15px;height:0;border-top:2px dashed #534AB7;display:inline-block;vertical-align:middle}
+@media(prefers-color-scheme:dark){.ln-v{background:#5DCAA5}.ln-t{background:#FAC775}.ln-d{border-color:#AFA9EC}}
+
+/* ── Campaign Footer ── */
+.site-footer{background:var(--color-background-secondary);border-top:0.5px solid var(--color-border-tertiary);padding:20px 24px;margin-top:32px}
+.footer-inner{max-width:1140px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-refs{font-size:10px;color:var(--color-text-tertiary);line-height:1.8;flex:1}
+.footer-links{display:flex;gap:16px;align-items:center;flex-shrink:0}
+.footer-links a{font-size:11px;color:var(--color-text-secondary);text-decoration:none}
+.footer-links a:hover{color:var(--campaign-green)}
+
+/* ── Responsive ── */
+@media(max-width:768px){
+  .control-bar{grid-template-columns:1fr 1fr}
+  .g4{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(2,1fr)}
+  .g2{grid-template-columns:1fr}
+  .g2 .vsep{display:none}
+  .pitch-row{flex-wrap:wrap}
+  .header-links{display:none}
+}
+@media(max-width:480px){
+  .control-bar{grid-template-columns:1fr}
+  .g4{grid-template-columns:1fr 1fr}
+  .container{padding:16px 16px 32px}
+}
+
+/* ── Print / Save PDF button ── */
+.print-btn{
+  display:inline-flex;align-items:center;gap:7px;
+  background:var(--campaign-green);color:#fff;
+  border:none;border-radius:var(--border-radius-md);
+  padding:7px 14px;font-size:12px;font-weight:500;
+  font-family:var(--font-sans);cursor:pointer;
+  transition:opacity .15s;white-space:nowrap;
+}
+.print-btn:hover{opacity:.88}
+.print-btn svg{width:14px;height:14px;fill:#fff;flex-shrink:0}
+
+/* ── Print-only elements (hidden on screen) ── */
+.print-cover,.print-params,.print-section-header{display:none}
+
+/* ════════════════════════════════════════════
+   FORMAL REPORT PRINT STYLES
+   Inspired by BifacialMAX technical report format:
+   clean ruled sections, parameter tables, monospaced
+   data values, restrained two-column data blocks.
+════════════════════════════════════════════ */
+@media print{
+
+  /* ══════════════════════════════════════
+     PAGE SETUP
+  ══════════════════════════════════════ */
+  @page{ size:A4 portrait; margin:18mm 18mm 16mm 18mm; }
+  /* First page: same margins as all other pages */
+  @page:first{ size:A4 portrait; margin:18mm 18mm 16mm 18mm; }
+
+  /* ══════════════════════════════════════
+     GLOBAL RESET TO LIGHT
+  ══════════════════════════════════════ */
+  :root{
+    --color-background-primary:#ffffff !important;
+    --color-background-secondary:#f7f6f2 !important;
+    --color-background-tertiary:#f0efe9 !important;
+    --color-text-primary:#1a1a18 !important;
+    --color-text-secondary:#4a4945 !important;
+    --color-text-tertiary:#888780 !important;
+    --color-border-primary:rgba(0,0,0,0.30) !important;
+    --color-border-secondary:rgba(0,0,0,0.18) !important;
+    --color-border-tertiary:rgba(0,0,0,0.10) !important;
+    --color-background-info:#e6f1fb !important;
+    --color-text-info:#185fa5 !important;
+    --color-border-info:#85b7eb !important;
+    --color-background-success:#eaf3de !important;
+    --color-text-success:#3b6d11 !important;
+    --color-background-warning:#faeeda !important;
+    --color-text-warning:#7a4509 !important;
+    --color-border-warning:#ba7517 !important;
+    --campaign-green:#0F6E56 !important;
+    color-scheme:light !important;
+  }
+  *{ -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; box-sizing:border-box; }
+  html,body{ margin:0 !important; padding:0 !important; background:#fff !important;
+    font-family:'Google Sans Flex','Google Sans',-apple-system,sans-serif !important;
+    font-size:10pt !important; color:#1a1a18 !important; }
+
+  /* ══════════════════════════════════════
+     HIDE ALL SCREEN-ONLY ELEMENTS
+  ══════════════════════════════════════ */
+  .site-header,.site-footer,.tool-header,.tab-nav,.control-bar,.pitch-row,
+  .btn-group,.sb[data-s],.print-btn,.header-links,
+  #t-rev .pi, #t-bess .pi, [data-s]
+  { display:none !important; }
+
+  /* ══════════════════════════════════════
+     COVER PAGE — white, normal document flow
+     Standard page-break-after, no fixed/absolute tricks.
+     Content laid out as a normal block that fills one A4 page.
+  ══════════════════════════════════════ */
+  .print-cover{
+    display:flex !important;
+    flex-direction:column;
+    page-break-after:always;
+    break-after:page;
+    /* Fill the printable area of one A4 page:
+       297mm − 18mm top − 16mm bottom = 263mm usable */
+    min-height:263mm;
+    background:#ffffff !important;
+    color:#1a1a18 !important;
+    padding:0;
+  }
+  .print-cover-logo-zone{
+    display:flex !important;
+    align-items:center;
+    justify-content:space-between;
+    padding-bottom:8mm;
+    margin-bottom:8mm;
+    border-bottom:1.5pt solid #0F6E56;
+  }
+  .print-cover-logo-zone img{
+    height:18mm;
+    width:auto;
+    display:block;
+  }
+  .print-cover-logo-badge{
+    font-size:7.5pt;
+    font-weight:500;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:#888780;
+    text-align:right;
+    line-height:1.6;
+  }
+  .print-cover-top{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
+  }
+  .print-cover-org{
+    font-size:8pt; font-weight:500; letter-spacing:0.10em;
+    text-transform:uppercase; color:#888780; margin-bottom:4mm;
+  }
+  .print-cover-title{
+    font-size:30pt; font-weight:700; line-height:1.1;
+    color:#0F6E56; margin-bottom:5mm;
+  }
+  .print-cover-subtitle{
+    font-size:11pt; font-weight:400; color:#4a4945;
+    line-height:1.6; max-width:148mm; margin-bottom:10mm;
+  }
+  .print-cover-rule{
+    width:36mm; height:2pt;
+    background:#C9A227;
+    margin-bottom:10mm;
+  }
+  .print-cover-mid{ /* metadata grid */ }
+  .print-cover-meta-grid{
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:6mm 14mm; max-width:148mm;
+    margin-bottom:10mm;
+  }
+  .print-cover-meta-label{
+    font-size:7pt; text-transform:uppercase;
+    letter-spacing:0.10em; color:#888780; margin-bottom:1.5mm;
+  }
+  .print-cover-meta-value{
+    font-size:10pt; font-weight:600;
+    font-family:'SF Mono','Consolas','Monaco',monospace;
+    color:#1a1a18; line-height:1.3;
+  }
+  .print-cover-bottom-zone{
+    margin-top:auto;
+    padding-top:6mm;
+    border-top:0.5pt solid #dddbd4;
+  }
+  .print-cover-disclaimer{
+    font-size:7pt; color:#aaa9a3; line-height:1.55;
+    margin-bottom:5mm;
+  }
+  .print-cover-bottom{
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .print-cover-bottom-left{ font-size:8pt; color:#4a4945; line-height:1.6; }
+  .print-cover-bottom-right{ font-size:8pt; color:#888780; text-align:right; line-height:1.6; }
+
+  /* ══════════════════════════════════════
+     PARAMS PAGE
+  ══════════════════════════════════════ */
+  /* Spacer div that absorbs the first page in normal flow
+     so .print-params starts on page 2 (the fixed cover
+     occupies page 1 via position:fixed + break-after) */
+  .print-cover-flow-spacer{
+    display:block !important;
+    page-break-after:always !important;
+    break-after:page !important;
+    height:0 !important;
+    overflow:hidden !important;
+  }
+  .print-params{
+    display:block !important;
+    page-break-after:always; break-after:page;
+    padding:0;
+  }
+  .print-params-header{
+    border-bottom:2pt solid #0F6E56; padding-bottom:3mm; margin-bottom:5mm;
+    display:flex; align-items:baseline; justify-content:space-between;
+  }
+  .print-params-header-title{ font-size:13pt; font-weight:600; color:#0F6E56; }
+  .print-params-header-ref{ font-size:8pt; font-family:'SF Mono','Consolas','Monaco',monospace; color:#888780; }
+  .print-params-subhead{
+    font-size:7.5pt; text-transform:uppercase; letter-spacing:0.08em;
+    color:#888780; margin-bottom:2mm; margin-top:4mm;
+    border-bottom:0.5pt solid #e0dfd8; padding-bottom:1mm;
+  }
+  .print-params-table{ width:100%; border-collapse:collapse; font-size:9pt; margin-bottom:3mm; }
+  .print-params-table th{
+    text-align:left; font-size:8pt; font-weight:500; color:#4a4945;
+    padding:1.5mm 2.5mm; border-bottom:0.5pt solid #ccc; background:#f7f6f2;
+  }
+  .print-params-table td{
+    padding:1.5mm 2.5mm; border-bottom:0.3pt solid #e8e7e0; vertical-align:top;
+  }
+  .print-params-table td:first-child{ color:#4a4945; font-size:8.5pt; width:45%; }
+  .print-params-table td.val{ font-family:'SF Mono','Consolas','Monaco',monospace; font-weight:500; font-size:9pt; }
+  .print-params-table td.val-v{ color:#0F6E56 }
+  .print-params-table td.val-t{ color:#854F0B }
+  .print-params-table td.val-n{ color:#1a1a18 }
+  .print-kv-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:3mm; margin-bottom:4mm; }
+  .print-kv-cell{ border:0.5pt solid #dddbd4; border-radius:3pt; padding:3mm; background:#f7f6f2; }
+  .print-kv-label{ font-size:7.5pt; color:#888780; margin-bottom:1mm; }
+  .print-kv-value{ font-size:11pt; font-weight:600; font-family:'SF Mono','Consolas','Monaco',monospace; }
+  .print-kv-sub{ font-size:7pt; color:#888780; margin-top:0.5mm; }
+  .cv-pr{ color:#0F6E56 }
+  .ct-pr{ color:#854F0B }
+
+  /* ══════════════════════════════════════
+     MAIN CONTAINER
+  ══════════════════════════════════════ */
+  .container{ max-width:100% !important; padding:0 !important; margin:0 !important; }
+  main.container > .warn-box{ margin-top:6mm; }
+
+  /* ══════════════════════════════════════
+     TAB PANELS — each on its own page
+  ══════════════════════════════════════ */
+  .tab-panel{
+    display:block !important;
+    page-break-before:always; break-before:page;
+    /* Content area = 297mm − 18mm top − 16mm bottom − 2mm section header ≈ 257mm usable */
+  }
+
+  /* ══════════════════════════════════════
+     SECTION HEADERS
+  ══════════════════════════════════════ */
+  .print-section-header{
+    display:flex !important;
+    align-items:baseline; justify-content:space-between;
+    border-bottom:2pt solid #0F6E56;
+    padding-bottom:3mm; margin-bottom:5mm;
+  }
+  .print-section-header-title{ font-size:13pt; font-weight:600; color:#0F6E56; }
+  .print-section-header-page{ font-size:8pt; font-family:'SF Mono','Consolas','Monaco',monospace; color:#888780; }
+
+  /* ══════════════════════════════════════
+     MODULE 3 PART 2 — page break before agri section
+  ══════════════════════════════════════ */
+  .print-rev-page-break{
+    page-break-before:always !important;
+    break-before:page !important;
+    display:block !important;
+  }
+
+  /* ══════════════════════════════════════
+     CARDS
+  ══════════════════════════════════════ */
+  .rc,.cc,.mc,.smc,.info-box,.warn-box,.info-alert,.print-kv-cell{
+    break-inside:avoid !important; page-break-inside:avoid !important;
+  }
+  .rc{ background:#fff !important; border:0.5pt solid #d4d2cc !important; border-radius:4pt !important; padding:5mm !important; }
+  .cc{ background:#fff !important; border:0.5pt solid #d4d2cc !important; border-radius:4pt !important; padding:5mm !important; }
+  .mc{ background:#f7f6f2 !important; border:none !important; border-radius:4pt !important; padding:4mm !important; }
+  .smc{ background:#f0efe9 !important; border-radius:3pt !important; padding:3mm !important; }
+  .info-box{
+    background:#f7f6f2 !important; border:none !important;
+    border-left:3pt solid #0F6E56 !important; border-radius:0 3pt 3pt 0 !important;
+    padding:4mm 5mm !important; margin-bottom:5mm !important;
+  }
+  .warn-box{ background:#faeeda !important; border:0.5pt solid #ba7517 !important; border-radius:3pt !important; padding:4mm !important; font-size:8.5pt !important; }
+  .info-alert{ background:#e6f1fb !important; border:0.5pt solid #85b7eb !important; border-radius:3pt !important; padding:4mm !important; }
+
+  /* ══════════════════════════════════════
+     GRIDS
+  ══════════════════════════════════════ */
+  .g4{ display:grid !important; grid-template-columns:repeat(4,1fr) !important; gap:3.5mm !important; break-inside:avoid !important; }
+  .g3{ display:grid !important; grid-template-columns:repeat(3,1fr) !important; gap:3.5mm !important; break-inside:avoid !important; }
+  .g2{ display:grid !important; grid-template-columns:1fr 12pt 1fr !important; gap:3.5mm !important; break-inside:avoid !important; }
+  .s3{ display:grid !important; grid-template-columns:repeat(3,1fr) !important; gap:3mm !important; margin-top:3mm !important; }
+
+  /* ══════════════════════════════════════
+     TYPOGRAPHY — upscaled to fill page
+  ══════════════════════════════════════ */
+  .big{ font-size:22pt !important; font-weight:700 !important; line-height:1.1 !important; }
+  .med{ font-size:14pt !important; font-weight:600 !important; }
+  .lbl{ font-size:8pt !important; color:#4a4945 !important; margin-bottom:1mm !important; }
+  .sm{ font-size:7.5pt !important; color:#888780 !important; line-height:1.4 !important; }
+  .info-box-title{ font-size:10pt !important; font-weight:600 !important; margin-bottom:2mm !important; }
+  .info-box-text{ font-size:9pt !important; line-height:1.6 !important; }
+
+  /* ══════════════════════════════════════
+     SPACING UTILITIES — generous for page fill
+  ══════════════════════════════════════ */
+  .mb-13,.mb-14{ margin-bottom:5mm !important; }
+  .mb-16,.mb-18,.mb-20{ margin-bottom:6mm !important; }
+
+  /* ══════════════════════════════════════
+     CANVAS CHARTS — tall to fill space
+  ══════════════════════════════════════ */
+  canvas{ max-width:100% !important; height:230px !important; display:block !important; }
+  [style*="height:190px"]{ height:230px !important; position:relative !important; }
+  [style*="height:230px"]{ height:230px !important; position:relative !important; }
+  [style*="height:270px"]{ height:260px !important; position:relative !important; }
+  [style*="height:200px"]{ height:200px !important; position:relative !important; }
+
+  /* ══════════════════════════════════════
+     COLOUR TOKENS
+  ══════════════════════════════════════ */
+  .cv{ color:#0F6E56 !important; }
+  .ct{ color:#854F0B !important; }
+  .vf-fill{ background:#0F6E56 !important; }
+  .tf-fill{ background:#BA7517 !important; }
+  .pb-t{ background:#e8e7e0 !important; }
+  .bg{ background:#eaf3de !important; color:#3b6d11 !important; }
+  .bw{ background:#faeeda !important; color:#7a4509 !important; }
+  .vsep{ background:#d4d2cc !important; }
+  a{ color:inherit !important; text-decoration:none !important; }
+
+}
+</style>
+</head>
+<body>
+
+
+<!-- ══ PRINT-ONLY COVER PAGE ══ -->
+<div class="print-cover" id="print-cover">
+
+  <!-- LOGO ZONE -->
+  <div class="print-cover-logo-zone">
+    <img src="data:image/png;base64,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3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfSdg2lPE9r3lfSB6LoeRh+FeA3dU8pF1sdg2lPE9r3lfS5MLo3TOFxNrE2Mqt0XbVcV26orr+bVE74nl8IPqwyiTupMPwrwPjralqzmRdbPfAe48x/9k=" alt="Harvesting the Sun Twice">
+    <div class="print-cover-logo-badge">Campaign Analysis Tool<br>harvestingthesuntwice.org</div>
+  </div>
+
+  <!-- TOP ZONE: org label + title + subtitle -->
+  <div class="print-cover-top">
+    <div class="print-cover-org">Harvesting the Sun Twice · Campaign Analysis Report</div>
+    <div class="print-cover-title" style="color:#0F6E56">VBPV vs TBPV<br>UK Project Analysis</div>
+    <div class="print-cover-subtitle">Comparative assessment of Vertical Bifacial PV (E-W agrivoltaic configuration) against South-facing Tilted Bifacial PV across UK locations. Four analytical modules: project sizing, seasonal performance, time-of-use revenue, and BESS economics.</div>
+    <div class="print-cover-rule" style="background:#C9A227"></div>
+  </div>
+
+  <!-- MID ZONE: metadata grid -->
+  <div class="print-cover-mid">
+    <div class="print-cover-meta-grid" id="cover-meta">
+      <div class="print-cover-meta-item">
+        <div class="print-cover-meta-label">Document Reference</div>
+        <div class="print-cover-meta-value">VBPV-UK-ASSET-2026-05-01-001-V3</div>
+      </div>
+      <div class="print-cover-meta-item">
+        <div class="print-cover-meta-label">Generated</div>
+        <div class="print-cover-meta-value" id="cover-date">—</div>
+      </div>
+      <div class="print-cover-meta-item">
+        <div class="print-cover-meta-label">Location</div>
+        <div class="print-cover-meta-value" id="cover-location">—</div>
+      </div>
+      <div class="print-cover-meta-item">
+        <div class="print-cover-meta-label">Calculation Mode</div>
+        <div class="print-cover-meta-value" id="cover-mode">—</div>
+      </div>
+      <div class="print-cover-meta-item">
+        <div class="print-cover-meta-label">Input Value</div>
+        <div class="print-cover-meta-value" id="cover-input">—</div>
+      </div>
+      <div class="print-cover-meta-item">
+        <div class="print-cover-meta-label">VBPV Row Pitch</div>
+        <div class="print-cover-meta-value" id="cover-pitch">—</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM ZONE: disclaimer + footer -->
+  <div class="print-cover-bottom-zone">
+    <div class="print-cover-disclaimer">
+      Indicative modelling tool. VBPV density model: 1,200 ÷ pitch kWp/ha (empirical agrivoltaic reference). TBPV: 120 kWp/ha reference (30° tilt, standard UK utility). Revenue model applies normalised hourly profiles — not site-specific dispatch modelling. DC:AC ratio fixed at 1.10. Not a substitute for a site-specific Energy Yield Assessment (EYA) or full financial model.
+    </div>
+    <div class="print-cover-bottom">
+      <div class="print-cover-bottom-left">
+        harvestingthesuntwice.org<br>
+        harvestingthesuntwice@gmail.com
+      </div>
+      <div class="print-cover-bottom-right">
+        © 2026 Dual Harvest Agrivoltaics Ltd<br>
+        Campaign Director: Paul Bird
+      </div>
+    </div>
+  </div>
+
+</div>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- Flow spacer: pushes params onto page 2 after fixed cover -->
+<div class="print-cover-flow-spacer"></div>
+
+<!-- ══ PRINT-ONLY PARAMETERS SUMMARY PAGE ══ -->
+<div class="print-params" id="print-params">
+  <div class="print-params-header">
+    <span class="print-params-header-title">System Parameters &amp; Summary Results</span>
+    <span class="print-params-header-ref" id="params-ref-date">—</span>
+  </div>
+
+  <div class="print-params-subhead">Input Parameters</div>
+  <table class="print-params-table">
+    <thead><tr><th>Parameter</th><th>VBPV</th><th>TBPV</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Location</td><td class="val val-n" colspan="2" id="p-loc">—</td><td style="font-size:8pt;color:#888780"></td></tr>
+      <tr><td>Panel orientation</td><td class="val val-v">Vertical E-W bifacial</td><td class="val val-t">30° S-facing bifacial</td><td style="font-size:8pt;color:#888780"></td></tr>
+      <tr><td>Specific yield (kWh/kWp/yr)</td><td class="val val-v" id="p-vy">—</td><td class="val val-t" id="p-ty">—</td><td style="font-size:8pt;color:#888780">BifacialMAX / B&amp;D 2024</td></tr>
+      <tr><td>Array density (kWp/ha)</td><td class="val val-v" id="p-vden">—</td><td class="val val-t">120</td><td style="font-size:8pt;color:#888780">TBPV: 30° tilt, 6m pitch</td></tr>
+      <tr><td>Row pitch (E-W)</td><td class="val val-v" id="p-pitch">—</td><td class="val val-t">6 m</td><td style="font-size:8pt;color:#888780">Szarek et al. 2026 validated range 8–20m</td></tr>
+      <tr><td>DC:AC ratio</td><td class="val val-n" colspan="2">1.10</td><td style="font-size:8pt;color:#888780">Fixed throughout</td></tr>
+      <tr><td>Calculation mode</td><td class="val val-n" colspan="2" id="p-mode">—</td><td style="font-size:8pt;color:#888780"></td></tr>
+      <tr><td>Input value</td><td class="val val-n" colspan="2" id="p-inp2">—</td><td style="font-size:8pt;color:#888780"></td></tr>
+    </tbody>
+  </table>
+
+  <div class="print-params-subhead">Module 1 — Project Size &amp; Energy Yield</div>
+  <div class="print-kv-grid">
+    <div class="print-kv-cell"><div class="print-kv-label">VBPV — Land Required</div><div class="print-kv-value cv-pr" id="ps-v-land">—</div><div class="print-kv-sub" id="ps-v-land-s"></div></div>
+    <div class="print-kv-cell"><div class="print-kv-label">VBPV — Annual MWh</div><div class="print-kv-value cv-pr" id="ps-v-mwh">—</div><div class="print-kv-sub">MWh/yr</div></div>
+    <div class="print-kv-cell"><div class="print-kv-label">VBPV — Capacity Factor</div><div class="print-kv-value cv-pr" id="ps-v-cf">—</div><div class="print-kv-sub">%</div></div>
+    <div class="print-kv-cell"><div class="print-kv-label">TBPV — Land Required</div><div class="print-kv-value ct-pr" id="ps-t-land">—</div><div class="print-kv-sub" id="ps-t-land-s"></div></div>
+    <div class="print-kv-cell"><div class="print-kv-label">TBPV — Annual MWh</div><div class="print-kv-value ct-pr" id="ps-t-mwh">—</div><div class="print-kv-sub">MWh/yr</div></div>
+    <div class="print-kv-cell"><div class="print-kv-label">TBPV — Capacity Factor</div><div class="print-kv-value ct-pr" id="ps-t-cf">—</div><div class="print-kv-sub">%</div></div>
+  </div>
+  <table class="print-params-table">
+    <thead><tr><th>Differential Metric</th><th>Value</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Land differential (VBPV vs TBPV)</td><td class="val val-n" id="ps-land-diff">—</td><td style="font-size:8pt;color:#888780" id="ps-land-diff-s"></td></tr>
+      <tr><td>MWh differential (VBPV vs TBPV)</td><td class="val val-n" id="ps-mwh-diff">—</td><td style="font-size:8pt;color:#888780" id="ps-mwh-diff-s"></td></tr>
+      <tr><td>UK homes powered (VBPV output)</td><td class="val val-v" id="ps-homes">—</td><td style="font-size:8pt;color:#888780">@ 3,100 kWh/yr average household</td></tr>
+    </tbody>
+  </table>
+
+  <div class="print-params-subhead">Module 3 — Time-of-Use Revenue</div>
+  <table class="print-params-table">
+    <thead><tr><th>Parameter</th><th>VBPV</th><th>TBPV</th></tr></thead>
+    <tbody>
+      <tr><td>Effective value factor (£/MWh)</td><td class="val val-v" id="ps-v-vf">—</td><td class="val val-t" id="ps-t-vf">—</td></tr>
+      <tr><td>Annual revenue (£/yr)</td><td class="val val-v" id="ps-v-rev">—</td><td class="val val-t" id="ps-t-rev">—</td></tr>
+      <tr><td>Value premium (VBPV over TBPV)</td><td class="val val-v" id="ps-vf-prem" colspan="2">—</td></tr>
+    </tbody>
+  </table>
+
+  <div class="print-params-subhead">Module 4 — BESS Analysis</div>
+  <table class="print-params-table">
+    <thead><tr><th>Parameter</th><th>VBPV + BESS</th><th>TBPV + BESS</th></tr></thead>
+    <tbody>
+      <tr><td>Required BESS capacity (MWh)</td><td class="val val-v" id="ps-v-bess">—</td><td class="val val-t" id="ps-t-bess">—</td></tr>
+      <tr><td>BESS CAPEX (£M)</td><td class="val val-v" id="ps-v-cx">—</td><td class="val val-t" id="ps-t-cx">—</td></tr>
+      <tr><td>Annual peak-spreading revenue</td><td class="val val-v" id="ps-v-brv">—</td><td class="val val-t" id="ps-t-brv">—</td></tr>
+      <tr><td>Simple payback (years)</td><td class="val val-v" id="ps-v-pb">—</td><td class="val val-t" id="ps-t-pb">—</td></tr>
+      <tr><td>CAPEX saving (VBPV vs TBPV)</td><td class="val val-v" id="ps-bess-save" colspan="2">—</td></tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top:5mm;padding-top:3mm;border-top:0.5pt solid #d4d2cc;font-size:7.5pt;color:#888780;line-height:1.6">
+    Sources: [1] Badran &amp; Dhimish (2024) · Int. J. Low-Carbon Technologies, Oxford Academic &nbsp;·&nbsp;
+    [2] Szarek et al. (2026) · Applied Energy, University of Turku &nbsp;·&nbsp;
+    [3] BifacialMAX validation reference: London TBPV 1,315 / VBPV 1,126 kWh/kWp/yr &nbsp;·&nbsp;
+    [4] Next2Sun GmbH BESS field data (unverified %)
+  </div>
+</div>
+
+<!-- ══ CAMPAIGN HEADER ══ -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-brand">
+      <div class="header-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L8 8H4l4 4-1.5 6L12 15l5.5 3L16 12l4-4h-4L12 2z"/>
+          <rect x="3" y="20" width="18" height="1.5" rx="0.75"/>
+          <rect x="5" y="17" width="2" height="3" rx="0.5"/>
+          <rect x="11" y="17" width="2" height="3" rx="0.5"/>
+          <rect x="17" y="17" width="2" height="3" rx="0.5"/>
+        </svg>
+      </div>
+      <div>
+        <div class="header-title">Harvesting the Sun Twice</div>
+        <div class="header-sub">VBPV vs TBPV Analysis Dashboard</div>
+      </div>
+    </div>
+    <div class="header-links">
+      <a href="/index.html">Home</a>
+      <a href="/technology.html">Technology</a>
+      <a href="/compare.html">Compare</a>
+      <a href="/dashboard.html" style="color:#fff;font-weight:500;border-bottom:1.5px solid rgba(255,255,255,0.6);padding-bottom:1px">Analysis Tool</a>
+      <a href="/sources.html">Evidence</a>
+      <a href="/library.html">Library</a>
+      <a href="/faq.html">FAQ</a>
+      <button class="print-btn" onclick="printDashboard()" title="Export all four modules to PDF">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>
+        Print / Save PDF
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ══ MAIN CONTENT ══ -->
+<main class="container">
+
+  <div class="tool-header">
+    <div class="tool-title">VBPV vs TBPV — UK Project Analysis Tool</div>
+    <div class="tool-desc">Compare Vertical Bifacial PV (E-W agrivoltaic configuration) against standard South-facing Tilted Bifacial PV across UK locations. Enter your site area or target capacity to model energy yield, seasonal performance, time-of-use revenue, and BESS economics. Yield data validated against BifacialMAX modelling, London 51.51°N, June 2026. <a href="/methodology.html" style="color:var(--color-text-info)">Full methodology →</a></div>
+  </div>
+
+  <!-- SHARED CONTROLS -->
+  <div class="control-bar mb-13">
+    <div class="ctrl-group">
+      <div class="lbl">Location</div>
+      <select id="loc-sel"></select>
+    </div>
+    <div class="ctrl-group">
+      <div class="lbl">Calculation mode</div>
+      <div class="btn-group">
+        <button class="mb on" id="btn-mw">From MW capacity</button>
+        <button class="mb" id="btn-ha">From site area (ha)</button>
+      </div>
+    </div>
+    <div class="ctrl-group">
+      <div class="lbl" id="inp-lbl">Target AC capacity</div>
+      <div style="display:flex;align-items:center;gap:7px">
+        <input type="number" id="p-inp" value="17" min="0.1" step="0.5" class="inp-large">
+        <span id="inp-unit" style="font-size:13px;font-weight:500;color:var(--color-text-secondary)">MW</span>
+      </div>
+    </div>
+    <div class="ctrl-group">
+      <div class="lbl">DC installed capacity</div>
+      <div id="dc-cap" style="font-size:16px;font-weight:500;font-family:var(--font-mono);padding:7px 0;color:var(--color-text-primary)">—</div>
+    </div>
+  </div>
+
+  <!-- PITCH ROW -->
+  <div class="pitch-row mb-16">
+    <span class="pitch-row-label">VBPV row pitch (E-W inter-row spacing)</span>
+    <span style="font-size:9px;color:var(--color-text-tertiary)">8m (Szarek min.)</span>
+    <input type="range" id="pitch-sl" min="8" max="20" value="10" step="1">
+    <span style="font-size:9px;color:var(--color-text-tertiary)">20m</span>
+    <span style="font-size:15px;font-weight:500;font-family:var(--font-mono);min-width:32px;color:var(--color-text-primary)" id="pitch-val">10m</span>
+    <span id="pitch-badge" class="badge bg" style="flex-shrink:0"></span>
+    <div style="display:flex;gap:4px;flex-shrink:0">
+      <button class="sb" id="ps8" onclick="sP(8)">8m</button>
+      <button class="sb on" id="ps10" onclick="sP(10)">10m</button>
+      <button class="sb" id="ps12" onclick="sP(12)">12m</button>
+      <button class="sb" id="ps16" onclick="sP(16)">16m</button>
+    </div>
+  </div>
+
+  <!-- TAB NAVIGATION -->
+  <nav class="tab-nav">
+    <button class="tab-btn on" id="tn-proj" onclick="sT('proj')">Project calculator</button>
+    <button class="tab-btn" id="tn-seas" onclick="sT('seas')">Seasonal · B&amp;D 2024</button>
+    <button class="tab-btn" id="tn-rev" onclick="sT('rev')">Revenue · ToU pricing</button>
+    <button class="tab-btn" id="tn-bess" onclick="sT('bess')">BESS analysis</button>
+  </nav>
+
+  <!-- ═══════════ TAB 1: PROJECT ═══════════ -->
+  <div id="t-proj" class="tab-panel active">
+    <div class="print-section-header">
+      <span class="print-section-header-title">Module 1 — Project Calculator</span>
+      <span class="print-section-header-page">VBPV-UK-ASSET-2026-05-01-001-V3</span>
+    </div>
+    <div class="g2 mb-13">
+      <div class="rc" style="border-top:3px solid #0F6E56">
+        <div style="font-size:12px;font-weight:500;color:#0F6E56;margin-bottom:8px">VBPV · E-W Vertical Bifacial</div>
+        <div class="lbl" id="vr-l">Land required</div>
+        <div class="big cv" id="v-pri">—</div><div class="sm" id="v-sub"></div>
+        <div class="s3">
+          <div class="smc"><div class="lbl">Density</div><div class="med cv" id="v-den">—</div><div class="sm">kWp/ha</div></div>
+          <div class="smc"><div class="lbl">MWh/yr</div><div class="med cv" id="v-mwh">—</div></div>
+          <div class="smc"><div class="lbl">Cap. factor</div><div class="med cv" id="v-cf">—</div><div class="sm">%</div></div>
+        </div>
+        <div style="font-size:10px;color:var(--color-text-tertiary);margin-top:8px;line-height:1.4" id="v-note"></div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:center"><div class="vsep"></div></div>
+      <div class="rc" style="border-top:3px solid #BA7517">
+        <div style="font-size:12px;font-weight:500;color:#854F0B;margin-bottom:8px">TBPV · South-facing Tilted Bifacial</div>
+        <div class="lbl" id="tr-l">Land required</div>
+        <div class="big ct" id="t-pri">—</div><div class="sm" id="t-sub"></div>
+        <div class="s3">
+          <div class="smc"><div class="lbl">Density</div><div class="med ct">120</div><div class="sm">kWp/ha ref.</div></div>
+          <div class="smc"><div class="lbl">MWh/yr</div><div class="med ct" id="t-mwh">—</div></div>
+          <div class="smc"><div class="lbl">Cap. factor</div><div class="med ct" id="t-cf">—</div><div class="sm">%</div></div>
+        </div>
+        <div style="font-size:10px;color:var(--color-text-tertiary);margin-top:8px;line-height:1.4">120 kWp/ha · 30° tilt · 6m row pitch · Badran &amp; Dhimish 2024</div>
+      </div>
+    </div>
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:12px 16px" class="mb-13">
+      <div class="g3">
+        <div><div class="lbl" id="c-l1">Land differential</div><div style="font-size:17px;font-weight:500;font-family:var(--font-mono)" id="c-land">—</div><div class="sm" id="c-land-s"></div></div>
+        <div><div class="lbl">MWh differential</div><div style="font-size:17px;font-weight:500;font-family:var(--font-mono)" id="c-mwh">—</div><div class="sm" id="c-mwh-s"></div></div>
+        <div><div class="lbl">UK homes (VBPV output)</div><div style="font-size:17px;font-weight:500;font-family:var(--font-mono)" id="c-homes">—</div><div class="sm">@ 3,100 kWh/yr</div></div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px">
+      <div style="font-size:12px;font-weight:500">Peak window analysis — share of daily output</div>
+      <div style="display:flex;gap:3px">
+        <button class="sb on" data-s="annual">Annual avg</button>
+        <button class="sb" data-s="summer">Summer</button>
+        <button class="sb" data-s="winter">Winter</button>
+      </div>
+    </div>
+    <div class="g4 mb-13">
+      <div class="rc" style="border-top:3px solid #0F6E56">
+        <div style="font-size:11px;font-weight:500;color:#0F6E56;margin-bottom:3px">Morning peak</div>
+        <div style="font-size:9px;color:var(--color-text-tertiary);margin-bottom:8px">06:00–10:00 BST</div>
+        <div style="display:flex;align-items:center;gap:4px;margin-bottom:4px"><span style="font-size:9px;width:28px;color:var(--color-text-secondary)">VBPV</span><div class="pb-t"><div class="pb-f vf-fill" id="bm-v"></div></div><span class="cv" style="font-size:10px;font-weight:500;font-family:var(--font-mono);width:30px;text-align:right" id="pm-v">—</span></div>
+        <div style="display:flex;align-items:center;gap:4px;margin-bottom:8px"><span style="font-size:9px;width:28px;color:var(--color-text-secondary)">TBPV</span><div class="pb-t"><div class="pb-f tf-fill" id="bm-t"></div></div><span class="ct" style="font-size:10px;font-weight:500;font-family:var(--font-mono);width:30px;text-align:right" id="pm-t">—</span></div>
+        <div style="font-size:10px;font-weight:500;font-family:var(--font-mono)" id="dm-v">—</div>
+        <div style="font-size:9px;color:var(--color-text-tertiary);margin-top:4px">East face captures rising sun</div>
+      </div>
+      <div class="rc" style="border-top:3px solid #1D9E75">
+        <div style="font-size:11px;font-weight:500;color:#1D9E75;margin-bottom:3px">Evening peak</div>
+        <div style="font-size:9px;color:var(--color-text-tertiary);margin-bottom:8px">16:00–20:00 BST</div>
+        <div style="display:flex;align-items:center;gap:4px;margin-bottom:4px"><span style="font-size:9px;width:28px;color:var(--color-text-secondary)">VBPV</span><div class="pb-t"><div class="pb-f vf-fill" id="be-v"></div></div><span class="cv" style="font-size:10px;font-weight:500;font-family:var(--font-mono);width:30px;text-align:right" id="pe-v">—</span></div>
+        <div style="display:flex;align-items:center;gap:4px;margin-bottom:8px"><span style="font-size:9px;width:28px;color:var(--color-text-secondary)">TBPV</span><div class="pb-t"><div class="pb-f tf-fill" id="be-t"></div></div><span class="ct" style="font-size:10px;font-weight:500;font-family:var(--font-mono);width:30px;text-align:right" id="pe-t">—</span></div>
+        <div style="font-size:10px;font-weight:500;font-family:var(--font-mono)" id="de-v">—</div>
+        <div style="font-size:9px;color:var(--color-text-tertiary);margin-top:4px">West face captures afternoon sun</div>
+      </div>
+      <div class="rc" style="border-top:3px solid #BA7517">
+        <div style="font-size:11px;font-weight:500;color:#854F0B;margin-bottom:3px">Midday surplus</div>
+        <div style="font-size:9px;color:var(--color-text-tertiary);margin-bottom:8px">11:00–15:00 BST</div>
+        <div style="display:flex;align-items:center;gap:4px;margin-bottom:4px"><span style="font-size:9px;width:28px;color:var(--color-text-secondary)">VBPV</span><div class="pb-t"><div class="pb-f vf-fill" id="bd-v"></div></div><span class="cv" style="font-size:10px;font-weight:500;font-family:var(--font-mono);width:30px;text-align:right" id="pd-v">—</span></div>
+        <div style="display:flex;align-items:center;gap:4px;margin-bottom:8px"><span style="font-size:9px;width:28px;color:var(--color-text-secondary)">TBPV</span><div class="pb-t"><div class="pb-f tf-fill" id="bd-t"></div></div><span class="ct" style="font-size:10px;font-weight:500;font-family:var(--font-mono);width:30px;text-align:right" id="pd-t">—</span></div>
+        <div style="font-size:10px;font-weight:500;font-family:var(--font-mono)" id="dd-v">—</div>
+        <div style="font-size:9px;color:var(--color-text-tertiary);margin-top:4px">Low demand — surplus needs BESS</div>
+      </div>
+      <div class="rc" style="border-top:3px solid #534AB7">
+        <div style="font-size:11px;font-weight:500;color:#534AB7;margin-bottom:3px">Combined peaks</div>
+        <div style="font-size:9px;color:var(--color-text-tertiary);margin-bottom:8px">Morning + evening windows</div>
+        <div style="display:flex;align-items:center;gap:4px;margin-bottom:4px"><span style="font-size:9px;width:28px;color:var(--color-text-secondary)">VBPV</span><div class="pb-t"><div class="pb-f" style="background:#534AB7" id="bc-v"></div></div><span style="color:#534AB7;font-size:10px;font-weight:500;font-family:var(--font-mono);width:30px;text-align:right" id="pc-v">—</span></div>
+        <div style="display:flex;align-items:center;gap:4px;margin-bottom:8px"><span style="font-size:9px;width:28px;color:var(--color-text-secondary)">TBPV</span><div class="pb-t"><div class="pb-f tf-fill" id="bc-t"></div></div><span class="ct" style="font-size:10px;font-weight:500;font-family:var(--font-mono);width:30px;text-align:right" id="pc-t">—</span></div>
+        <div style="font-size:10px;font-weight:500;font-family:var(--font-mono)" id="dc-v">—</div>
+        <div style="font-size:9px;color:var(--color-text-tertiary);margin-top:4px">VBPV is "peak-first" by design</div>
+      </div>
+    </div>
+    <div class="cc">
+      <div style="font-size:12px;font-weight:500;margin-bottom:7px">Daily output profile — normalised shape · BST</div>
+      <div style="display:flex;gap:12px;font-size:11px;color:var(--color-text-secondary);margin-bottom:8px;align-items:center;flex-wrap:wrap">
+        <span><span class="ln-v"></span> VBPV (E-W twin peak)</span>
+        <span><span class="ln-t"></span> TBPV (S-facing single peak)</span>
+        <span><span class="ln-d"></span> UK grid demand (right axis)</span>
+      </div>
+      <div style="position:relative;height:190px"><canvas id="ch-daily" role="img" aria-label="VBPV twin-peak vs TBPV single-peak daily profile with UK grid demand overlay">Daily generation profiles.</canvas></div>
+      <div style="font-size:10px;color:var(--color-text-tertiary);margin-top:7px;line-height:1.5">Szarek et al. 2026: VBPV delivers +46% grid hosting capacity. TBPV noon surplus coincides with minimum grid demand and requires BESS to reach peak markets.</div>
+    </div>
+  </div>
+
+  <!-- ═══════════ TAB 2: SEASONAL ═══════════ -->
+  <div id="t-seas" class="tab-panel">
+    <div class="print-section-header">
+      <span class="print-section-header-title">Module 2 — Seasonal Performance · Badran &amp; Dhimish 2024</span>
+      <span class="print-section-header-page">VBPV-UK-ASSET-2026-05-01-001-V3</span>
+    </div>
+    <div class="info-box mb-14">
+      <div class="info-box-title">Badran &amp; Dhimish (2024) — seasonal crossover finding</div>
+      <div class="info-box-text">VBPV outperforms south-facing tilted bifacial PV in winter months at UK latitudes. Low solar elevation angles mean vertical panels receive near-optimal direct irradiance November–February, with additional gains from snow albedo on the rear face. The summer deficit is real but occurs when grid demand is lower and electricity commands lower market value. Study location: University of York, 53.9°N. Source: Int. J. Low-Carbon Technologies, Oxford Academic (2024).</div>
+    </div>
+    <div class="g4 mb-14">
+      <div class="mc" style="border-top:2px solid #0F6E56"><div class="lbl">VBPV outperforms in</div><div class="big cv">5 months</div><div class="sm">Oct, Nov, Dec, Jan, Feb</div></div>
+      <div class="mc" style="border-top:2px solid #0F6E56"><div class="lbl">Peak winter advantage</div><div class="big cv">+34%</div><div class="sm">VBPV vs TBPV kWh/kWp in Dec · York</div></div>
+      <div class="mc" style="border-top:2px solid #BA7517"><div class="lbl">Peak summer deficit</div><div class="big ct">−25%</div><div class="sm">VBPV vs TBPV kWh/kWp in Jun · York</div></div>
+      <div class="mc" style="border-top:2px solid var(--color-border-secondary)"><div class="lbl">Annual net (selected location)</div><div class="big" id="s-net">—</div><div class="sm">kWh/kWp VBPV vs TBPV</div></div>
+    </div>
+    <div class="cc mb-13">
+      <div style="font-size:12px;font-weight:500;margin-bottom:4px">Monthly production — VBPV vs TBPV kWh/kWp</div>
+      <div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:8px">Shaded months = VBPV ≥ TBPV · ratio line = VBPV as % of TBPV (right axis)</div>
+      <div style="display:flex;gap:12px;font-size:10px;color:var(--color-text-secondary);margin-bottom:8px;align-items:center;flex-wrap:wrap">
+        <span style="display:flex;align-items:center;gap:3px"><span style="width:10px;height:10px;border-radius:2px;background:#0F6E56;display:inline-block"></span> VBPV kWh/kWp</span>
+        <span style="display:flex;align-items:center;gap:3px"><span style="width:10px;height:10px;border-radius:2px;background:#BA7517;display:inline-block"></span> TBPV kWh/kWp</span>
+        <span style="display:flex;align-items:center;gap:3px"><span style="width:14px;height:0;border-top:2px dashed #534AB7;display:inline-block;vertical-align:middle"></span> VBPV/TBPV % ratio</span>
+      </div>
+      <div style="position:relative;height:230px"><canvas id="ch-seas" role="img" aria-label="Monthly kWh per kWp VBPV vs TBPV with winter crossover and ratio line">Monthly production.</canvas></div>
+    </div>
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 14px;font-size:10px;color:var(--color-text-secondary);line-height:1.6">
+      Monthly profile derived from Badran &amp; Dhimish (2024) irradiance weighting at 53.9°N, applied to selected location's annual specific yield. Full citation: Badran, G. &amp; Dhimish, M. (2024). Comprehensive study on the performance of vertical bifacial photovoltaics: a UK case study. International Journal of Low-Carbon Technologies, Oxford Academic.
+    </div>
+  </div>
+
+  <!-- ═══════════ TAB 3: REVENUE ═══════════ -->
+  <div id="t-rev" class="tab-panel">
+    <div class="print-section-header">
+      <span class="print-section-header-title">Module 3 — Revenue · Time-of-Use Pricing</span>
+      <span class="print-section-header-page">VBPV-UK-ASSET-2026-05-01-001-V3</span>
+    </div>
+    <div class="info-box mb-14">
+      <div class="info-box-title">Time-of-use revenue model</div>
+      <div class="info-box-text">VBPV generates into high-value morning and evening demand peaks. TBPV generates into low-value midday — sometimes at negative wholesale prices in high-solar summers. Adjust prices below to match your PPA, wholesale exposure, or CfD structure. Default values are representative UK half-hourly wholesale averages (2024–25).</div>
+    </div>
+    <div class="g4 mb-14">
+      <div class="pi"><label>Morning peak (06–10h) £/MWh</label><input type="number" id="r-morn" value="80" min="0" step="5"></div>
+      <div class="pi"><label>Daytime (10–16h) £/MWh</label><input type="number" id="r-day" value="45" min="0" step="5"></div>
+      <div class="pi"><label>Evening peak (16–21h) £/MWh</label><input type="number" id="r-eve" value="90" min="0" step="5"></div>
+      <div class="pi"><label>Night (21–06h) £/MWh</label><input type="number" id="r-night" value="40" min="0" step="5"></div>
+    </div>
+    <div class="g4 mb-14">
+      <div class="mc" style="border-top:2px solid #0F6E56"><div class="lbl">VBPV value factor</div><div class="big cv" id="rv-vf">—</div><div class="sm">£/MWh generated · annual avg</div></div>
+      <div class="mc" style="border-top:2px solid #BA7517"><div class="lbl">TBPV value factor</div><div class="big ct" id="rv-tf">—</div><div class="sm">£/MWh generated · annual avg</div></div>
+      <div class="mc" style="border-top:2px solid var(--color-border-secondary)"><div class="lbl">VBPV value premium</div><div class="big" id="rv-prem">—</div><div class="sm">% more revenue per MWh vs TBPV</div></div>
+      <div class="mc" style="border-top:2px solid var(--color-border-secondary)"><div class="lbl">Annual revenue gap</div><div class="big" id="rv-gap">—</div><div class="sm">£/yr VBPV vs TBPV at project scale</div></div>
+    </div>
+    <div class="g2 mb-14">
+      <div class="rc" style="border-top:3px solid #0F6E56">
+        <div style="font-size:11px;font-weight:500;color:#0F6E56;margin-bottom:7px">VBPV annual revenue</div>
+        <div class="big cv" id="rv-v-ann">—</div><div class="sm">£/yr at project scale</div>
+        <div class="s3">
+          <div class="smc"><div class="lbl">Annual MWh</div><div class="med cv" id="rv-v-mwh">—</div></div>
+          <div class="smc"><div class="lbl">£/MWh eff.</div><div class="med cv" id="rv-v-ef">—</div></div>
+          <div class="smc"><div class="lbl">Winter VF</div><div class="med cv" id="rv-v-wvf">—</div></div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:center"><div class="vsep"></div></div>
+      <div class="rc" style="border-top:3px solid #BA7517">
+        <div style="font-size:11px;font-weight:500;color:#854F0B;margin-bottom:7px">TBPV annual revenue</div>
+        <div class="big ct" id="rv-t-ann">—</div><div class="sm">£/yr at project scale</div>
+        <div class="s3">
+          <div class="smc"><div class="lbl">Annual MWh</div><div class="med ct" id="rv-t-mwh">—</div></div>
+          <div class="smc"><div class="lbl">£/MWh eff.</div><div class="med ct" id="rv-t-ef">—</div></div>
+          <div class="smc"><div class="lbl">Winter VF</div><div class="med ct" id="rv-t-wvf">—</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="cc" style="margin-bottom:14px">
+      <div style="font-size:12px;font-weight:500;margin-bottom:4px">Monthly revenue — VBPV vs TBPV (£)</div>
+      <div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:8px">Winter months show strongest VBPV advantage — both higher value factor and seasonal production crossover occurring simultaneously</div>
+      <div style="display:flex;gap:12px;font-size:10px;color:var(--color-text-secondary);margin-bottom:8px;align-items:center">
+        <span style="display:flex;align-items:center;gap:3px"><span style="width:10px;height:10px;border-radius:2px;background:#0F6E56;display:inline-block"></span> VBPV revenue</span>
+        <span style="display:flex;align-items:center;gap:3px"><span style="width:10px;height:10px;border-radius:2px;background:#BA7517;display:inline-block"></span> TBPV revenue</span>
+      </div>
+      <div style="position:relative;height:200px"><canvas id="ch-rev" role="img" aria-label="Monthly revenue VBPV vs TBPV in pounds">Monthly revenue.</canvas></div>
+    </div>
+
+    <!-- AGRICULTURAL VALUE SECTION — print page break here for B2 split -->
+    <div class="print-rev-page-break">
+      <div class="print-section-header" style="margin-top:0">
+        <span class="print-section-header-title">Module 3 — Agricultural Value &amp; Co-benefits</span>
+        <span class="print-section-header-page">VBPV-UK-ASSET-2026-05-01-001-V3</span>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-top:6px">
+      <div style="flex:1;height:0.5px;background:var(--color-border-tertiary)"></div>
+      <span style="font-size:11px;font-weight:500;color:var(--color-text-secondary);white-space:nowrap">Agricultural value — the dual-income case</span>
+      <div style="flex:1;height:0.5px;background:var(--color-border-tertiary)"></div>
+    </div>
+
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:12px 16px;margin-bottom:14px">
+      <div style="font-size:12px;font-weight:500;margin-bottom:4px">Why solar revenue alone understates the VBPV case</div>
+      <div style="font-size:11px;color:var(--color-text-secondary);line-height:1.6">TBPV occupies agricultural land entirely — crop income is lost for the project lifetime. VBPV maintains ~78% crop irradiance between E-W rows, preserving proportional food production income. The combined income per hectare (solar + agricultural) is the correct comparison for land occupying Best and Most Versatile farmland. Enter your site's typical crop income below to see the full dual-income picture.</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px;align-items:end">
+      <div class="pi">
+        <label>Crop income (£/ha/yr)</label>
+        <input type="number" id="a-crop" value="350" min="0" step="25">
+        <div class="sm" style="margin-top:4px">UK arable refs: wheat ~£280, OSR ~£340, vegetables £600–1,200+. Use Farm Business Survey or FBS regional average for your crop type.</div>
+      </div>
+      <div class="pi">
+        <label>VBPV crop retention (%)</label>
+        <input type="number" id="a-ret" value="78" min="0" max="100" step="1">
+        <div class="sm" style="margin-top:4px">Default 78% · Szarek et al. 2026 range: 70–85% at 8–12m pitch. Adjust for your pitch and crop type.</div>
+      </div>
+      <div class="mc" style="border-top:2px solid #3B6D11;align-self:stretch">
+        <div class="lbl">TBPV crop retention</div>
+        <div class="big" style="color:#854F0B">0%</div>
+        <div class="sm">Panels cover ground — no meaningful arable cropping possible beneath fixed-tilt arrays</div>
+      </div>
+    </div>
+
+    <div class="g4" style="margin-bottom:14px">
+      <div class="mc" style="border-top:2px solid #0F6E56">
+        <div class="lbl">VBPV combined income/ha</div>
+        <div class="big cv" id="ag-v-comb">—</div>
+        <div class="sm">£/ha/yr · solar + crop</div>
+      </div>
+      <div class="mc" style="border-top:2px solid #BA7517">
+        <div class="lbl">TBPV solar income/ha</div>
+        <div class="big ct" id="ag-t-comb">—</div>
+        <div class="sm">£/ha/yr · solar only · no crop</div>
+      </div>
+      <div class="mc" style="border-top:2px solid #3B6D11">
+        <div class="lbl">Combined income advantage</div>
+        <div class="big" id="ag-adv" style="color:#3B6D11">—</div>
+        <div class="sm">£/ha/yr VBPV over TBPV</div>
+      </div>
+      <div class="mc" style="border-top:2px solid var(--color-border-secondary)">
+        <div class="lbl">Total annual dual-income</div>
+        <div class="big" id="ag-total" style="color:#3B6D11">—</div>
+        <div class="sm">£/yr · VBPV project scale</div>
+      </div>
+    </div>
+
+    <div class="g2" style="margin-bottom:14px">
+      <div class="rc" style="border-top:3px solid #0F6E56">
+        <div style="font-size:11px;font-weight:500;color:#0F6E56;margin-bottom:8px">VBPV — dual income breakdown</div>
+        <div class="s3">
+          <div class="smc"><div class="lbl">Solar income</div><div class="med cv" id="ag-v-sol">—</div><div class="sm">£/yr</div></div>
+          <div class="smc"><div class="lbl">Crop income</div><div class="med cv" id="ag-v-crop">—</div><div class="sm">£/yr · at <span id="ag-ret-lbl">78</span>% retention</div></div>
+          <div class="smc"><div class="lbl">Combined</div><div class="med cv" id="ag-v-tot">—</div><div class="sm">£/yr total</div></div>
+        </div>
+        <div style="font-size:10px;color:var(--color-text-tertiary);margin-top:8px;line-height:1.4">Agricultural income calculated as: site area (ha) × crop income (£/ha) × retention (%). Szarek et al. 2026: 79.9–82.5% irradiance retention at 10–12m pitch.</div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:center"><div class="vsep"></div></div>
+      <div class="rc" style="border-top:3px solid #BA7517">
+        <div style="font-size:11px;font-weight:500;color:#854F0B;margin-bottom:8px">TBPV — solar-only income</div>
+        <div class="s3">
+          <div class="smc"><div class="lbl">Solar income</div><div class="med ct" id="ag-t-sol">—</div><div class="sm">£/yr</div></div>
+          <div class="smc"><div class="lbl">Crop income</div><div class="med ct">£0</div><div class="sm">£/yr · land under panels</div></div>
+          <div class="smc"><div class="lbl">Combined</div><div class="med ct" id="ag-t-tot">—</div><div class="sm">£/yr total</div></div>
+        </div>
+        <div style="font-size:10px;color:var(--color-text-tertiary);margin-top:8px;line-height:1.4">TBPV displaces all agricultural production. On BMV (Grade 1, 2, 3a) land, this income loss persists for the full project lifetime (25–40 years).</div>
+      </div>
+    </div>
+
+    <div style="background:var(--color-background-success);border:0.5px solid var(--color-border-success);border-radius:var(--border-radius-md);padding:10px 14px;font-size:11px;color:var(--color-text-success);line-height:1.6">
+      <strong>Campaign framing:</strong> The UK Land Use Framework and Strategic Spatial Energy Plan currently assume solar prevents food production — treating VBPV and TBPV as equivalent in land-use terms. The dual-income figures above show why this is incorrect. VBPV generates meaningful agricultural income alongside solar revenue. DESNZ letter TOB2026/04355 (Adrian Collins, 29/04/2026) acknowledged that agrivoltaics "may have an important role to play" — this section quantifies that role in £/yr terms.
+    </div>
+
+    <div style="margin-top:10px;font-size:10px;color:var(--color-text-tertiary);line-height:1.5">
+      Crop income is indicative. Actual farm income depends on crop type, rotation, yield, commodity prices, and subsidy regime (BPS/SFI). Use Farm Business Survey (FBS) regional averages or a site-specific farm business assessment for formal representations. Agricultural income retention percentage: Szarek et al. 2026 (70–85% range at E-W pitch 8–12m). Canopy-style APV systems may achieve higher retention — consult Dual Harvest Agrivoltaics for site-specific assessment.
+    </div>
+
+    <!-- AGRICULTURAL CO-BENEFITS -->
+    <div style="display:flex;align-items:center;gap:10px;margin-top:18px;margin-bottom:14px">
+      <div style="flex:1;height:0.5px;background:var(--color-border-tertiary)"></div>
+      <span style="font-size:11px;font-weight:500;color:var(--color-text-secondary);white-space:nowrap">Non-financial agricultural co-benefits</span>
+      <div style="flex:1;height:0.5px;background:var(--color-border-tertiary)"></div>
+    </div>
+
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:12px 16px;margin-bottom:14px">
+      <div style="font-size:12px;font-weight:500;margin-bottom:4px">VBPV delivers agronomic benefits that have no TBPV equivalent</div>
+      <div style="font-size:11px;color:var(--color-text-secondary);line-height:1.6">Beyond income, VBPV E-W rows create measurable agronomic advantages that are absent from fixed-tilt south-facing arrays. These benefits are unquantified in current UK planning policy but are increasingly supported by peer-reviewed evidence.</div>
+    </div>
+
+    <div class="g4" style="margin-bottom:14px">
+      <!-- Wind protection -->
+      <div class="rc" style="border-top:3px solid #185FA5">
+        <div style="font-size:11px;font-weight:500;color:#185FA5;margin-bottom:5px">🌬 Wind protection</div>
+        <div style="font-size:20px;font-weight:500;font-family:var(--font-mono);color:#185FA5;margin-bottom:4px">Up to 40%</div>
+        <div style="font-size:10px;color:var(--color-text-tertiary);margin-bottom:8px">wind speed reduction between E-W rows</div>
+        <div style="font-size:11px;color:var(--color-text-secondary);line-height:1.5">VBPV rows act as windbreaks along the prevailing wind direction, reducing soil erosion and crop moisture loss. Twice the protection of conventional tree windbreaks (20%).</div>
+        <div style="font-size:10px;color:var(--color-text-tertiary);margin-top:8px;line-height:1.4">Williams, Hashad &amp; Zhang (2026) · Agricultural and Forest Meteorology</div>
+        <div style="font-size:10px;color:var(--color-background-warning);margin-top:4px;padding:3px 7px;background:var(--color-background-info);border-radius:4px;color:var(--color-text-info);display:inline-block">TBPV: no windbreak effect</div>
+      </div>
+
+      <!-- Soil structure / compaction -->
+      <div class="rc" style="border-top:3px solid #3B6D11">
+        <div style="font-size:11px;font-weight:500;color:#3B6D11;margin-bottom:5px">🌱 Soil structure</div>
+        <div style="font-size:20px;font-weight:500;font-family:var(--font-mono);color:#3B6D11;margin-bottom:4px">Maintained</div>
+        <div style="font-size:10px;color:var(--color-text-tertiary);margin-bottom:8px">annual cultivation continues between rows</div>
+        <div style="font-size:11px;color:var(--color-text-secondary);line-height:1.5">VBPV allows continued ploughing, drilling, and cultivation between E-W rows, maintaining soil biology, organic matter, and drainage. TBPV panels shade and compact the ground beneath — preventing cultivation, concentrating rainfall runoff from tilted panels, and degrading soil structure over the project lifetime (25–40 years).</div>
+        <div style="font-size:10px;color:var(--color-text-tertiary);margin-top:8px;line-height:1.4">VBPV driven-pile foundations · no concrete in soil · full reversibility at decommissioning</div>
+        <div style="font-size:10px;margin-top:4px;padding:3px 7px;background:var(--color-background-warning);border-radius:4px;color:var(--color-text-warning);display:inline-block">TBPV: compaction, runoff channelling, 25–40yr</div>
+      </div>
+
+      <!-- Crop albedo synergy -->
+      <div class="rc" style="border-top:3px solid #854F0B">
+        <div style="font-size:11px;font-weight:500;color:#854F0B;margin-bottom:5px">☀️ Albedo synergy</div>
+        <div style="font-size:20px;font-weight:500;font-family:var(--font-mono);color:#854F0B;margin-bottom:4px">+ve loop</div>
+        <div style="font-size:10px;color:var(--color-text-tertiary);margin-bottom:8px">crop canopy reflects energy to rear face</div>
+        <div style="font-size:11px;color:var(--color-text-secondary);line-height:1.5">Crop canopy between E-W rows reflects diffuse radiation onto VBPV rear faces, boosting generation. Snow cover amplifies this further in winter months — a synergistic effect that grows with crop density. Contributes to VBPV's winter performance crossover.</div>
+        <div style="font-size:10px;color:var(--color-text-tertiary);margin-top:8px;line-height:1.4">Szarek et al. (2026) · Applied Energy · University of Turku</div>
+        <div style="font-size:10px;margin-top:4px;padding:3px 7px;background:var(--color-background-secondary);border-radius:4px;color:var(--color-text-secondary);display:inline-block">TBPV: no rear-face crop albedo path</div>
+      </div>
+
+      <!-- BMV land / Leave no trace -->
+      <div class="rc" style="border-top:3px solid #993556">
+        <div style="font-size:11px;font-weight:500;color:#993556;margin-bottom:5px">🏡 BMV preservation</div>
+        <div style="font-size:20px;font-weight:500;font-family:var(--font-mono);color:#993556;margin-bottom:4px">"Leave no trace"</div>
+        <div style="font-size:10px;color:var(--color-text-tertiary);margin-bottom:8px">reversible · soil baseline maintained</div>
+        <div style="font-size:11px;color:var(--color-text-secondary);line-height:1.5">VBPV driven-pile foundations leave no concrete in soil. "Leave no trace" planning condition: baseline MP soil assessment at commissioning + annual drip-line monitoring + soil report at decommissioning. Full reversibility supports BMV Grade 1–3a land classification.</div>
+        <div style="font-size:10px;color:var(--color-text-tertiary);margin-top:8px;line-height:1.4">NPPF BMV protection · Paul Wright (leave no trace methodology) · Alex DePillis (drip-line monitoring)</div>
+        <div style="font-size:10px;margin-top:4px;padding:3px 7px;background:var(--color-background-warning);border-radius:4px;color:var(--color-text-warning);display:inline-block">TBPV: compacted soil, concrete bases, 25–40yr</div>
+      </div>
+    </div>
+
+    <!-- SFI / Subsidy note -->
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 14px;margin-bottom:10px;font-size:11px;color:var(--color-text-secondary);line-height:1.6">
+      <strong style="color:var(--color-text-primary)">Sustainable Farming Incentive (SFI) compatibility:</strong> VBPV's continued agricultural use may support ongoing SFI scheme eligibility — subject to Natural England and DEFRA guidance applicable at the time of application. TBPV projects typically cannot maintain SFI payments as agricultural activity ceases. This income stream is not modelled above but could represent a further £40–150/ha/yr depending on actions selected. Verify current SFI action rates at <a href="https://www.gov.uk/guidance/find-out-about-the-sustainable-farming-incentive" target="_blank" style="color:var(--color-text-info)">gov.uk/sfi</a>.
+    </div>
+
+    <div style="font-size:10px;color:var(--color-text-tertiary);line-height:1.5">
+      Crop income is indicative. Actual farm income depends on crop type, rotation, yield, commodity prices, and subsidy regime. Use Farm Business Survey (FBS) regional averages or a site-specific farm business assessment for formal representations. Agricultural income retention: Szarek et al. 2026 (70–85% at 8–12m pitch). Wind speed reduction: Williams, Hashad &amp; Zhang (2026), Agricultural and Forest Meteorology. Soil structure: VBPV allows continued annual cultivation; TBPV prevents cultivation and concentrates rainfall runoff for the full project lifetime. Canopy APV systems may achieve higher crop retention — consult Dual Harvest Agrivoltaics Limited for site-specific assessment: <a href="https://harvestingthesuntwice.org" target="_blank" style="color:var(--color-text-info)">harvestingthesuntwice.org</a>
+    </div>
+  </div>
+
+  <!-- ═══════════ TAB 4: BESS ═══════════ -->
+  <div id="t-bess" class="tab-panel">
+    <div class="print-section-header">
+      <span class="print-section-header-title">Module 4 — BESS Analysis</span>
+      <span class="print-section-header-page">VBPV-UK-ASSET-2026-05-01-001-V3</span>
+    </div>
+    <div class="info-box mb-14">
+      <div class="info-box-title">BESS sizing and payback model</div>
+      <div class="info-box-text">TBPV generates 61% of output in the low-demand midday window — requiring substantial battery storage to reach peak markets. VBPV's peak-aligned output needs significantly less storage. This model calculates BESS capital cost, annual revenue from peak-spreading, and simple payback for each configuration. Price spread used from the Revenue tab.</div>
+    </div>
+    <div class="g4 mb-14">
+      <div class="pi"><label>BESS installed cost (£/kWh)</label><input type="number" id="b-cost" value="100" min="50" step="10"></div>
+      <div class="pi"><label>TBPV shift fraction (%)</label><input type="number" id="b-tfr" value="35" min="5" max="80" step="5"></div>
+      <div class="pi"><label>VBPV shift fraction (%)</label><input type="number" id="b-vfr" value="15" min="0" max="50" step="5"></div>
+      <div class="pi"><label>System lifetime (years)</label><input type="number" id="b-life" value="15" min="5" max="30" step="1"></div>
+    </div>
+    <div class="g4 mb-14">
+      <div class="mc" style="border-top:2px solid #0F6E56"><div class="lbl">VBPV BESS capacity</div><div class="big cv" id="b-v-mwh">—</div><div class="sm">MWh · daily cycling basis</div></div>
+      <div class="mc" style="border-top:2px solid #BA7517"><div class="lbl">TBPV BESS capacity</div><div class="big ct" id="b-t-mwh">—</div><div class="sm">MWh · daily cycling basis</div></div>
+      <div class="mc" style="border-top:2px solid #534AB7"><div class="lbl">CAPEX saving (VBPV)</div><div class="big" style="color:#534AB7" id="b-save">—</div><div class="sm">£M less BESS capital vs TBPV</div></div>
+      <div class="mc" style="border-top:2px solid var(--color-border-secondary)"><div class="lbl">Price spread (ToU tab)</div><div class="big" id="b-spread">—</div><div class="sm">£/MWh evening peak − daytime</div></div>
+    </div>
+    <div class="g2 mb-14">
+      <div class="rc" style="border-top:3px solid #0F6E56">
+        <div style="font-size:11px;font-weight:500;color:#0F6E56;margin-bottom:7px">VBPV + BESS economics</div>
+        <div class="s3">
+          <div class="smc"><div class="lbl">BESS CAPEX</div><div class="med cv" id="b-v-cx">—</div><div class="sm">£M outlay at yr 0</div></div>
+          <div class="smc"><div class="lbl">Annual revenue</div><div class="med cv" id="b-v-rv">—</div><div class="sm">£k/yr peak-spreading</div></div>
+          <div class="smc"><div class="lbl">Simple payback</div><div class="med cv" id="b-v-pb">—</div><div class="sm">years</div></div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:center"><div class="vsep"></div></div>
+      <div class="rc" style="border-top:3px solid #BA7517">
+        <div style="font-size:11px;font-weight:500;color:#854F0B;margin-bottom:7px">TBPV + BESS economics</div>
+        <div class="s3">
+          <div class="smc"><div class="lbl">BESS CAPEX</div><div class="med ct" id="b-t-cx">—</div><div class="sm">£M outlay at yr 0</div></div>
+          <div class="smc"><div class="lbl">Annual revenue</div><div class="med ct" id="b-t-rv">—</div><div class="sm">£k/yr peak-spreading</div></div>
+          <div class="smc"><div class="lbl">Simple payback</div><div class="med ct" id="b-t-pb">—</div><div class="sm">years</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="info-alert mb-14">
+      <strong>How to read the cashflow chart:</strong> Both lines start negative (CAPEX outlay at year 0). A <em>higher position means better</em> — either less capital spent or more recovered. VBPV starts higher because it needs significantly less BESS capital. Both lines cross zero (break-even) at approximately the same year. After break-even, TBPV rises faster because its larger BESS generates more annual peak-spreading revenue — but required 2–3× more upfront investment to get there.
+    </div>
+    <div class="cc">
+      <div style="font-size:12px;font-weight:500;margin-bottom:4px">BESS cumulative cashflow — <span id="bess-life-lbl">15</span>-year project life</div>
+      <div style="display:flex;gap:12px;font-size:11px;color:var(--color-text-secondary);margin-bottom:8px;align-items:center;flex-wrap:wrap">
+        <span style="display:flex;align-items:center;gap:4px"><span style="width:18px;height:3px;background:#0F6E56;display:inline-block;border-radius:2px"></span> VBPV + BESS (lower CAPEX)</span>
+        <span style="display:flex;align-items:center;gap:4px"><span style="width:18px;height:3px;background:#BA7517;display:inline-block;border-radius:2px"></span> TBPV + BESS (higher CAPEX)</span>
+        <span style="font-size:10px;color:var(--color-text-tertiary)">· CAPEX annotated at year 0 · dashed = break-even</span>
+      </div>
+      <div style="position:relative;height:270px"><canvas id="ch-bess" role="img" aria-label="BESS cumulative cashflow VBPV vs TBPV over project lifetime with CAPEX annotations">BESS cashflow.</canvas></div>
+      <div style="font-size:10px;color:var(--color-text-tertiary);margin-top:8px;line-height:1.5">BESS cost reference: £80–200/kWh installed (UK utility-scale 2025–26). Default £100/kWh reflects competitive LFP procurement — Ember (Oct 2025): all-in project CAPEX ~$125/kWh; BloombergNEF (2025): battery pack prices ~$108/kWh. UK-specific projects with higher BOS/grid connection costs may trend toward the upper end of range. TBPV shift fraction 35% = 61% midday output minus ~26% direct grid consumption. VBPV 15% = residual daytime output not captured at peak. Round-trip efficiency: 85% throughout. Simple payback shown — NPV analysis recommended for investment decisions. Next2Sun BESS field data referenced (percentage figure independently unverified).</div>
+    </div>
+  </div>
+
+  <!-- SHARED DISCLAIMER -->
+  <div class="warn-box" style="margin-top:20px">
+    Indicative modelling tool. VBPV density model: 1,950÷pitch kWp/ha (first-principles: Huasun M6 470W, 2.41m bay, N2S Standard single panel). TBPV: 783 kWp/ha reference (30° tilt, 2m wide tables, 6m row pitch, GCR 0.33 — representative UK utility-scale). Yield data: BifacialMAX validated runs, London 51.51°N, June 2026 (TBPV: 1,118 kWh/kWp/yr; VBPV N2S Standard: 934 kWh/kWp/yr; albedo 0.20, HJT 70% bifaciality, P=12m). Revenue model applies normalised hourly profiles — not site-specific dispatch modelling. DC:AC ratio fixed at 1.10 throughout. Not a substitute for a site-specific Energy Yield Assessment (EYA) or full financial model.
+  </div>
+
+</main>
+
+<!-- ══ CAMPAIGN FOOTER ══ -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-refs">
+      [1] Badran &amp; Dhimish (2024) · Comprehensive study on vertical bifacial PV: a UK case study · Int. J. Low-Carbon Technologies, Oxford Academic &nbsp;·&nbsp;
+      [2] Szarek et al. (2026) · Methodological workflow to maximise solar energy in low-voltage grids · Applied Energy, University of Turku &nbsp;·&nbsp;
+      [3] BifacialMAX validated runs, London 51.51°N, June 2026: TBPV 30°/S 1,118 kWh/kWp/yr · VBPV N2S Standard 934 kWh/kWp/yr · albedo 0.20, HJT 70% bifaciality, P=12m &nbsp;·&nbsp;
+      [4] Schüler et al. (2026) · Löffingen Agri-Solar Park · IPV Conference 2026 · BESS: 1,288 kWh / 3.3 MWp VBPV = 390 kWh/MWp field-verified &nbsp;·&nbsp;
+      Document: VBPV-UK-ASSET-2026-05-01-001-V3
+    </div>
+    <div class="footer-links">
+      <a href="https://harvestingthesuntwice.org" target="_blank">harvestingthesuntwice.org</a>
+      <a href="mailto:harvestingthesuntwice@gmail.com">harvestingthesuntwice@gmail.com</a>
+      <span style="font-size:11px;color:var(--color-text-tertiary)">© 2026 Dual Harvest Agrivoltaics Ltd</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const LOCS=[
+  {id:'spalding',name:'Spalding, Lincolnshire',tbpv:1082,vbpv:909},
+  {id:'lincoln',name:'Lincoln',tbpv:1069,vbpv:898},
+  {id:'peterborough',name:'Peterborough',tbpv:1087,vbpv:912},
+  {id:'york',name:'York (B&D study site, 53.9°N)',tbpv:1050,vbpv:884},
+  {id:'cambridge',name:'Cambridge',tbpv:1097,vbpv:920},
+  {id:'norwich',name:'Norwich',tbpv:1078,vbpv:905},
+  {id:'london',name:'London',tbpv:1118,vbpv:934},
+  {id:'birmingham',name:'Birmingham',tbpv:1064,vbpv:895},
+  {id:'leeds',name:'Leeds',tbpv:1044,vbpv:879},
+  {id:'manchester',name:'Manchester',tbpv:1007,vbpv:851},
+  {id:'bristol',name:'Bristol',tbpv:1092,vbpv:913},
+  {id:'southampton',name:'Southampton',tbpv:1175,vbpv:978},
+  {id:'cardiff',name:'Cardiff',tbpv:1071,vbpv:901},
+  {id:'newcastle',name:'Newcastle',tbpv:988,vbpv:837},
+  {id:'edinburgh',name:'Edinburgh',tbpv:942,vbpv:804},
+];
+const PR={
+  annual:{tbpv:[0,0,0,0,0,1,3,12,28,52,70,83,91,93,87,74,56,35,15,4,1,0,0,0],vbpv:[0,0,0,0,0,1,4,15,45,72,65,52,40,44,58,72,78,68,42,16,3,0,0,0],dem:[35,30,27,25,26,32,48,68,80,82,80,78,76,74,74,78,85,92,98,95,85,72,57,44]},
+  summer:{tbpv:[0,0,0,0,0,2,8,22,42,62,78,90,96,97,91,79,62,42,22,8,2,0,0,0],vbpv:[0,0,0,0,0,2,9,28,62,82,72,56,42,48,65,82,88,75,48,20,5,0,0,0],dem:[30,26,24,23,24,30,46,65,75,76,74,72,70,68,70,74,80,87,92,89,80,68,52,38]},
+  winter:{tbpv:[0,0,0,0,0,0,0,2,10,22,32,38,40,38,30,20,10,3,0,0,0,0,0,0],vbpv:[0,0,0,0,0,0,0,4,18,32,28,22,16,20,26,32,30,22,12,3,0,0,0,0],dem:[42,38,35,33,35,40,55,74,88,90,88,85,82,80,82,88,95,100,100,96,90,80,65,52]},
+};
+const TM=[2.5,4.2,7.9,10.7,13.3,14.3,13.0,11.0,8.6,5.6,3.2,2.0];const TMS=TM.reduce((a,b)=>a+b,0);
+const VM=[3.8,5.4,8.0,9.7,11.6,12.4,11.6,10.0,8.8,6.6,4.9,3.1];const VMS=VM.reduce((a,b)=>a+b,0);
+const MO=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const WIN=[0,1,9,10,11];
+const HOURS=Array.from({length:24},(_,i)=>(i<10?'0':'')+i+':00');
+const AC_DC=1.1,TD=783,HRS=8760,RTE=0.85;
+let mode='mw',loc='london',pitch=10,seas='annual';
+const dk=window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches;
+const C={
+  v:dk?'#5DCAA5':'#0F6E56',
+  t:dk?'#FAC775':'#BA7517',
+  d:dk?'#AFA9EC':'#534AB7',
+  g:dk?'rgba(255,255,255,.04)':'rgba(0,0,0,.04)',
+  tk:dk?'#B4B2A9':'#5F5E5A',
+  bg:dk?'#2C2C2A':'#F5F4EF',
+  th:dk?'#F1EFE8':'#1C1C1A',
+  tb:dk?'#B4B2A9':'#5F5E5A',
+  bd:dk?'#444441':'#D3D1C7',
+  ws:dk?'rgba(93,202,165,.07)':'rgba(15,110,86,.06)'
+};
+const tt={backgroundColor:C.bg,titleColor:C.th,bodyColor:C.tb,borderColor:C.bd,borderWidth:.5,padding:10,titleFont:{size:12,family:'monospace'},bodyFont:{size:12,family:'monospace'}};
+const ax={grid:{color:C.g},ticks:{color:C.tk,font:{size:12}},border:{display:false}};
+
+// Populate location selector
+const selEl=document.getElementById('loc-sel');
+LOCS.forEach(l=>{const o=document.createElement('option');o.value=l.id;o.textContent=l.name;if(l.id==='london')o.selected=true;selEl.appendChild(o);});
+
+function gL(){return LOCS.find(x=>x.id===loc);}
+function fmt(n,d=0){return Number(n.toFixed(d)).toLocaleString('en-GB');}
+function vden(p){return Math.round(1950/p);}
+function wSum(a,s,e){let t=0;for(let i=s;i<=e;i++)t+=a[i];return t;}
+function vFactor(prof,prices){const t=prof.reduce((a,b)=>a+b,0);return t?prof.reduce((s,v,i)=>s+v*prices[i],0)/t:0;}
+function getPrices(){
+  const pm=+document.getElementById('r-morn').value||80;
+  const pd=+document.getElementById('r-day').value||45;
+  const pe=+document.getElementById('r-eve').value||90;
+  const pn=+document.getElementById('r-night').value||40;
+  const p=Array(24).fill(pn);
+  for(let i=6;i<=9;i++)p[i]=pm;
+  for(let i=10;i<=15;i++)p[i]=pd;
+  for(let i=16;i<=20;i++)p[i]=pe;
+  return p;
+}
+
+function sP(p){pitch=p;document.getElementById('pitch-sl').value=p;uPitch();compute();}
+function uPitch(){
+  document.getElementById('pitch-val').textContent=pitch+'m';
+  const pb=document.getElementById('pitch-badge');
+  if(pitch<10){pb.className='badge bw';pb.textContent='Check machinery access';}
+  else if(pitch<=14){pb.className='badge bg';pb.textContent='Agrivoltaic optimum range';}
+  else{pb.className='badge bg';pb.textContent='Wide — excellent crop access';}
+  [8,10,12,16].forEach(p=>{const b=document.getElementById('ps'+p);if(b)b.className='sb'+(p===pitch?' on':'');});
+}
+
+function compute(){
+  const l=gL();const den=vden(pitch);
+  const inp=parseFloat(document.getElementById('p-inp').value)||0;
+  if(inp<=0)return;
+  let mvAC,mtAC,hav,hat;
+  if(mode==='mw'){mvAC=inp;mtAC=inp;hav=(inp*AC_DC*1000)/den;hat=(inp*AC_DC*1000)/TD;}
+  else{hav=inp;hat=inp;mvAC=(inp*den/1000)/AC_DC;mtAC=(inp*TD/1000)/AC_DC;}
+  const mvp=mvAC*AC_DC,mtp=mtAC*AC_DC;
+  const mwv=mvp*1000*l.vbpv/1000,mwt=mtp*1000*l.tbpv/1000;
+  const cfv=mwv/(mvAC*HRS)*100,cft=mwt/(mtAC*HRS)*100;
+
+  document.getElementById('dc-cap').textContent=(mvAC*AC_DC).toFixed(2)+' MWp';
+  document.getElementById('v-den').textContent=den;
+  if(mode==='mw'){
+    document.getElementById('vr-l').textContent='Land required';
+    document.getElementById('tr-l').textContent='Land required';
+    document.getElementById('v-pri').textContent=fmt(hav,1)+' ha';
+    document.getElementById('t-pri').textContent=fmt(hat,1)+' ha';
+    document.getElementById('v-sub').textContent=pitch+'m pitch · '+den+' kWp/ha · DC:AC 1.10';
+    document.getElementById('t-sub').textContent='30° tilt · 783 kWp/ha · 6m pitch · DC:AC 1.10';
+    const d=hav-hat;
+    document.getElementById('c-l1').textContent='Land differential';
+    const cl=document.getElementById('c-land');cl.textContent=(d>=0?'+':'')+fmt(d,1)+' ha';cl.style.color=d>=0?'#E24B4A':C.v;
+    document.getElementById('c-land-s').textContent=d>=0?'VBPV needs '+fmt(d,1)+' more ha — offset by dual-use agricultural value':'VBPV needs '+fmt(Math.abs(d),1)+' fewer ha for same MW';
+  } else {
+    document.getElementById('vr-l').textContent='Max AC capacity achievable';
+    document.getElementById('tr-l').textContent='Max AC capacity achievable';
+    document.getElementById('v-pri').textContent=fmt(mvAC,2)+' MW';
+    document.getElementById('t-pri').textContent=fmt(mtAC,2)+' MW';
+    document.getElementById('v-sub').textContent=pitch+'m pitch · '+den+' kWp/ha · DC:AC 1.10';
+    document.getElementById('t-sub').textContent='783 kWp/ha · 30° tilt · 6m pitch · DC:AC 1.10';
+    const d=mvAC-mtAC;
+    document.getElementById('c-l1').textContent='Capacity differential';
+    const cl=document.getElementById('c-land');cl.textContent=(d>=0?'+':'')+fmt(d,2)+' MW';cl.style.color=d>=0?C.v:'#E24B4A';
+    document.getElementById('c-land-s').textContent=d>=0?'VBPV achieves more MW from same land at this pitch':'Offset by dual-use agricultural and grid value';
+  }
+  document.getElementById('v-mwh').textContent=fmt(mwv);
+  document.getElementById('t-mwh').textContent=fmt(mwt);
+  document.getElementById('v-cf').textContent=cfv.toFixed(1)+'%';
+  document.getElementById('t-cf').textContent=cft.toFixed(1)+'%';
+  const dmEl=document.getElementById('c-mwh'),dif=mwv-mwt;
+  dmEl.textContent=(dif>=0?'+':'')+fmt(dif)+' MWh/yr';dmEl.style.color=dif>=0?C.v:'#E24B4A';
+  document.getElementById('c-mwh-s').textContent=dif>=0?'VBPV generates more total MWh':'TBPV generates more MWh — at cost of agricultural land use';
+  document.getElementById('c-homes').textContent=fmt(Math.round(Math.abs(mwv)/3.1));
+  const vn=document.getElementById('v-note');
+  if(pitch<10)vn.textContent='⚠ Below 10m pitch — verify compatibility with farm machinery working width before specification.';
+  else if(pitch===12)vn.textContent='12m pitch: BifacialMAX reference geometry (H 3m, W 2m). Validated against London irradiance data, April 2026.';
+  else if(pitch>=16)vn.textContent='Wide pitch suitable for large arable machinery. Szarek et al. 2026 confirms 79.9–82.5% crop irradiance retention.';
+  else vn.textContent='Pitch within Szarek et al. 2026 validated range. 8m confirmed as minimum for crop irradiance compatibility.';
+
+  uPeaks();
+  const snetEl=document.getElementById('s-net');
+  const snet=l.vbpv-l.tbpv;
+  snetEl.textContent=(snet>=0?'+':'')+fmt(snet)+' kWh/kWp/yr';
+  snetEl.style.color=snet>=0?C.v:'#E24B4A';
+  uRevenue(l,mwv,mwt,hav,hat);
+  uBess(mwv,mwt);
+  uCharts(l,mwv,mwt);
+}
+
+function uPeaks(){
+  const v=PR[seas].vbpv,t=PR[seas].tbpv;
+  const vt=v.reduce((a,b)=>a+b,0),tt=t.reduce((a,b)=>a+b,0);
+  function sR(bv,bt,pv,pt,dv,vp,tp,col){
+    const mx=Math.max(vp,tp,1);
+    document.getElementById(bv).style.width=Math.min(100,vp/mx*100)+'%';
+    document.getElementById(bt).style.width=Math.min(100,tp/mx*100)+'%';
+    document.getElementById(pv).textContent=vp.toFixed(1)+'%';
+    document.getElementById(pt).textContent=tp.toFixed(1)+'%';
+    const d=vp-tp,el=document.getElementById(dv);
+    el.textContent=(d>=0?'+':'')+d.toFixed(1)+'pp vs TBPV';el.style.color=col(d);
+  }
+  const gn=d=>d>0?C.v:'#E24B4A';
+  const am=d=>d<0?C.t:'#639922';
+  const pu=d=>d>0?(dk?'#AFA9EC':'#534AB7'):'#E24B4A';
+  sR('bm-v','bm-t','pm-v','pm-t','dm-v',wSum(v,6,10)/vt*100,wSum(t,6,10)/tt*100,gn);
+  sR('be-v','be-t','pe-v','pe-t','de-v',wSum(v,16,20)/vt*100,wSum(t,16,20)/tt*100,gn);
+  sR('bd-v','bd-t','pd-v','pd-t','dd-v',wSum(v,11,15)/vt*100,wSum(t,11,15)/tt*100,am);
+  sR('bc-v','bc-t','pc-v','pc-t','dc-v',(wSum(v,6,10)+wSum(v,16,20))/vt*100,(wSum(t,6,10)+wSum(t,16,20))/tt*100,pu);
+}
+
+function uRevenue(l,mwv,mwt,hav,hat){
+  const prices=getPrices();
+  const vfA=vFactor(PR.annual.vbpv,prices),tfA=vFactor(PR.annual.tbpv,prices);
+  const vfW=vFactor(PR.winter.vbpv,prices),tfW=vFactor(PR.winter.tbpv,prices);
+  const pct=(vfA/tfA-1)*100;const rv=mwv*vfA,rt=mwt*tfA;const gap=rv-rt;
+  document.getElementById('rv-vf').textContent='£'+vfA.toFixed(2);
+  document.getElementById('rv-tf').textContent='£'+tfA.toFixed(2);
+  const rpEl=document.getElementById('rv-prem');rpEl.textContent=(pct>=0?'+':'')+pct.toFixed(1)+'%';rpEl.style.color=pct>=0?C.v:'#E24B4A';
+  const rgEl=document.getElementById('rv-gap');rgEl.textContent=(gap>=0?'+':'')+'£'+fmt(Math.round(Math.abs(gap)));rgEl.style.color=gap>=0?C.v:'#E24B4A';
+  document.getElementById('rv-v-ann').textContent='£'+fmt(Math.round(rv));
+  document.getElementById('rv-t-ann').textContent='£'+fmt(Math.round(rt));
+  document.getElementById('rv-v-mwh').textContent=fmt(mwv);
+  document.getElementById('rv-t-mwh').textContent=fmt(mwt);
+  document.getElementById('rv-v-ef').textContent='£'+vfA.toFixed(2);
+  document.getElementById('rv-t-ef').textContent='£'+tfA.toFixed(2);
+  document.getElementById('rv-v-wvf').textContent='£'+vfW.toFixed(2);
+  document.getElementById('rv-t-wvf').textContent='£'+tfW.toFixed(2);
+
+  // Agricultural value calculations
+  const cropHa=+document.getElementById('a-crop').value||350;
+  const retPct=(+document.getElementById('a-ret').value||78)/100;
+  document.getElementById('ag-ret-lbl').textContent=Math.round(retPct*100);
+
+  // Solar income per ha = total solar revenue / site hectares for that config
+  const vSolPerHa=hav>0?rv/hav:0;
+  const tSolPerHa=hat>0?rt/hat:0;
+
+  // Crop income per ha (VBPV gets retention%, TBPV gets 0)
+  const vCropPerHa=cropHa*retPct;
+  const tCropPerHa=0;
+
+  // Combined per ha
+  const vCombPerHa=vSolPerHa+vCropPerHa;
+  const tCombPerHa=tSolPerHa+tCropPerHa;
+  const advPerHa=vCombPerHa-tCombPerHa;
+
+  // Project-scale crop income (based on VBPV site area)
+  const vCropTotal=hav*cropHa*retPct;
+  const vTotalIncome=rv+vCropTotal;
+
+  // Update DOM
+  const agGreen=dk?'#5DCAA5':'#3B6D11';
+  const agAdv=document.getElementById('ag-adv');
+  agAdv.textContent=(advPerHa>=0?'+':'')+'£'+fmt(Math.round(advPerHa));
+  agAdv.style.color=advPerHa>=0?agGreen:'#E24B4A';
+  document.getElementById('ag-v-comb').textContent='£'+fmt(Math.round(vCombPerHa));
+  document.getElementById('ag-t-comb').textContent='£'+fmt(Math.round(tCombPerHa));
+  document.getElementById('ag-total').textContent='£'+fmt(Math.round(vTotalIncome));
+  document.getElementById('ag-v-sol').textContent='£'+fmt(Math.round(rv));
+  document.getElementById('ag-v-crop').textContent='£'+fmt(Math.round(vCropTotal));
+  document.getElementById('ag-v-tot').textContent='£'+fmt(Math.round(vTotalIncome));
+  document.getElementById('ag-t-sol').textContent='£'+fmt(Math.round(rt));
+  document.getElementById('ag-t-tot').textContent='£'+fmt(Math.round(rt));
+}
+
+function uBess(mwv,mwt){
+  const bc=+document.getElementById('b-cost').value||100;
+  const btf=(+document.getElementById('b-tfr').value||35)/100;
+  const bvf=(+document.getElementById('b-vfr').value||15)/100;
+  const spread=(+document.getElementById('r-eve').value||90)-(+document.getElementById('r-day').value||45);
+  const life=+document.getElementById('b-life').value||15;
+  document.getElementById('bess-life-lbl').textContent=life;
+  const vBm=mwv/365*bvf,tBm=mwt/365*btf;
+  const vCx=vBm*1000*bc,tCx=tBm*1000*bc;
+  const vRv=mwv*bvf*RTE*spread,tRv=mwt*btf*RTE*spread;
+  const vPb=vRv>0?vCx/vRv:99,tPb=tRv>0?tCx/tRv:99;
+  document.getElementById('b-v-mwh').textContent=vBm.toFixed(1)+' MWh';
+  document.getElementById('b-t-mwh').textContent=tBm.toFixed(1)+' MWh';
+  const svEl=document.getElementById('b-save');svEl.textContent='£'+((tCx-vCx)/1e6).toFixed(2)+'M';svEl.style.color=tCx>vCx?C.v:'#E24B4A';
+  document.getElementById('b-spread').textContent='£'+spread+'/MWh';
+  document.getElementById('b-v-cx').textContent='£'+(vCx/1e6).toFixed(2)+'M';
+  document.getElementById('b-t-cx').textContent='£'+(tCx/1e6).toFixed(2)+'M';
+  document.getElementById('b-v-rv').textContent='£'+fmt(Math.round(vRv/1000))+'k';
+  document.getElementById('b-t-rv').textContent='£'+fmt(Math.round(tRv/1000))+'k';
+  document.getElementById('b-v-pb').textContent=vPb<30?vPb.toFixed(1)+' yr':'>30 yr';
+  document.getElementById('b-t-pb').textContent=tPb<30?tPb.toFixed(1)+' yr':'>30 yr';
+}
+
+// Charts
+let CHS={};
+function dC(id){if(CHS[id]){try{CHS[id].destroy();}catch(e){}delete CHS[id];}}
+
+const shP={id:'sh',beforeDatasetsDraw(ch){
+  const{ctx,scales:{x,y}}=ch;if(!x||!y)return;
+  const sh=(s,e,col)=>{const x1=x.getPixelForValue(s),x2=x.getPixelForValue(e);ctx.save();ctx.fillStyle=col;ctx.fillRect(x1,y.top,x2-x1,y.bottom-y.top);ctx.restore();};
+  sh(6,10,C.ws);sh(16,20,C.ws);
+}};
+
+const bessAnnotPlugin={
+  id:'bA',
+  afterDatasetsDraw(ch){
+    if(!ch.options.bessAnnot)return;
+    const{vCx,tCx,Cv,Ct}=ch.options.bessAnnot;
+    const{ctx,scales:{x,y},chartArea}=ch;if(!x||!y)return;
+    const x0=x.getPixelForValue(0);
+    const yV=y.getPixelForValue(-vCx),yT=y.getPixelForValue(-tCx);
+    ctx.save();
+    ctx.font='500 11px monospace';ctx.textAlign='left';
+    ctx.fillStyle=Cv;ctx.fillText('VBPV CAPEX: \u2212\u00A3'+(vCx/1e6).toFixed(2)+'M',x0+10,yV-8);
+    ctx.fillStyle=Ct;ctx.fillText('TBPV CAPEX: \u2212\u00A3'+(tCx/1e6).toFixed(2)+'M',x0+10,yT+18);
+    ctx.beginPath();ctx.arc(x0,yV,5,0,Math.PI*2);ctx.fillStyle=Cv;ctx.fill();
+    ctx.beginPath();ctx.arc(x0,yT,5,0,Math.PI*2);ctx.fillStyle=Ct;ctx.fill();
+    if(Math.abs(yV-yT)>30){
+      const mx=x0-24;
+      ctx.strokeStyle=dk?'rgba(255,255,255,.18)':'rgba(0,0,0,.14)';
+      ctx.lineWidth=1;ctx.setLineDash([3,3]);
+      ctx.beginPath();ctx.moveTo(mx,yV);ctx.lineTo(mx,yT);ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.font='10px monospace';
+      ctx.fillStyle=dk?'rgba(255,255,255,.45)':'rgba(0,0,0,.38)';
+      ctx.textAlign='center';
+      ctx.fillText('gap',mx,(yV+yT)/2-7);
+      ctx.fillText('\u00A3'+(Math.abs(tCx-vCx)/1e6).toFixed(2)+'M',mx,(yV+yT)/2+8);
+    }
+    ctx.restore();
+  }
+};
+
+const z0P={id:'z0',afterDatasetsDraw(ch){
+  const{ctx,scales:{y},chartArea}=ch;if(!y)return;
+  const z=y.getPixelForValue(0);
+  if(z<chartArea.top||z>chartArea.bottom)return;
+  ctx.save();
+  ctx.strokeStyle=dk?'rgba(255,255,255,.25)':'rgba(0,0,0,.2)';
+  ctx.lineWidth=1.5;ctx.setLineDash([5,4]);
+  ctx.beginPath();ctx.moveTo(chartArea.left,z);ctx.lineTo(chartArea.right,z);ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.font='500 11px monospace';
+  ctx.fillStyle=dk?'rgba(255,255,255,.4)':'rgba(0,0,0,.35)';
+  ctx.textAlign='right';
+  ctx.fillText('Break-even \u2014\u2014',chartArea.right-4,z-5);
+  ctx.restore();
+}};
+
+function uCharts(l,mwv,mwt){
+  // Daily profile chart
+  dC('d');
+  const dc=document.getElementById('ch-daily');
+  if(dc){CHS.d=new Chart(dc.getContext('2d'),{type:'line',plugins:[shP],data:{labels:HOURS,datasets:[
+    {label:'VBPV (E-W)',data:PR[seas].vbpv,borderColor:C.v,backgroundColor:'transparent',borderWidth:2.5,pointRadius:0,tension:.4,yAxisID:'y'},
+    {label:'TBPV (S-facing)',data:PR[seas].tbpv,borderColor:C.t,backgroundColor:'transparent',borderWidth:2,pointRadius:0,tension:.4,yAxisID:'y'},
+    {label:'Grid demand',data:PR[seas].dem,borderColor:C.d,backgroundColor:'transparent',borderWidth:1.5,pointRadius:0,tension:.4,borderDash:[5,4],yAxisID:'y2'},
+  ]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{...tt,callbacks:{label:ctx=>` ${ctx.dataset.label}: ${ctx.parsed.y}`}}},scales:{x:{...ax,ticks:{...ax.ticks,maxTicksLimit:9,autoSkip:true}},y:{...ax,min:0,max:105,position:'left',title:{display:true,text:'Normalised output',color:C.tk,font:{size:11}}},y2:{...ax,min:0,max:115,position:'right',grid:{display:false},title:{display:true,text:'Demand index',color:C.tk,font:{size:11}}}}}}); }
+
+  // Seasonal chart
+  dC('s');
+  const sc=document.getElementById('ch-seas');
+  if(sc){
+    const vMo=MO.map((_,i)=>Math.round(l.vbpv*VM[i]/VMS));
+    const tMo=MO.map((_,i)=>Math.round(l.tbpv*TM[i]/TMS));
+    const ratio=MO.map((_,i)=>+(vMo[i]/tMo[i]*100).toFixed(1));
+    const vCols=MO.map((_,i)=>WIN.includes(i)?(dk?'rgba(93,202,165,.85)':'rgba(15,110,86,.8)'):(dk?'rgba(93,202,165,.3)':'rgba(15,110,86,.35)'));
+    const tCols=MO.map((_,i)=>WIN.includes(i)?(dk?'rgba(250,199,117,.3)':'rgba(186,117,23,.35)'):(dk?'rgba(250,199,117,.85)':'rgba(186,117,23,.8)'));
+    const winShP={id:'ws',beforeDatasetsDraw(ch){
+      const{ctx,scales:{x,y}}=ch;if(!x||!y)return;
+      WIN.forEach(m=>{
+        const bMeta=ch.getDatasetMeta(0);if(!bMeta.data[m])return;
+        const bw=(bMeta.data[m].width||28)*1.2;const bx=x.getPixelForValue(m);
+        ctx.save();ctx.fillStyle=C.ws;ctx.fillRect(bx-bw/2,y.top,bw,y.bottom-y.top);ctx.restore();
+      });
+    }};
+    CHS.s=new Chart(sc.getContext('2d'),{type:'bar',plugins:[winShP],data:{labels:MO,datasets:[
+      {label:'VBPV kWh/kWp',data:vMo,backgroundColor:vCols,borderRadius:2,yAxisID:'y'},
+      {label:'TBPV kWh/kWp',data:tMo,backgroundColor:tCols,borderRadius:2,yAxisID:'y'},
+      {label:'VBPV/TBPV %',data:ratio,type:'line',borderColor:C.d,backgroundColor:'transparent',borderWidth:1.5,pointRadius:3,pointBackgroundColor:C.d,tension:.3,yAxisID:'y2'},
+    ]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{...tt,callbacks:{label:ctx=>ctx.dataset.yAxisID==='y2'?` Ratio: ${ctx.parsed.y}%`:` ${ctx.dataset.label}: ${ctx.parsed.y} kWh/kWp`}}},scales:{x:{...ax,ticks:{...ax.ticks,autoSkip:false,font:{size:10}}},y:{...ax,min:0,title:{display:true,text:'kWh/kWp',color:C.tk,font:{size:11}}},y2:{...ax,min:60,max:160,position:'right',grid:{display:false},ticks:{...ax.ticks,callback:v=>v+'%'},title:{display:true,text:'VBPV/TBPV %',color:C.tk,font:{size:11}}}}}}); }
+
+  // Revenue chart
+  dC('r');
+  const rc=document.getElementById('ch-rev');
+  if(rc){
+    const prices=getPrices();
+    const vfA=vFactor(PR.annual.vbpv,prices),tfA=vFactor(PR.annual.tbpv,prices);
+    const vfW=vFactor(PR.winter.vbpv,prices),tfW=vFactor(PR.winter.tbpv,prices);
+    const vfS=vFactor(PR.summer.vbpv,prices),tfS=vFactor(PR.summer.tbpv,prices);
+    const VFS=[vfW,vfW,vfA,vfA,vfS,vfS,vfS,vfS,vfA,vfA,vfW,vfW];
+    const TFS=[tfW,tfW,tfA,tfA,tfS,tfS,tfS,tfS,tfA,tfA,tfW,tfW];
+    const vRM=MO.map((_,i)=>Math.round(mwv*VM[i]/VMS*VFS[i]));
+    const tRM=MO.map((_,i)=>Math.round(mwt*TM[i]/TMS*TFS[i]));
+    CHS.r=new Chart(rc.getContext('2d'),{type:'bar',data:{labels:MO,datasets:[
+      {label:'VBPV £/yr',data:vRM,backgroundColor:dk?'rgba(93,202,165,.75)':'rgba(15,110,86,.75)',borderRadius:2},
+      {label:'TBPV £/yr',data:tRM,backgroundColor:dk?'rgba(250,199,117,.75)':'rgba(186,117,23,.75)',borderRadius:2},
+    ]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{...tt,callbacks:{label:ctx=>` ${ctx.dataset.label}: \u00A3${ctx.parsed.y.toLocaleString('en-GB')}`}}},scales:{x:{...ax,ticks:{...ax.ticks,autoSkip:false,font:{size:10}}},y:{...ax,min:0,ticks:{...ax.ticks,callback:v=>'\u00A3'+Math.round(v/1000)+'k'},title:{display:true,text:'Revenue £',color:C.tk,font:{size:11}}}}}}); }
+
+  // BESS cashflow chart
+  dC('b');
+  const bc2=document.getElementById('ch-bess');
+  if(bc2){
+    const bcost=+document.getElementById('b-cost').value||100;
+    const btf=(+document.getElementById('b-tfr').value||35)/100;
+    const bvf=(+document.getElementById('b-vfr').value||15)/100;
+    const spread=(+document.getElementById('r-eve').value||90)-(+document.getElementById('r-day').value||45);
+    const life=+document.getElementById('b-life').value||15;
+    const vCx=mwv/365*bvf*1000*bcost,tCx=mwt/365*btf*1000*bcost;
+    const vAn=mwv*bvf*RTE*spread,tAn=mwt*btf*RTE*spread;
+    const yrs=Array.from({length:life+1},(_,i)=>i);
+    CHS.b=new Chart(bc2.getContext('2d'),{
+      type:'line',plugins:[z0P,bessAnnotPlugin],
+      data:{labels:yrs,datasets:[
+        {label:'VBPV+BESS',data:yrs.map(y=>-vCx+vAn*y),borderColor:C.v,backgroundColor:'transparent',borderWidth:3,pointRadius:0,tension:.1},
+        {label:'TBPV+BESS',data:yrs.map(y=>-tCx+tAn*y),borderColor:C.t,backgroundColor:'transparent',borderWidth:2.5,pointRadius:0,tension:.1},
+      ]},
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        bessAnnot:{vCx,tCx,Cv:C.v,Ct:C.t},
+        interaction:{mode:'index',intersect:false},
+        plugins:{legend:{display:false},tooltip:{...tt,callbacks:{title:ctx=>'Year '+ctx[0].label,label:ctx=>` ${ctx.dataset.label}: \u00A3${(ctx.parsed.y/1e6).toFixed(2)}M`}}},
+        scales:{
+          x:{...ax,title:{display:true,text:'Year',color:C.tk,font:{size:12}},ticks:{...ax.ticks,font:{size:12}}},
+          y:{...ax,ticks:{color:C.tk,font:{size:12},maxTicksLimit:7,callback:v=>{const m=v/1e6;return(m>=0?'\u00A3':'\u2212\u00A3')+Math.abs(m).toFixed(1)+'M';}},title:{display:true,text:'Cumulative cashflow',color:C.tk,font:{size:11}}}
+        }
+      }
+    });
+  }
+}
+
+// Tab switching
+const TABS=['proj','seas','rev','bess'];
+function sT(id){
+  TABS.forEach(t=>{
+    const panel=document.getElementById('t-'+t);
+    const btn=document.getElementById('tn-'+t);
+    if(panel)panel.className='tab-panel'+(t===id?' active':'');
+    if(btn)btn.className='tab-btn'+(t===id?' on':'');
+  });
+  setTimeout(()=>Object.values(CHS).forEach(c=>{try{c.resize();}catch(e){}}),60);
+}
+
+// Event listeners
+document.getElementById('loc-sel').addEventListener('change',e=>{loc=e.target.value;compute();});
+document.getElementById('p-inp').addEventListener('input',compute);
+document.getElementById('btn-mw').addEventListener('click',()=>{
+  mode='mw';document.getElementById('btn-mw').classList.add('on');document.getElementById('btn-ha').classList.remove('on');
+  document.getElementById('inp-lbl').textContent='Target AC capacity';document.getElementById('inp-unit').textContent='MW';
+  document.getElementById('p-inp').value='17';compute();
+});
+document.getElementById('btn-ha').addEventListener('click',()=>{
+  mode='ha';document.getElementById('btn-ha').classList.add('on');document.getElementById('btn-mw').classList.remove('on');
+  document.getElementById('inp-lbl').textContent='Available site area';document.getElementById('inp-unit').textContent='ha';
+  document.getElementById('p-inp').value='15';compute();
+});
+document.getElementById('pitch-sl').addEventListener('input',e=>{pitch=parseInt(e.target.value);uPitch();compute();});
+['r-morn','r-day','r-eve','r-night','a-crop','a-ret'].forEach(id=>document.getElementById(id).addEventListener('input',compute));
+['b-cost','b-tfr','b-vfr','b-life'].forEach(id=>document.getElementById(id).addEventListener('input',()=>{
+  const l=gL();const inp=parseFloat(document.getElementById('p-inp').value)||17;const den=vden(pitch);
+  const mvAC=mode==='mw'?inp:(inp*den/1000)/AC_DC;
+  const mtAC=mode==='mw'?inp:(inp*TD/1000)/AC_DC;
+  const mwv=mvAC*AC_DC*1000*l.vbpv/1000,mwt=mtAC*AC_DC*1000*l.tbpv/1000;
+  uBess(mwv,mwt);uCharts(l,mwv,mwt);
+}));
+document.querySelectorAll('[data-s]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    seas=btn.dataset.s;
+    document.querySelectorAll('[data-s]').forEach(b=>b.classList.remove('on'));
+    btn.classList.add('on');
+    uPeaks();
+    if(CHS.d){CHS.d.data.datasets[0].data=PR[seas].vbpv;CHS.d.data.datasets[1].data=PR[seas].tbpv;CHS.d.data.datasets[2].data=PR[seas].dem;CHS.d.update('none');}
+  });
+});
+
+// Initialise
+uPitch();
+compute();
+
+// ── Print / Save PDF ──
+function printDashboard(){
+  // Populate cover page metadata
+  const now=new Date();
+  const dateStr=now.toLocaleDateString('en-GB',{day:'2-digit',month:'long',year:'numeric'})+
+    ' · '+now.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+  const locName=document.getElementById('loc-sel').options[document.getElementById('loc-sel').selectedIndex]?.text||'—';
+  const modeStr=mode==='mw'?'From MW capacity':'From site area (ha)';
+  const inputVal=document.getElementById('p-inp').value+(mode==='mw'?' MW AC':' ha');
+
+  const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
+  set('cover-date',dateStr);
+  set('cover-location',locName);
+  set('cover-mode',modeStr);
+  set('cover-input',inputVal);
+  set('cover-pitch',pitch+'m inter-row');
+  set('params-ref-date','Generated: '+dateStr);
+
+  // Params page — input parameters
+  set('p-loc',locName);
+  const l=gL();
+  set('p-vy',l.vbpv+' kWh/kWp/yr');
+  set('p-ty',l.tbpv+' kWh/kWp/yr');
+  set('p-pitch',pitch+'m (E-W inter-row)');
+  set('p-mode',modeStr);
+  set('p-inp2',inputVal);
+  const den=vden(pitch);
+  set('p-vden',den+' kWp/ha');
+
+  // Params page — Module 1 results (read from computed DOM)
+  const clone=(id)=>{const el=document.getElementById(id);return el?el.textContent.trim():'—';};
+  set('ps-v-land',clone('v-pri'));
+  set('ps-v-land-s',clone('v-sub'));
+  set('ps-t-land',clone('t-pri'));
+  set('ps-t-land-s',clone('t-sub'));
+  set('ps-v-mwh',clone('v-mwh')+' MWh/yr');
+  set('ps-t-mwh',clone('t-mwh')+' MWh/yr');
+  set('ps-v-cf',clone('v-cf')+'%');
+  set('ps-t-cf',clone('t-cf')+'%');
+  set('ps-land-diff',clone('c-land'));
+  set('ps-land-diff-s',clone('c-land-s'));
+  set('ps-mwh-diff',clone('c-mwh'));
+  set('ps-mwh-diff-s',clone('c-mwh-s'));
+  set('ps-homes',clone('c-homes'));
+
+  // Params page — Module 3 revenue (correct IDs)
+  set('ps-v-vf','£'+clone('rv-vf')+' /MWh');
+  set('ps-t-vf','£'+clone('rv-tf')+' /MWh');
+  set('ps-v-rev','£'+clone('rv-v-ann'));
+  set('ps-t-rev','£'+clone('rv-t-ann'));
+  set('ps-vf-prem',clone('rv-prem'));
+
+  // Params page — Module 4 BESS (correct IDs)
+  set('ps-v-bess',clone('b-v-mwh')+' MWh');
+  set('ps-t-bess',clone('b-t-mwh')+' MWh');
+  set('ps-v-cx',clone('b-v-cx'));
+  set('ps-t-cx',clone('b-t-cx'));
+  set('ps-v-brv',clone('b-v-rv')+'k/yr');
+  set('ps-t-brv',clone('b-t-rv')+'k/yr');
+  set('ps-v-pb',clone('b-v-pb')+' yr');
+  set('ps-t-pb',clone('b-t-pb')+' yr');
+  set('ps-bess-save',clone('b-save')+' less CAPEX vs TBPV');
+
+  // Also update footer doc ref
+  const footerRef=document.querySelector('.footer-refs');
+  if(footerRef&&footerRef.innerHTML.includes('V1'))
+    footerRef.innerHTML=footerRef.innerHTML.replace('001-V1','001-V2');
+
+  // 1. Force-show all tab panels so charts render
+  const panels=document.querySelectorAll('.tab-panel');
+  const prevClasses=[];
+  panels.forEach((p,i)=>{
+    prevClasses[i]=p.className;
+    p.className='tab-panel active';
+  });
+
+  // 2. Resize all Chart.js instances so canvases paint fully
+  Object.values(CHS).forEach(c=>{try{c.resize();}catch(e){}});
+
+  // 3. Short delay to allow canvas repaint, then open print dialog
+  setTimeout(()=>{
+    window.print();
+    // 4. Restore original tab state after dialog closes
+    panels.forEach((p,i)=>{p.className=prevClasses[i];});
+    const activeBtn=document.querySelector('.tab-btn.on');
+    if(activeBtn){
+      const tabId=activeBtn.id.replace('tn-','');
+      sT(tabId);
+    }
+    setTimeout(()=>Object.values(CHS).forEach(c=>{try{c.resize();}catch(e){}}),100);
+  },400);
+}
+</script>
+</body>
+</html>
