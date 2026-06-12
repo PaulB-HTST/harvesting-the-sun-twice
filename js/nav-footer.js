@@ -1,5 +1,5 @@
 // nav-footer.js — Updated 12/06/2026
-// Added: Pipeline Map gold CTA button
+// Added: Pipeline Map as standard nav link
 // Added: Analysis Tool nav link (dashboard.html)
 // Fixed: class names corrected to match style.css BEM conventions
 // This file is loaded by all pages via <script src="/js/nav-footer.js"></script>
@@ -18,6 +18,7 @@
     { href: '/sources.html',    label: 'Evidence',      id: 'sources' },
     { href: '/library.html',    label: 'Library',       id: 'library' },
     { href: '/faq.html',        label: 'FAQ',           id: 'faq' },
+    { href: '/map.html',        label: 'Pipeline Map',  id: 'map' },
   ];
 
   // ── Build nav HTML ──
@@ -39,7 +40,6 @@
         <div class="nav__links" aria-label="Main navigation">
           ${navLinks}
         </div>
-        <a href="/map.html" class="nav__cta nav__cta--map" style="background:#C9A227;color:#1a1a1a;border-color:#C9A227;">Pipeline Map</a>
         <a href="mailto:harvestingthesuntwice@gmail.com" class="nav__cta">Contact</a>
       </div>
     `;
