@@ -416,7 +416,7 @@ const ALC_LIMIT=500;
 async function fetchALCData() {
   const statusEl = document.getElementById('repd-status');
   if (statusEl) statusEl.textContent = 'Loading ALC data…';
-  const url = 'https://environment.data.gov.uk/spatialdata/agricultural-land-classification-provisional-england/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=Agricultural_Land_Classification_(Provisional)_(England)&outputFormat=application/json&srsName=EPSG:4326&count=2000';
+  const url = '/api/alc';
   try {
     const resp = await fetch(url);
     if (!resp.ok) throw new Error('HTTP ' + resp.status);
