@@ -643,9 +643,7 @@ document.getElementById('county-cbs').addEventListener('change',renderSolar);
 // ── Status filter checkboxes — use status codes ───────────────────────────────
 // (HTML has data-s="O" etc — map to codes)
 
-// ── File input wiring ─────────────────────────────────────────────────────────
-document.getElementById('csv-input').addEventListener('change',function(){handleCSVFile(this.files&&this.files[0]);});
-document.getElementById('alc-input').addEventListener('change',function(){handleALCFile(this.files&&this.files[0]);});
+// ── File input wiring ────────────────────────────────────────────────────────
 
 // ── Auto-load on startup ──────────────────────────────────────────────────────
 loadEmbeddedREPD();
