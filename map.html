@@ -413,44 +413,38 @@ function loadEmbeddedREPD(){
 const ALC_API='https://environment.data.gov.uk/spatialdata/agricultural-land-classification-provisional-england/ogc/features/v1/collections/Agricultural_Land_Classification_Provisional_England/items';
 const ALC_LIMIT=500;
 
-async function fetchALCData(){
-  const badge=document.getElementById('alc-badge') || {};
-  const statusEl=document.getElementById('repd-status') || {};
-  const alcStatus=document.getElementById('repd-status') || {};
-  badge.style.display='flex';
-  document.getElementById('alc-badge-msg') || {}.textContent='Fetching ALC data…';
-  statusEl.textContent='Fetching ALC from Natural England…';
-
-  try{
-    // Get total count first
-    const first=await fetch(ALC_API+'?limit=1&f=json');
-    const firstD=await first.json();
-    const total=firstD.numberMatched||0;
-    statusEl.textContent='Loading '+total+' ALC polygons…';
-
-    const allFeatures=[];
-    let offset=0;
-    while(offset<total){
-      const r=await fetch(ALC_API+'?limit='+ALC_LIMIT+'&offset='+offset+'&f=json');
-      const d=await r.json();
-      allFeatures.push(...(d.features||[]));
-      offset+=ALC_LIMIT;
-      const pct=Math.round(allFeatures.length/total*100);
-      document.getElementById('alc-badge-msg') || {}.textContent='Loading ALC… '+pct+'%';
-      if(!d.features||d.features.length<ALC_LIMIT)break;
+async function fetchALCData() {
+  const statusEl = document.getElementById('repd-status');
+  if (statusEl) statusEl.textContent = 'Loading ALC data…';
+  const url = 'https://environment.data.gov.uk/spatialdata/agricultural-land-classification-provisional-england/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=Agricultural_Land_Classification_(Provisional)_(England)&outputFormat=application/json&srsName=EPSG:4326&count=2000';
+  try {
+    const resp = await fetch(url);
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const data = await resp.json();
+    if (!data.features || data.features.length === 0) {
+      if (statusEl) statusEl.textContent = '✓ 6769 sites loaded (REPD Q1 2026) · ALC: no features returned';
+      return;
     }
-
-    renderALCFeatures(allFeatures);
-    badge.style.display='none';
-    setAlcStatus('✓ '+allFeatures.length+' ALC polygons loaded','ok');
-    statusEl.textContent='✓ ALC loaded: '+allFeatures.length+' polygons';
-    updateStats();
-  }catch(err){
-    badge.style.display='none';
-    statusEl.textContent='⚠ ALC auto-load failed — load manually with button ②';
-    alcStatus.textContent='Auto-load failed: '+err.message;
-    alcStatus.className='file-status err';
-    console.error('ALC fetch error:',err);
+    const gradeColours = {
+      '1': '#2d7a2d', '2': '#7db87d', '3a': '#c8d464', '3b': '#c8c832',
+      '4': '#e6c846', '5': '#e69632', 'urban': '#c8643c', 'non-agricultural': '#a07850'
+    };
+    if (window.alcLayer) window.alcLayer.remove();
+    window.alcLayer = L.geoJSON(data, {
+      style: feature => {
+        const grade = (feature.properties.ALC_GRADE || feature.properties.Grade || '').toString().toLowerCase().replace('grade ', '').trim();
+        const colour = gradeColours[grade] || '#aaaaaa';
+        return { fillColor: colour, fillOpacity: alcOpacity, color: '#ffffff', weight: 0.3, opacity: 0.5 };
+      },
+      onEachFeature: (feature, layer) => {
+        const grade = feature.properties.ALC_GRADE || feature.properties.Grade || 'Unknown';
+        layer.bindPopup('<strong>ALC Grade:</strong> ' + grade);
+      }
+    }).addTo(map);
+    if (statusEl) statusEl.textContent = '✓ 6769 sites loaded · ALC: ' + data.features.length + ' polygons';
+  } catch(err) {
+    if (statusEl) statusEl.textContent = '✓ 6769 sites loaded (REPD Q1 2026) · ALC unavailable';
+    console.warn('ALC fetch failed:', err);
   }
 }
 
