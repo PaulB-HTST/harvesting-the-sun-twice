@@ -172,7 +172,8 @@ em { font-style: italic; }
   gap: 0.25rem;
   list-style: none;
 }
-.nav__links a {
+.nav__links a,
+.nav__links a:visited {
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 0.80rem;
   color: var(--mist);
