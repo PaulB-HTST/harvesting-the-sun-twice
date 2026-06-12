@@ -1,10 +1,10 @@
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET');
-  res.setHeader('Cache-Control', 'no-store');
+  res.setHeader('Cache-Control', 's-maxage=86400, stale-while-revalidate');
 
   const BASE = 'https://services.arcgis.com/JJzESW51TqeY9uat/ArcGIS/rest/services/Provisional%20Agricultural%20Land%20Classification%20(ALC)%20(England)/FeatureServer/0/query';
-  const PAGE = 2000;
+  const PAGE = 1000; // ArcGIS service maxRecordCount
   const MAX_PAGES = 10; // safety cap ~20,000 features
 
   try {
