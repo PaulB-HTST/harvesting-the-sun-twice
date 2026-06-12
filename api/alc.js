@@ -29,7 +29,7 @@ export default async function handler(req, res) {
       }
 
       // ArcGIS signals more pages via exceededTransferLimit
-      more = page.exceededTransferLimit === true && page.features.length === PAGE;
+      more = page.features && page.features.length === PAGE;
       offset += PAGE;
     }
 
