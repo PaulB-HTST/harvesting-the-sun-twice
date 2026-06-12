@@ -473,9 +473,9 @@ function renderALCFeatures(features){
 // ── Manual file handlers (override/update) ────────────────────────────────────
 function handleALCFile(file){
   if(!file)return;
-  const badge=document.getElementById('alc-badge') || {};
+  // [removed: alc UI element no longer exists]
   badge.style.display='flex';
-  document.getElementById('alc-badge-msg') || {}.textContent='Reading '+file.name+'…';
+  // [removed: alc UI element no longer exists]
   setAlcStatus('Reading '+file.name+'…','wait');
   const reader=new FileReader();
   reader.onload=function(e){
@@ -484,7 +484,7 @@ function handleALCFile(file){
         const geojson=JSON.parse(e.target.result);
         renderALCFeatures(geojson.features||[]);
         setAlcStatus('✓ '+(geojson.features||[]).length+' polygons from '+file.name,'ok');
-        document.getElementById('repd-status') || {}.textContent='✓ ALC: '+(geojson.features||[]).length+' polygons';
+  // [removed: alc UI element ref]
         badge.style.display='none';
         updateStats();
       }catch(err){
@@ -536,7 +536,7 @@ function handleCSVFile(file){
 
 function handleCSVDrop(e){const f=e.dataTransfer.files&&e.dataTransfer.files[0];if(f)handleCSVFile(f);}
 function handleALCDrop(e){const f=e.dataTransfer.files&&e.dataTransfer.files[0];if(f)handleALCFile(f);}
-function setAlcStatus(msg,type){const el=document.getElementById('repd-status') || {};el.textContent=msg;el.className='file-status '+type;}
+  // [removed: alc UI element ref - function setAlcStatus(msg,type){const el=document.getElement]
 
 // ── Render solar dots ─────────────────────────────────────────────────────────
 function renderSolar(){
