@@ -414,11 +414,11 @@ const ALC_API='https://environment.data.gov.uk/spatialdata/agricultural-land-cla
 const ALC_LIMIT=500;
 
 async function fetchALCData(){
-  const badge=document.getElementById('alc-badge');
-  const statusEl=document.getElementById('alc-panel-status');
-  const alcStatus=document.getElementById('alc-status');
+  const badge=document.getElementById('alc-badge') || {};
+  const statusEl=document.getElementById('repd-status') || {};
+  const alcStatus=document.getElementById('repd-status') || {};
   badge.style.display='flex';
-  document.getElementById('alc-badge-msg').textContent='Fetching ALC data…';
+  document.getElementById('alc-badge-msg') || {}.textContent='Fetching ALC data…';
   statusEl.textContent='Fetching ALC from Natural England…';
 
   try{
@@ -436,7 +436,7 @@ async function fetchALCData(){
       allFeatures.push(...(d.features||[]));
       offset+=ALC_LIMIT;
       const pct=Math.round(allFeatures.length/total*100);
-      document.getElementById('alc-badge-msg').textContent='Loading ALC… '+pct+'%';
+      document.getElementById('alc-badge-msg') || {}.textContent='Loading ALC… '+pct+'%';
       if(!d.features||d.features.length<ALC_LIMIT)break;
     }
 
@@ -479,9 +479,9 @@ function renderALCFeatures(features){
 // ── Manual file handlers (override/update) ────────────────────────────────────
 function handleALCFile(file){
   if(!file)return;
-  const badge=document.getElementById('alc-badge');
+  const badge=document.getElementById('alc-badge') || {};
   badge.style.display='flex';
-  document.getElementById('alc-badge-msg').textContent='Reading '+file.name+'…';
+  document.getElementById('alc-badge-msg') || {}.textContent='Reading '+file.name+'…';
   setAlcStatus('Reading '+file.name+'…','wait');
   const reader=new FileReader();
   reader.onload=function(e){
@@ -490,7 +490,7 @@ function handleALCFile(file){
         const geojson=JSON.parse(e.target.result);
         renderALCFeatures(geojson.features||[]);
         setAlcStatus('✓ '+(geojson.features||[]).length+' polygons from '+file.name,'ok');
-        document.getElementById('alc-panel-status').textContent='✓ ALC: '+(geojson.features||[]).length+' polygons';
+        document.getElementById('repd-status') || {}.textContent='✓ ALC: '+(geojson.features||[]).length+' polygons';
         badge.style.display='none';
         updateStats();
       }catch(err){
@@ -542,7 +542,7 @@ function handleCSVFile(file){
 
 function handleCSVDrop(e){const f=e.dataTransfer.files&&e.dataTransfer.files[0];if(f)handleCSVFile(f);}
 function handleALCDrop(e){const f=e.dataTransfer.files&&e.dataTransfer.files[0];if(f)handleALCFile(f);}
-function setAlcStatus(msg,type){const el=document.getElementById('alc-status');el.textContent=msg;el.className='file-status '+type;}
+function setAlcStatus(msg,type){const el=document.getElementById('repd-status') || {};el.textContent=msg;el.className='file-status '+type;}
 
 // ── Render solar dots ─────────────────────────────────────────────────────────
 function renderSolar(){
