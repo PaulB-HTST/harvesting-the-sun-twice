@@ -426,13 +426,13 @@ async function fetchALCData() {
       return;
     }
     const gradeColours = {
-      '1': '#2d7a2d', '2': '#7db87d', '3a': '#c8d464', '3b': '#c8c832',
-      '4': '#e6c846', '5': '#e69632', 'urban': '#c8643c', 'non-agricultural': '#a07850'
+      'Grade 1': '#2d7a2d', 'Grade 2': '#7db87d', 'Grade 3a': '#c8d464', 'Grade 3b': '#c8c832',
+      'Grade 4': '#e6c846', 'Grade 5': '#e69632', 'Not Surveyed': '#888888', 'Other': '#a07850'
     };
     if (window.alcLayer) window.alcLayer.remove();
     window.alcLayer = L.geoJSON(data, {
       style: feature => {
-        const grade = (feature.properties.ALC_GRADE || feature.properties.Grade || '').toString().toLowerCase().replace('grade ', '').trim();
+        const grade = (feature.properties.ALC_GRADE || feature.properties.Grade || '').toString().trim();
         const colour = gradeColours[grade] || '#aaaaaa';
         return { fillColor: colour, fillOpacity: alcOpacity, color: '#ffffff', weight: 0.3, opacity: 0.5 };
       },
