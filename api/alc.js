@@ -3,8 +3,8 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Methods', 'GET');
   res.setHeader('Cache-Control', 's-maxage=86400, stale-while-revalidate');
 
-  // Natural England ALC Post-1988 via ArcGIS REST (confirmed working endpoint)
-  const url = 'https://services.arcgis.com/JJzESW51TqeY9uat/ArcGIS/rest/services/Agricultural_Land_Classification_Post_1988/FeatureServer/0/query?where=1%3D1&outFields=ALC_GRADE&returnGeometry=true&outSR=4326&f=geojson&resultRecordCount=2000';
+  // Provisional ALC (full national coverage for England) - confirmed 200 OK
+  const url = 'https://services.arcgis.com/JJzESW51TqeY9uat/ArcGIS/rest/services/Provisional%20Agricultural%20Land%20Classification%20(ALC)%20(England)/FeatureServer/0/query?where=1%3D1&outFields=ALC_GRADE&returnGeometry=true&outSR=4326&f=geojson&resultRecordCount=2000';
 
   try {
     const controller = new AbortController();
