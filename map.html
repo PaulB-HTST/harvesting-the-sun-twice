@@ -426,8 +426,13 @@ async function fetchALCData() {
       return;
     }
     const gradeColours = {
-      'Grade 1': '#2d7a2d', 'Grade 2': '#7db87d', 'Grade 3a': '#c8d464', 'Grade 3b': '#c8c832',
-      'Grade 4': '#e6c846', 'Grade 5': '#e69632', 'Not Surveyed': '#888888', 'Other': '#a07850'
+      'Grade 1': '#2d7a2d', '1': '#2d7a2d',
+      'Grade 2': '#7db87d', '2': '#7db87d',
+      'Grade 3': '#c8d464', 'Grade 3a': '#c8d464', '3a': '#c8d464',
+      'Grade 3b': '#c8c832', '3b': '#c8c832',
+      'Grade 4': '#e6c846', '4': '#e6c846',
+      'Grade 5': '#e69632', '5': '#e69632',
+      'Not Surveyed': '#888888', 'Other': '#a07850', 'Urban': '#c8643c'
     };
     if (window.alcLayer) window.alcLayer.remove();
     window.alcLayer = L.geoJSON(data, {
