@@ -256,6 +256,11 @@
           <div><span style="display:inline-block;width:12px;height:12px;background:#91c900;border:2px solid #fff;border-radius:2px;margin-right:5px;vertical-align:middle"></span>Grade 3a — Good</div>
           <div style="margin-top:4px;font-style:italic;color:var(--stone,#888)">All other grades dimmed to 15%</div>
         </div>
+      <div style="margin-top:10px;padding-top:8px;border-top:1px solid var(--rule);">
+        <div class="sec">Site Type Filter</div>
+        <label class="cb-row"><input type="checkbox" id="ground-only-toggle"> <span style="font-size:11px;color:var(--forest);font-weight:600;">Ground-mount only</span></label>
+        <div style="font-size:10px;color:var(--stone);margin-top:3px;line-height:1.4;">Hides roof, building &amp; floating solar sites</div>
+      </div>
       </div>
 
       <div>
@@ -441,17 +446,27 @@ async function fetchALCData() {
       'Not Surveyed': '#888888', 'Other': '#a07850', 'Urban': '#c8643c'
     };
     if (window.alcLayer) window.alcLayer.remove();
-    window.alcLayer = L.geoJSON(data, {
-      style: feature => {
-        const grade = (feature.properties.ALC_GRADE || feature.properties.Grade || '').toString().trim();
-        const colour = gradeColours[grade] || '#aaaaaa';
-        return { fillColor: colour, fillOpacity: alcOpacity, color: '#ffffff', weight: 0.3, opacity: 0.5 };
-      },
-      onEachFeature: (feature, layer) => {
-        const grade = feature.properties.ALC_GRADE || feature.properties.Grade || 'Unknown';
-        layer.bindPopup('<strong>ALC Grade:</strong> ' + grade);
-      }
-    }).addTo(map);
+    // Build per-grade layers so ALC grade filter checkboxes work
+    const byGrade = {};
+    data.features.forEach(f => {
+      const grade = (f.properties.ALC_GRADE || f.properties.Grade || '').toString().trim();
+      const bucket = gradeBucket(grade);
+      if (!byGrade[bucket]) byGrade[bucket] = [];
+      byGrade[bucket].push(f);
+    });
+    alcPolygons.forEach(({layer}) => map.hasLayer(layer) && map.removeLayer(layer));
+    alcPolygons = [];
+    const active = new Set([...document.querySelectorAll('#alc-cbs input:checked')].map(i => i.dataset.grade));
+    Object.entries(byGrade).forEach(([bucket, feats]) => {
+      const layer = L.geoJSON({type:'FeatureCollection',features:feats}, {
+        pane: 'alcPane',
+        style: feat => { const g = (feat.properties.ALC_GRADE||feat.properties.Grade||'').toString().trim(); return {fillColor:alcFill(g),fillOpacity:alcOpacity,color:alcFill(g),weight:0.3,opacity:0.4}; },
+        onEachFeature: (feat,lyr) => { const g = feat.properties.ALC_GRADE||feat.properties.Grade||'Unknown'; lyr.bindPopup('<div class="pt">ALC '+esc(g)+'</div>'+pr('Grade',g)); }
+      });
+      alcPolygons.push({bucket,layer});
+      if(active.has(bucket)) layer.addTo(map);
+    });
+    window.alcLayer = { remove: () => alcPolygons.forEach(({layer}) => map.hasLayer(layer) && map.removeLayer(layer)) }
     if (statusEl) statusEl.textContent = '✓ 6769 sites loaded · ALC: ' + data.features.length + ' polygons';
   } catch(err) {
     if (statusEl) statusEl.textContent = '✓ 6769 sites loaded (REPD Q1 2026) · ALC unavailable';
@@ -570,6 +585,11 @@ function renderSolar(){
   let visible=0,totalMW=0;
   solarData.forEach(s=>{
     if(!s.lat||!s.lng)return;
+    // Ground-mount only filter
+    if(document.getElementById('ground-only-toggle')?.checked){
+      const nm=(s.name||'').toLowerCase();
+      if(nm.includes('roof')||nm.includes('building')||nm.includes('floating')||nm.includes('canopy')||nm.includes('car park')||nm.includes('carport'))return;
+    }
     const cl=(s.county||'').toLowerCase().trim();
     if(!activeC.has(cl))return;
     const sc=getCode(s);
@@ -626,7 +646,6 @@ function applyBMVHighlight(){
   document.getElementById('bmv-legend').style.display=bmvHighlight?'block':'none';
   document.getElementById('bmv-toggle-row').style.background=bmvHighlight?'var(--gold,#c9a84c)':'var(--straw,#f5edcc)';
   alcPolygons.forEach(({bucket,layer})=>{
-    if(!map.hasLayer(layer))return;
     if(bmvHighlight){
       if(BMV_GRADES.has(bucket))layer.setStyle({fillOpacity:alcOpacity,opacity:0.9,weight:1.5,color:'#fff200'});
       else layer.setStyle({fillOpacity:0.15,opacity:0.15});
@@ -644,6 +663,7 @@ function setAllCounties(checked){
 }
 document.getElementById('status-cbs').addEventListener('change',renderSolar);
 document.getElementById('county-cbs').addEventListener('change',renderSolar);
+document.getElementById('ground-only-toggle').addEventListener('change',renderSolar);
 
 // ── Status filter checkboxes — use status codes ───────────────────────────────
 // (HTML has data-s="O" etc — map to codes)
