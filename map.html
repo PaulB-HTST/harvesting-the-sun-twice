@@ -188,11 +188,7 @@
       <div class="map-intro__title">☀ UK Solar Pipeline &amp; Agricultural Land Classification</div>
       <div class="map-intro__sub">REPD Q4 Jan 2026 · Natural England ALC</div>
     </div>
-    <div class="map-intro__note">
-      Every dot is a real planning application. The ALC colours show which land grades are at risk.
-      Load the three datasets below to activate all layers.
-      Data sources: <a href="sources.html">Evidence Library →</a>
-    </div>
+    <div class="map-intro__note">Every dot is a real UK solar planning application. ALC grade shading loads automatically — no action needed. Click any dot for site details. Data: <a href="/sources.html">Evidence Library →</a></div>
   </div>
 
   <!-- FILE LOADER BANNER -->
@@ -213,7 +209,7 @@
     <!-- SIDE PANEL -->
     <div id="panel">
 
-      <div id="alc-panel-status">ALC layer: load file ②</div>
+      
 
       <div>
         <div class="sec">ALC Opacity</div>
@@ -232,6 +228,16 @@
           <label class="cb-row"><input type="checkbox" data-grade="Non-Agricultural" checked><span class="swatch" style="background:#ff5500"></span>Non-Agricultural</label>
           <label class="cb-row"><input type="checkbox" data-grade="Urban" checked><span class="swatch" style="background:#e60000"></span>Urban</label>
         </div>
+      </div>
+      <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--rule);font-size:10.5px;color:var(--stone);line-height:1.9;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--sage);margin-bottom:4px;">ALC Grade Key</div>
+        <div><span style="display:inline-block;width:11px;height:11px;background:#2d7a2d;border-radius:2px;vertical-align:middle;margin-right:5px;"></span>Grade 1 — Best (BMV)</div>
+        <div><span style="display:inline-block;width:11px;height:11px;background:#7db87d;border-radius:2px;vertical-align:middle;margin-right:5px;"></span>Grade 2 — Very Good (BMV)</div>
+        <div><span style="display:inline-block;width:11px;height:11px;background:#c8d464;border-radius:2px;vertical-align:middle;margin-right:5px;"></span>Grade 3 — Good/Moderate</div>
+        <div><span style="display:inline-block;width:11px;height:11px;background:#e6c846;border-radius:2px;vertical-align:middle;margin-right:5px;"></span>Grade 4 — Poor</div>
+        <div><span style="display:inline-block;width:11px;height:11px;background:#e69632;border-radius:2px;vertical-align:middle;margin-right:5px;"></span>Grade 5 — Very Poor</div>
+        <div><span style="display:inline-block;width:11px;height:11px;background:#888;border-radius:2px;vertical-align:middle;margin-right:5px;"></span>Not Surveyed</div>
+        <div style="margin-top:4px;font-style:italic;font-size:9.5px;color:var(--stone);">© Natural England. Provisional 1:250,000. Not for site decisions.</div>
       </div>
 
       <!-- BMV HIGHLIGHT -->
@@ -365,7 +371,7 @@ function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').repl
 function pr(l,v){return'<div class="pr"><span class="pl">'+l+':</span><span>'+esc(String(v))+'</span></div>';}
 
 // ── Map ───────────────────────────────────────────────────────────────────────
-const map=L.map('map',{center:[54.0,-2.5],zoom:6});
+const map=L.map('map',{center:[54.0,-2.5],zoom:6,zoomSnap:0.25,zoomDelta:0.5});
 const baseVoyager=L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
   {attribution:'&copy; <a href="https://carto.com/">CARTO</a> &copy; OpenStreetMap',subdomains:'abcd',maxZoom:19}).addTo(map);
 const baseOSM=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -575,7 +581,7 @@ function renderSolar(){
     const label=statusLabel(sc);
     const cap=typeof s.capacity==='number'?s.capacity:parseFloat(s.capacity||0);
     L.circleMarker([s.lat,s.lng],{
-      radius:7,fillColor:solarColour(sc),fillOpacity:0.9,color:'#fff',weight:1.5,pane:'solarPane'
+      radius:5,fillColor:solarColour(sc),fillOpacity:0.9,color:'#fff',weight:1.5,pane:'solarPane'
     }).bindPopup(
       '<div class="pt">'+esc(s.name||'')+'</div>'+
       pr('Status',label)+pr('County',s.county||'N/A')+
