@@ -257,9 +257,16 @@
           <div style="margin-top:4px;font-style:italic;color:var(--stone,#888)">All other grades dimmed to 15%</div>
         </div>
       <div style="margin-top:10px;padding-top:8px;border-top:1px solid var(--rule);">
-        <div class="sec">Site Type Filter</div>
-        <label class="cb-row"><input type="checkbox" id="ground-only-toggle"> <span style="font-size:11px;color:var(--forest);font-weight:600;">Ground-mount only</span></label>
-        <div style="font-size:10px;color:var(--stone);margin-top:3px;line-height:1.4;">Hides roof, building &amp; floating solar sites</div>
+        <div class="sec">Minimum Capacity</div>
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
+          <span style="font-size:11px;color:var(--stone);">Show sites &ge;</span>
+          <strong id="cap-val" style="font-size:12px;color:var(--forest);min-width:48px;">0 MW</strong>
+        </div>
+        <input type="range" id="cap-filter" min="0" max="3" value="0" step="1" style="width:100%;accent-color:var(--moss);">
+        <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--stone);margin-top:1px;">
+          <span>All</span><span>5 MW</span><span>25 MW</span><span>50 MW</span>
+        </div>
+        <div style="font-size:10px;color:var(--stone);margin-top:4px;line-height:1.4;">Filters by registered capacity. Large ground-mount farms are typically &gt;5 MW.</div>
       </div>
       </div>
 
@@ -585,11 +592,10 @@ function renderSolar(){
   let visible=0,totalMW=0;
   solarData.forEach(s=>{
     if(!s.lat||!s.lng)return;
-    // Ground-mount only filter
-    if(document.getElementById('ground-only-toggle')?.checked){
-      const nm=(s.name||'').toLowerCase();
-      if(nm.includes('roof')||nm.includes('building')||nm.includes('floating')||nm.includes('canopy')||nm.includes('car park')||nm.includes('carport'))return;
-    }
+    // Minimum capacity filter
+    const _capThresholds=[0,5,25,50];
+    const _capMin=_capThresholds[parseInt(document.getElementById('cap-filter')?.value||0)];
+    if(_capMin>0 && (s.capacity||0)<_capMin) return;
     const cl=(s.county||'').toLowerCase().trim();
     if(!activeC.has(cl))return;
     const sc=getCode(s);
@@ -663,7 +669,10 @@ function setAllCounties(checked){
 }
 document.getElementById('status-cbs').addEventListener('change',renderSolar);
 document.getElementById('county-cbs').addEventListener('change',renderSolar);
-document.getElementById('ground-only-toggle').addEventListener('change',renderSolar);
+document.getElementById('cap-filter').addEventListener('input', function(){
+  document.getElementById('cap-val').textContent = ['0 MW','5 MW','25 MW','50 MW'][this.value];
+  renderSolar();
+});
 
 // ── Status filter checkboxes — use status codes ───────────────────────────────
 // (HTML has data-s="O" etc — map to codes)
