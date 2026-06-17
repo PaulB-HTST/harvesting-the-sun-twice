@@ -240,11 +240,11 @@
       </div>
       <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--rule);font-size:10.5px;color:var(--stone);line-height:1.9;">
         <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--sage);margin-bottom:4px;">ALC Grade Key</div>
-        <div><span style="display:inline-block;width:11px;height:11px;background:#2d7a2d;border-radius:2px;vertical-align:middle;margin-right:5px;"></span>Grade 1 — Best (BMV)</div>
-        <div><span style="display:inline-block;width:11px;height:11px;background:#7db87d;border-radius:2px;vertical-align:middle;margin-right:5px;"></span>Grade 2 — Very Good (BMV)</div>
-        <div><span style="display:inline-block;width:11px;height:11px;background:#c8d464;border-radius:2px;vertical-align:middle;margin-right:5px;"></span>Grade 3 — Good/Moderate</div>
-        <div><span style="display:inline-block;width:11px;height:11px;background:#e6c846;border-radius:2px;vertical-align:middle;margin-right:5px;"></span>Grade 4 — Poor</div>
-        <div><span style="display:inline-block;width:11px;height:11px;background:#e69632;border-radius:2px;vertical-align:middle;margin-right:5px;"></span>Grade 5 — Very Poor</div>
+        <div><span style="display:inline-block;width:11px;height:11px;background:#3CE1FE;border-radius:2px;vertical-align:middle;margin-right:5px;"></span>Grade 1 — Best (BMV)</div>
+        <div><span style="display:inline-block;width:11px;height:11px;background:#C1FAFE;border-radius:2px;vertical-align:middle;margin-right:5px;"></span>Grade 2 — Very Good (BMV)</div>
+        <div><span style="display:inline-block;width:11px;height:11px;background:#B2FE99;border-radius:2px;vertical-align:middle;margin-right:5px;"></span>Grade 3 — Good/Moderate</div>
+        <div><span style="display:inline-block;width:11px;height:11px;background:#FEF8A4;border-radius:2px;vertical-align:middle;margin-right:5px;"></span>Grade 4 — Poor</div>
+        <div><span style="display:inline-block;width:11px;height:11px;background:#B28764;border-radius:2px;vertical-align:middle;margin-right:5px;"></span>Grade 5 — Very Poor</div>
         <div><span style="display:inline-block;width:11px;height:11px;background:#888;border-radius:2px;vertical-align:middle;margin-right:5px;"></span>Not Surveyed</div>
         <div style="margin-top:4px;font-style:italic;font-size:9.5px;color:var(--stone);">© Natural England. Provisional 1:250,000. Not for site decisions.</div>
       </div>
@@ -453,13 +453,13 @@ async function fetchALCData() {
       return;
     }
     const gradeColours = {
-      'Grade 1': '#2d7a2d', '1': '#2d7a2d',
-      'Grade 2': '#7db87d', '2': '#7db87d',
-      'Grade 3': '#c8d464', 'Grade 3a': '#c8d464', '3a': '#c8d464',
-      'Grade 3b': '#c8c832', '3b': '#c8c832',
-      'Grade 4': '#e6c846', '4': '#e6c846',
-      'Grade 5': '#e69632', '5': '#e69632',
-      'Not Surveyed': '#888888', 'Other': '#a07850', 'Urban': '#c8643c'
+      'Grade 1': '#3CE1FE', '1': '#3CE1FE',
+      'Grade 2': '#C1FAFE', '2': '#C1FAFE',
+      'Grade 3': '#B2FE99', 'Grade 3a': '#B2FE99', '3a': '#B2FE99',
+      'Grade 3b': '#B2FE99', '3b': '#B2FE99',
+      'Grade 4': '#FEF8A4', '4': '#FEF8A4',
+      'Grade 5': '#B28764', '5': '#B28764',
+      'Not Surveyed': '#888888', 'Other': '#FED586', 'Urban': '#FF907C'
     };
     if (window.alcLayer) window.alcLayer.remove();
     // Build per-grade layers so ALC grade filter checkboxes work
