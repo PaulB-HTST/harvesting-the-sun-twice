@@ -26,6 +26,8 @@
 <!-- PapaParse (CSV) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 
+    <!-- NSIP Projects Layer (not in REPD) -->
+    <script src="nsip_layer.js"></script>
 <style>
 /* ── Map page overrides ─────────────────────────────────────────── */
 
@@ -181,6 +183,20 @@
   .map-intro { padding: 10px 16px; }
   .map-intro__note { display: none; }
 }
+
+/* NSIP Layer Styles */
+.control-badge { font-size:0.7em; background:#6B7280; color:white; padding:1px 5px; border-radius:10px; margin-left:4px; vertical-align:middle; }
+.nsip-badge { background:#8B5CF6; }
+.nsip-popup { font-size:13px; min-width:280px; }
+.nsip-popup-header { font-size:14px; font-weight:600; padding:4px 8px; margin-bottom:6px; background:#F9FAFB; border-radius:4px; }
+.nsip-popup-table { width:100%; border-collapse:collapse; font-size:12px; }
+.nsip-popup-table td { padding:3px 6px; vertical-align:top; }
+.nsip-popup-table td:first-child { color:#6B7280; white-space:nowrap; font-size:11px; }
+.nsip-status-badge { color:white; font-size:11px; font-weight:600; padding:2px 6px; border-radius:4px; }
+.nsip-popup-htst { margin-top:6px; padding:4px 8px; background:#EFF6FF; border-left:3px solid #3B82F6; font-size:11px; color:#1D4ED8; border-radius:0 4px 4px 0; }
+.nsip-legend-dot { width:14px !important; height:14px !important; border-radius:50% !important; display:inline-block; }
+.nsip-legend-section { margin-top:12px; padding-top:8px; border-top:1px solid #E5E7EB; }
+.nsip-legend-section .legend-section-title { font-weight:600; font-size:12px; margin-bottom:6px; color:#374151; }
 </style>
 </head>
 <body>
@@ -236,6 +252,13 @@
           <label class="cb-row"><input type="checkbox" data-grade="Grade 5" checked><span class="swatch" style="background:#B28764"></span>Grade 5 — Very Poor</label>
           <label class="cb-row"><input type="checkbox" data-grade="Non-Agricultural" checked><span class="swatch" style="background:#FED586"></span>Non-Agricultural</label>
           <label class="cb-row"><input type="checkbox" data-grade="Urban" checked><span class="swatch" style="background:#FF907C"></span>Urban</label>
+        </div>
+        <div class="control-group" id="nsip-toggle-group">
+          <label class="control-label">
+            <input type="checkbox" id="nsip-toggle" checked>
+            <span>Show NSIP Projects</span>
+            <span class="control-badge nsip-badge">7</span>
+          </label>
         </div>
       </div>
       <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--rule);font-size:10.5px;color:var(--stone);line-height:1.9;">
@@ -393,6 +416,11 @@ function pr(l,v){return'<div class="pr"><span class="pl">'+l+':</span><span>'+es
 
 // ── Map ───────────────────────────────────────────────────────────────────────
 const map=L.map('map',{center:[54.0,-2.5],zoom:6,zoomSnap:0.25,zoomDelta:0.5});
+const nsipLayer = createNSIPLayer(L);
+nsipLayer.addTo(map);
+document.getElementById('nsip-toggle').addEventListener('change', function() {
+  if (this.checked) { nsipLayer.addTo(map); } else { map.removeLayer(nsipLayer); }
+});
 const baseVoyager=L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
   {attribution:'&copy; <a href="https://carto.com/">CARTO</a> &copy; OpenStreetMap',subdomains:'abcd',maxZoom:19}).addTo(map);
 const baseOSM=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',
