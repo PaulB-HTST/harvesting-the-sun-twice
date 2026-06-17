@@ -44,7 +44,7 @@ function buildNsipPopup(props) {
   const bmvNote     = '<span style="background:#FEF8A4;color:#333;font-size:0.78em;padding:1px 5px;border-radius:3px;border:1px solid #ccc;margin-left:4px;">BMV concern</span>';
   return `
     <div style="font-family:sans-serif;min-width:260px;max-width:320px;line-height:1.5;">
-      <div style="background:#2d6a4f;color:#ffffff;padding:8px 10px;border-radius:4px 4px 0 0;margin:-1px -1px 8px -1px;">
+      <div style="background:#e8f5e9;color:#1a3a2a;padding:8px 10px;border-radius:4px 4px 0 0;margin:-1px -1px 8px -1px;">
         <strong style="font-size:1.05em;">${props.name || 'NSIP Project'}</strong>${bmvNote}
       </div>
       <table style="width:100%;font-size:0.88em;border-collapse:collapse;">
