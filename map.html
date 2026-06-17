@@ -229,13 +229,13 @@
       <div>
         <div class="sec">ALC Grade Filter</div>
         <div class="cb-group" id="alc-cbs">
-          <label class="cb-row"><input type="checkbox" data-grade="Grade 1" checked><span class="swatch" style="background:#267300"></span>Grade 1 — Best (BMV)</label>
-          <label class="cb-row"><input type="checkbox" data-grade="Grade 2" checked><span class="swatch" style="background:#6fc400"></span>Grade 2 — Very Good (BMV)</label>
-          <label class="cb-row"><input type="checkbox" data-grade="Grade 3" checked><span class="swatch" style="background:#b0e000"></span>Grade 3 — Good/Moderate</label>
-          <label class="cb-row"><input type="checkbox" data-grade="Grade 4" checked><span class="swatch" style="background:#ffff00"></span>Grade 4 — Poor</label>
-          <label class="cb-row"><input type="checkbox" data-grade="Grade 5" checked><span class="swatch" style="background:#ffaa00"></span>Grade 5 — Very Poor</label>
-          <label class="cb-row"><input type="checkbox" data-grade="Non-Agricultural" checked><span class="swatch" style="background:#ff5500"></span>Non-Agricultural</label>
-          <label class="cb-row"><input type="checkbox" data-grade="Urban" checked><span class="swatch" style="background:#e60000"></span>Urban</label>
+          <label class="cb-row"><input type="checkbox" data-grade="Grade 1" checked><span class="swatch" style="background:#3CE1FE"></span>Grade 1 — Best (BMV)</label>
+          <label class="cb-row"><input type="checkbox" data-grade="Grade 2" checked><span class="swatch" style="background:#C1FAFE"></span>Grade 2 — Very Good (BMV)</label>
+          <label class="cb-row"><input type="checkbox" data-grade="Grade 3" checked><span class="swatch" style="background:#B2FE99"></span>Grade 3 — Good/Moderate</label>
+          <label class="cb-row"><input type="checkbox" data-grade="Grade 4" checked><span class="swatch" style="background:#FEF8A4"></span>Grade 4 — Poor</label>
+          <label class="cb-row"><input type="checkbox" data-grade="Grade 5" checked><span class="swatch" style="background:#B28764"></span>Grade 5 — Very Poor</label>
+          <label class="cb-row"><input type="checkbox" data-grade="Non-Agricultural" checked><span class="swatch" style="background:#FED586"></span>Non-Agricultural</label>
+          <label class="cb-row"><input type="checkbox" data-grade="Urban" checked><span class="swatch" style="background:#FF907C"></span>Urban</label>
         </div>
       </div>
       <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--rule);font-size:10.5px;color:var(--stone);line-height:1.9;">
@@ -260,9 +260,9 @@
           <span style="font-weight:700;color:var(--forest,#1a3a2a);font-size:12px">⚡ Highlight BMV land</span>
         </label>
         <div id="bmv-legend" style="display:none;margin-top:6px;font-size:10.5px;line-height:1.8;color:var(--graphite,#444)">
-          <div><span style="display:inline-block;width:12px;height:12px;background:#267300;border:2px solid #fff;border-radius:2px;margin-right:5px;vertical-align:middle"></span>Grade 1 — Best</div>
-          <div><span style="display:inline-block;width:12px;height:12px;background:#6fc400;border:2px solid #fff;border-radius:2px;margin-right:5px;vertical-align:middle"></span>Grade 2 — Very Good</div>
-          <div><span style="display:inline-block;width:12px;height:12px;background:#91c900;border:2px solid #fff;border-radius:2px;margin-right:5px;vertical-align:middle"></span>Grade 3a — Good</div>
+          <div><span style="display:inline-block;width:12px;height:12px;background:#3CE1FE;border:2px solid #fff;border-radius:2px;margin-right:5px;vertical-align:middle"></span>Grade 1 — Best</div>
+          <div><span style="display:inline-block;width:12px;height:12px;background:#C1FAFE;border:2px solid #fff;border-radius:2px;margin-right:5px;vertical-align:middle"></span>Grade 2 — Very Good</div>
+          <div><span style="display:inline-block;width:12px;height:12px;background:#B2FE99;border:2px solid #fff;border-radius:2px;margin-right:5px;vertical-align:middle"></span>Grade 3a — Good</div>
           <div style="margin-top:4px;font-style:italic;color:var(--stone,#888)">All other grades dimmed to 15%</div>
         </div>
       <div style="margin-top:10px;padding-top:8px;border-top:1px solid var(--rule);">
@@ -355,15 +355,15 @@ function needsBNG(features){
 // ── Colour helpers ────────────────────────────────────────────────────────────
 function alcFill(grade){
   const g=(grade||'').toString().trim();
-  if(/grade\s*1\b/i.test(g))return'#267300';
-  if(/grade\s*2\b/i.test(g))return'#6fc400';
-  if(/grade\s*3a/i.test(g))return'#91c900';
-  if(/grade\s*3b/i.test(g))return'#c8e85a';
-  if(/grade\s*3\b/i.test(g))return'#b0e000';
-  if(/grade\s*4\b/i.test(g))return'#ffff00';
-  if(/grade\s*5\b/i.test(g))return'#ffaa00';
-  if(/non.agri/i.test(g))return'#ff5500';
-  if(/urban/i.test(g))return'#e60000';
+  if(/grade\s*1\b/i.test(g))return'#3CE1FE';
+  if(/grade\s*2\b/i.test(g))return'#C1FAFE';
+  if(/grade\s*3a/i.test(g))return'#B2FE99';
+  if(/grade\s*3b/i.test(g))return'#B2FE99';
+  if(/grade\s*3\b/i.test(g))return'#B2FE99';
+  if(/grade\s*4\b/i.test(g))return'#FEF8A4';
+  if(/grade\s*5\b/i.test(g))return'#B28764';
+  if(/non.agri/i.test(g))return'#FED586';
+  if(/urban/i.test(g))return'#FF907C';
   return'#aaaaaa';
 }
 function gradeBucket(g){
