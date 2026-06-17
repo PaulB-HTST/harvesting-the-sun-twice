@@ -1,0 +1,124 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "title": "HTST NSIP Solar Projects Layer",
+    "description": "Seven large NSIP solar projects absent from REPD Q1 2026.",
+    "last_updated": "2026-06-17",
+    "total_projects": 7,
+    "total_mw_approx": 3150
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-2.09, 51.57] },
+      "properties": {
+        "name": "Lime Down Solar Park",
+        "pins_ref": "EN010168",
+        "developer": "Island Green Power",
+        "capacity_mw": 840,
+        "status": "In Examination",
+        "status_code": "examination",
+        "location": "North of Hullavington, Wiltshire",
+        "county": "Wiltshire",
+        "notes": "Five sites ~878 ha, grid connection at Melksham Substation.",
+        "pins_url": "https://national-infrastructure-consenting.planninginspectorate.gov.uk/projects/EN010168"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-0.77, 53.87] },
+      "properties": {
+        "name": "Mylen Leah Solar Farm",
+        "pins_ref": "EN0110002",
+        "developer": "Statkraft",
+        "capacity_mw": 350,
+        "status": "Pre-Examination",
+        "status_code": "pre_examination",
+        "location": "Between Seaton Ross, Melbourne and Foggathorpe, East Riding of Yorkshire",
+        "county": "East Riding of Yorkshire",
+        "notes": "Statutory consultation April–May 2026. DCO expected end of 2026.",
+        "pins_url": "https://national-infrastructure-consenting.planninginspectorate.gov.uk/projects/EN0110002"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [0.73, 52.69] },
+      "properties": {
+        "name": "The Droves Solar Farm",
+        "pins_ref": "EN0110013",
+        "developer": "Island Green Power",
+        "capacity_mw": 400,
+        "status": "Pre-Examination",
+        "status_code": "pre_examination",
+        "location": "North of Swaffham, south of Castle Acre, West Norfolk",
+        "county": "Norfolk",
+        "notes": "Accepted for examination 16 December 2025. ~770 ha.",
+        "pins_url": "https://national-infrastructure-consenting.planninginspectorate.gov.uk/projects/EN0110013"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.22, 52.50] },
+      "properties": {
+        "name": "East Pye Solar",
+        "pins_ref": "EN010169",
+        "developer": "Island Green Power",
+        "capacity_mw": 500,
+        "status": "Accepted",
+        "status_code": "accepted",
+        "location": "Near Long Stratton, South Norfolk",
+        "county": "Norfolk",
+        "notes": "DCO application accepted for examination 2 April 2026. ~2,232 ha across 10 sites.",
+        "pins_url": "https://national-infrastructure-consenting.planninginspectorate.gov.uk/projects/EN010169"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [0.91, 50.97] },
+      "properties": {
+        "name": "South Brooks Solar Farm",
+        "pins_ref": "TBC",
+        "developer": "EDF Power Solutions / PS Renewables",
+        "capacity_mw": 600,
+        "status": "Pre-Application",
+        "status_code": "pre_application",
+        "location": "Lydd, Romney Marsh, Kent",
+        "county": "Kent",
+        "notes": "Phase 2 consultation June 2026. ~1,094 ha. Grid at Dungeness Substation. DCO expected early 2027.",
+        "pins_url": "https://southbrookssolarfarm.co.uk"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-0.46, 53.88] },
+      "properties": {
+        "name": "Clean Air Solar Farm",
+        "pins_ref": "EN0110018",
+        "developer": "PS Renewables / Ørsted Onshore",
+        "capacity_mw": 500,
+        "status": "Pre-Application",
+        "status_code": "pre_application",
+        "location": "Two sites near Beverley, East Riding of Yorkshire",
+        "county": "East Riding of Yorkshire",
+        "notes": "Previously Kingfisher Solar Farm. Public Information Days June 2026. HTST engagement letter sent; webinar 29 June 2026.",
+        "pins_url": "https://national-infrastructure-consenting.planninginspectorate.gov.uk/projects/EN0110018"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [0.39, 52.12] },
+      "properties": {
+        "name": "Kingsway Solar Farm",
+        "pins_ref": "EN010165",
+        "developer": "Kingsway Solar Ltd",
+        "capacity_mw": 350,
+        "status": "Acceptance Decision Pending",
+        "status_code": "acceptance_pending",
+        "location": "Near Balsham and West Wratting, South East Cambridgeshire",
+        "county": "Cambridgeshire / Suffolk",
+        "notes": "Acceptance decision due 18 June 2026. ~1,246 ha. 15km 400kV overhead grid connection proposed.",
+        "pins_url": "https://national-infrastructure-consenting.planninginspectorate.gov.uk/projects/EN010165"
+      }
+    }
+  ]
+}

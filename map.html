@@ -252,13 +252,7 @@
           <label class="cb-row"><input type="checkbox" data-grade="Non-Agricultural" checked><span class="swatch" style="background:#FED586"></span>Non-Agricultural</label>
           <label class="cb-row"><input type="checkbox" data-grade="Urban" checked><span class="swatch" style="background:#FF907C"></span>Urban</label>
         </div>
-        <div class="control-group" id="nsip-toggle-group">
-          <label class="control-label">
-            <input type="checkbox" id="nsip-toggle" checked>
-            <span>Show NSIP Projects</span>
-            <span class="control-badge nsip-badge">7</span>
-          </label>
-        </div>
+
       </div>
       <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--rule);font-size:10.5px;color:var(--stone);line-height:1.9;">
         <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--sage);margin-bottom:4px;">ALC Grade Key</div>
@@ -272,6 +266,7 @@
         <div><span style="display:inline-block;width:11px;height:11px;background:#FF907C;border-radius:2px;vertical-align:middle;margin-right:5px;"></span>Urban</div>
         <div style="margin-top:4px;font-style:italic;font-size:9.5px;color:var(--stone);">© Natural England. Provisional 1:250,000. Not for site decisions.</div>
       </div>
+      <div id="nsip-legend-container"></div>
 
       <!-- BMV HIGHLIGHT -->
       <div>
@@ -301,6 +296,13 @@
         </div>
         <div style="font-size:10px;color:var(--stone);margin-top:4px;line-height:1.4;">Filters by registered capacity. Large ground-mount farms are typically &gt;5 MW.</div>
       </div>
+      <div style="margin-top:10px;padding-top:8px;border-top:1px solid #eee;">
+  <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-weight:600;">
+    <input type="checkbox" id="nsip-toggle" checked style="width:16px;height:16px;">
+    <span>NSIP Projects</span>
+    <span style="font-size:0.78em;color:#888;font-weight:normal;">(not in REPD)</span>
+  </label>
+</div>
       </div>
 
       <div>
@@ -417,10 +419,11 @@ function pr(l,v){return'<div class="pr"><span class="pl">'+l+':</span><span>'+es
 
 // ── Map ───────────────────────────────────────────────────────────────────────
 const map=L.map('map',{center:[54.0,-2.5],zoom:6,zoomSnap:0.25,zoomDelta:0.5});
-const nsipLayer = createNSIPLayer(L);
-nsipLayer.addTo(map);
+initNsipLayer(map);
+document.getElementById('nsip-legend-container').innerHTML = getNsipLegendHTML();
 document.getElementById('nsip-toggle').addEventListener('change', function() {
-  if (this.checked) { nsipLayer.addTo(map); } else { map.removeLayer(nsipLayer); }
+  if (this.checked) { if (nsipLayerGroup) nsipLayerGroup.addTo(map); }
+  else { if (nsipLayerGroup) map.removeLayer(nsipLayerGroup); }
 });
 const baseVoyager=L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
   {attribution:'&copy; <a href="https://carto.com/">CARTO</a> &copy; OpenStreetMap',subdomains:'abcd',maxZoom:19}).addTo(map);
