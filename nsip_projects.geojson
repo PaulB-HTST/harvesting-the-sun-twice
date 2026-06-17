@@ -112,11 +112,11 @@
         "pins_ref": "EN010165",
         "developer": "Kingsway Solar Ltd",
         "capacity_mw": 350,
-        "status": "Acceptance Decision Pending",
-        "status_code": "acceptance_pending",
+        "status": "Withdrawn",
+        "status_code": "withdrawn",
         "location": "Near Balsham and West Wratting, South East Cambridgeshire",
         "county": "Cambridgeshire / Suffolk",
-        "notes": "Acceptance decision due 18 June 2026. ~1,246 ha. 15km 400kV overhead grid connection proposed.",
+        "notes": "Application withdrawn 17/06/2026 on day of acceptance decision. ~1,246 ha. 15km 400kV overhead grid connection proposed.",
         "pins_url": "https://national-infrastructure-consenting.planninginspectorate.gov.uk/projects/EN010165"
       }
     }
