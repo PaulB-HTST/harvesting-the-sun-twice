@@ -135,14 +135,14 @@ const nsipProjects = [
     ref: "EN010165",
     developer: "Downing Renewable Developments",
     mw: 500,
-    status: "Acceptance Decision 18/06/2026",
-    statusCode: "accepted",
+    status: "Withdrawn 17/06/2026",
+    statusCode: "withdrawn",
     location: "Between Burwell and Balsham, Cambridgeshire",
     county: "Cambridgeshire",
     lat: 52.198,
     lng: 0.370,
     pinsUrl: "https://national-infrastructure-consenting.planninginspectorate.gov.uk/projects/EN010165",
-    notes: "~1,246 ha. 15km overhead line connection to Burwell Substation. Acceptance decision due 18/06/2026. ~30-day Relevant Representations window to follow if accepted.",
+    notes: "Application withdrawn 17/06/2026 on day of acceptance decision. ~1,246 ha. 15km overhead line connection to Burwell Substation. Acceptance decision due 18/06/2026. ~30-day Relevant Representations window to follow if accepted.",
     htst_rep: "Representation submitted"
   }
 ];
