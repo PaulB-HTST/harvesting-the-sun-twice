@@ -254,20 +254,61 @@ em { font-style: italic; }
 /* ---- Hero ---- */
 .hero {
   background-color: var(--forest);
-    background-image: url('../images/hero-harvest-vbpv.png');
-  background-size: cover;
-  background-position: center 40%;
-  background-repeat: no-repeat;
   position: relative;
   overflow: hidden;
   padding: 7rem 0 6rem;
 }
-.hero::before {
+/* Carousel slides */
+.hero__slides {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.hero__slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center 40%;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+.hero__slide.is-active { opacity: 1; }
+.hero__slide--1 { background-image: url('../images/hero-harvest-vbpv.png'); }
+.hero__slide--2 { background-image: url('../images/VBPV_-_Potatos___Wild_flowers.png'); }
+.hero__slide::before {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
+  inset: 0;
   background: linear-gradient(135deg, rgba(15,35,20,0.70) 0%, rgba(15,35,20,0.50) 55%, rgba(15,35,20,0.25) 100%);
-  pointer-events: none;
+}
+.hero > .container { position: relative; z-index: 1; }
+/* Dot navigation */
+.hero__dots {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.6rem;
+  z-index: 2;
+  pointer-events: all;
+}
+.hero__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.35);
+  border: 1.5px solid rgba(255,255,255,0.6);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+.hero__dot.is-active {
+  background: var(--wheat);
+  border-color: var(--wheat);
+  transform: scale(1.25);
 }
 .hero::after {
   content: '';
@@ -275,6 +316,7 @@ em { font-style: italic; }
   bottom: 0; left: 0; right: 0;
   height: 3px;
   background: linear-gradient(90deg, transparent, var(--wheat), transparent);
+  z-index: 2;
 }
 .hero__inner {
   position: relative;
