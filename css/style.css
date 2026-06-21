@@ -276,7 +276,7 @@ em { font-style: italic; }
 }
 .hero__slide.is-active { opacity: 1; }
 .hero__slide--1 { background-image: url('../images/hero-harvest-vbpv.png'); }
-.hero__slide--2 { background-image: url('../images/VBPV_-_Potatos___Wild_flowers.png'); }
+.hero__slide--2 { background-image: url('../images/VBPV - Potatos & Wild flowers.png'); }
 .hero__slide::before {
   content: '';
   position: absolute;
