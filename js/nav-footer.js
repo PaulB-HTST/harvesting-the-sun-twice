@@ -1,3 +1,4 @@
+// Updated 23/06/2026 — commit this separately to trigger Vercel auto-deploy.
 // nav-footer.js — Updated 19/06/2026
 // Added: Pipeline Map as standard nav link
 // Added: Analysis Tool nav link (dashboard.html)
