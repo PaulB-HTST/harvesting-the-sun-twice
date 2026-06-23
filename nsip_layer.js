@@ -77,6 +77,15 @@ function initNsipLayer(map) {
         onEachFeature: function(feature, layer) {
           const props = feature.properties;
           layer.bindPopup(buildNsipPopup(props), { maxWidth: 340 });
+        window.nsipMarkers = window.nsipMarkers || [];
+        window.nsipMarkers.push({
+          name:   props.name || 'NSIP Project',
+          lat:    feature.geometry.coordinates[1],
+          lng:    feature.geometry.coordinates[0],
+          colour: nsipStatusColors[props.status_code] || nsipStatusColors['default'],
+          status: props.status || '',
+          marker: layer
+        });
           layer.on('mouseover', function() {
             this.setStyle({ weight: 4, color: '#FFD700' });
             this.bringToFront();
