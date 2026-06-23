@@ -459,6 +459,7 @@ map.createPane('solarPane'); map.getPane('solarPane').style.zIndex=450;
 const solarGroup=L.layerGroup().addTo(map);
 let alcPolygons=[];
 let solarData=[];
+window.solarData = solarData; // expose for map search
 let alcOpacity=0.70;
 let bmvHighlight=false;
 
