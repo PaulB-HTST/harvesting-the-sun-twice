@@ -2,10 +2,10 @@
   "type": "FeatureCollection",
   "metadata": {
     "title": "HTST NSIP Solar Projects Layer",
-    "description": "Seven large NSIP solar projects absent from REPD Q1 2026.",
-    "last_updated": "2026-06-17",
-    "total_projects": 7,
-    "total_mw_approx": 3150
+    "description": "NSIP solar projects absent from REPD — updated June 2026.",
+    "last_updated": "2026-06-23",
+    "total_projects": 13,
+    "total_mw_approx": 6740
   },
   "features": [
     {
@@ -60,15 +60,15 @@
       "type": "Feature",
       "geometry": { "type": "Point", "coordinates": [1.22, 52.50] },
       "properties": {
-        "name": "East Pye Solar",
+        "name": "Meridian Solar Farm",
         "pins_ref": "EN010169",
         "developer": "Island Green Power",
         "capacity_mw": 500,
-        "status": "Accepted",
-        "status_code": "accepted",
+        "status": "Pre-examination",
+        "status_code": "pre_examination",
         "location": "Near Long Stratton, South Norfolk",
         "county": "Norfolk",
-        "notes": "DCO application accepted for examination 2 April 2026. ~2,232 ha across 10 sites.",
+        "notes": "Status: Pre-examination (registration period). DCO application accepted for examination 2 April 2026. ~2,232 ha across 10 sites.",
         "pins_url": "https://national-infrastructure-consenting.planninginspectorate.gov.uk/projects/EN010169"
       }
     },
@@ -118,6 +118,102 @@
         "county": "Cambridgeshire / Suffolk",
         "notes": "Application withdrawn 17/06/2026 on day of acceptance decision. ~1,246 ha. 15km 400kV overhead grid connection proposed.",
         "pins_url": "https://national-infrastructure-consenting.planninginspectorate.gov.uk/projects/EN010165"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-1.280, 53.467] },
+      "properties": {
+        "name": "Whitestone Solar Farm",
+        "pins_ref": "EN0110020",
+        "developer": "Green Nation",
+        "capacity_mw": 750,
+        "status": "Accepted",
+        "status_code": "accepted",
+        "location": "Yorkshire",
+        "county": "Yorkshire",
+        "notes": "Status: Accepted for Examination",
+        "pins_url": "https://national-infrastructure-consenting.planninginspectorate.gov.uk/projects/EN0110020"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-1.5, 52.5] },
+      "properties": {
+        "name": "Springwell Solar Farm",
+        "pins_ref": "EN010149",
+        "developer": "TBC",
+        "capacity_mw": 500,
+        "status": "Approved",
+        "status_code": "approved",
+        "location": "TBC",
+        "county": "TBC",
+        "notes": "Status: Development Consent Granted (8 April 2026)",
+        "pins_url": "https://national-infrastructure-consenting.planninginspectorate.gov.uk/projects/EN010149"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-1.2, 52.8] },
+      "properties": {
+        "name": "One Earth Solar Farm",
+        "pins_ref": "EN010159",
+        "developer": "TBC",
+        "capacity_mw": 500,
+        "status": "Decision",
+        "status_code": "decision",
+        "location": "TBC",
+        "county": "TBC",
+        "notes": "Status: Decision Stage (deadline 8 July 2026)",
+        "pins_url": "https://national-infrastructure-consenting.planninginspectorate.gov.uk/projects/EN010159"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-1.1, 52.6] },
+      "properties": {
+        "name": "Peartree Hill Solar Farm",
+        "pins_ref": "EN010157",
+        "developer": "TBC",
+        "capacity_mw": 500,
+        "status": "Decision",
+        "status_code": "decision",
+        "location": "TBC",
+        "county": "TBC",
+        "notes": "Status: Decision Stage (deadline 2 July 2026)",
+        "pins_url": "https://national-infrastructure-consenting.planninginspectorate.gov.uk/projects/EN010157"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [0.870, 50.990] },
+      "properties": {
+        "name": "South Kent Energy Park",
+        "pins_ref": "TBC",
+        "developer": "Low Carbon",
+        "capacity_mw": 500,
+        "status": "Pre-Application",
+        "status_code": "pre_application",
+        "location": "Old Romney, Romney Marsh, Kent",
+        "county": "Kent",
+        "notes": "Added to PINS pre-application list 22 June 2026. DCO submission expected late 2026.",
+        "pins_url": "https://national-infrastructure-consenting.planninginspectorate.gov.uk"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-0.930, 53.340] },
+      "properties": {
+        "name": "Great North Road Solar and Biodiversity Park",
+        "pins_ref": "EN010162",
+        "developer": "GNR Solar Park Ltd",
+        "capacity_mw": 1000,
+        "status": "Recommendation",
+        "status_code": "recommendation",
+        "location": "Nottinghamshire, near A1 Great North Road",
+        "county": "Nottinghamshire",
+        "notes": "Examination completed. SoS decision expected October 2026.",
+        "pins_url": "https://national-infrastructure-consenting.planninginspectorate.gov.uk/projects/EN010162"
       }
     }
   ]
