@@ -1,4 +1,4 @@
-// Updated 24/06/2026 — repd_solar_data.js external file deployed
+// Updated 24/06/2026 — full REPD Q1 2026 dataset (7,228 entries) deployed
 // Updated 23/06/2026 — commit this separately to trigger Vercel auto-deploy.
 // nav-footer.js — Updated 19/06/2026
 // Added: Pipeline Map as standard nav link
