@@ -460,7 +460,6 @@ map.createPane('solarPane'); map.getPane('solarPane').style.zIndex=450;
 const solarGroup=L.layerGroup().addTo(map);
 let alcPolygons=[];
 let solarData=[];
-window.solarData = solarData; // expose for map search
 let alcOpacity=0.70;
 let bmvHighlight=false;
 
@@ -471,6 +470,8 @@ function loadEmbeddedREPD(){
     lat:d[0], lng:d[1], status:d[2], name:d[3], county:d[4], capacity:d[5],
     operator:'', planRef:''
   }));
+  window.solarData = solarData;
+
 
   const el=document.getElementById('repd-status');
   el.textContent='✓ '+solarData.length+' sites loaded (REPD Q1 2026)';
