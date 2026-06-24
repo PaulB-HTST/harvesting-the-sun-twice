@@ -4008,8 +4008,7 @@ const REPD_DATA = [
 [52.32836,-1.15081,"PP","Crick Solar Farm","Warwickshire",49.9],
 [52.5368,-1.73414,"PP","Cembre Limited Dunton Park, Kingsbury Road","West Midlands",0.94],
 [52.94582,-1.13327,"O","Eastcroft Municipal Depot","Nottinghamshire",0.18],
-[51.32948,-0.26313,"RV","University for the Creative Arts
-, Ashley Road - GSHP, Battery & Solar Panels","Surrey",0.35],
+[51.32948,-0.26313,"RV","University for the Creative Arts, Ashley Road - GSHP, Battery & Solar Panels","Surrey",0.35],
 [53.64014,-0.21019,"PP","ABP Immingham, Shed 35 Immingham Dock - Solar Panels","Lincolnshire",0.51],
 [50.74064,-1.55908,"OT","Pennington Wastewater Treatment Works, Milford Road - Solar panels","Hampshire",1.28],
 [50.79371,0.28773,"PP","Marshall Road - Solar Panels","East Sussex",0.2],
@@ -4501,8 +4500,7 @@ const REPD_DATA = [
 [55.91557,-3.63598,"PP","The Vu, Roscam House - Solar Photovoltaics Array","West Lothian",0],
 [52.80914,-3.05274,"OT","Tramway Farm, Crickheath - Solar Array","Shropshire",1.11],
 [52.89504,-1.47606,"PP","Tenpin Bowling Derby, Foresters Park Centre - Solar Panels","Derbyshire",0.19],
-[51.62909,-0.75192,"PP","Eden Shopping Centre, Oxford Road
- -  Solar Panels","Buckinghamshire",0.63],
+[51.62909,-0.75192,"PP","Eden Shopping Centre, Oxford Road -  Solar Panels","Buckinghamshire",0.63],
 [54.68167,-1.2108,"RV","Camerons Brewery, Stockton Street - Solar Panels","Cleveland",0.64],
 [52.4288,-1.97535,"PP","Shenley Court Secondary School, Shenley Lane - Solar PV Panels","West Midlands",0.18],
 [52.48186,-2.10875,"PP","Merry Hill Centre - Solar Panels","West Midlands",1.01],
