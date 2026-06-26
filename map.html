@@ -11,7 +11,7 @@ gtag('js', new Date());
 gtag('config', 'G-SPCV546Z74');
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Interactive map of UK solar farm locations against Agricultural Land Classification grades â Harvesting the Sun Twice campaign evidence tool.">
+<meta name="description" content="Interactive map of UK solar farm locations against Agricultural Land Classification grades — Harvesting the Sun Twice campaign evidence tool.">
 <title>UK Solar &amp; Land Use Map | Harvesting the Sun Twice</title>
 
 <!-- HTST site stylesheet -->
@@ -29,7 +29,7 @@ gtag('config', 'G-SPCV546Z74');
 <script src="nsip_layer.js"></script>
 <script src="js/map_search.js"></script>
 <style>
-/* ââ Map page overrides âââââââââââââââââââââââââââââââââââââââââââ */
+/* ── Map page overrides ─────────────────────────────────────────── */
 
 /* Full-height layout below the nav */
 .map-page-wrap {
@@ -39,7 +39,7 @@ height: calc(100vh - var(--nav-h));
 margin-top: var(--nav-h); /* push below fixed nav */
 }
 
-/* Page intro strip â HTST straw background */
+/* Page intro strip — HTST straw background */
 .map-intro {
 background: var(--forest);
 color: var(--mist);
@@ -57,7 +57,7 @@ flex-wrap: wrap;
 .map-intro__note { font-size: 11px; color: var(--sage); max-width: 460px; line-height: 1.5; }
 .map-intro__note a { color: var(--gold); }
 
-/* File-loader banner â three columns */
+/* File-loader banner — three columns */
 #csv-banner {
 background: var(--straw);
 border-bottom: 2px solid var(--moss);
@@ -92,7 +92,7 @@ white-space: nowrap; align-self: flex-start; margin-top: 3px;
 /* Map + panel layout */
 #map-app { display: flex; flex: 1; overflow: hidden; }
 
-/* Side panel â HTST chalk background */
+/* Side panel — HTST chalk background */
 #panel {
 width: 252px; min-width: 252px;
 background: var(--chalk);
@@ -150,7 +150,7 @@ border-top-color: var(--moss); border-radius: 50%;
 animation: sp 0.8s linear infinite; flex-shrink: 0; }
 @keyframes sp { to { transform: rotate(360deg); } }
 
-/* Leaflet popup â HTST palette */
+/* Leaflet popup — HTST palette */
 .leaflet-popup-content-wrapper {
 background: var(--chalk); color: var(--ink);
 border: 1px solid var(--rule); border-radius: var(--radius-lg);
@@ -198,7 +198,7 @@ flex-shrink: 0; line-height: 1.6;
 .nsip-legend-section { margin-top:12px; padding-top:8px; border-top:1px solid #E5E7EB; }
 .nsip-legend-section .legend-section-title { font-weight:600; font-size:12px; margin-bottom:6px; color:#374151; }
 
-/* ââ Map Search Control âââââââââââââââââââââââââââââââ */
+/* ── Map Search Control ─────────────────────────────── */
 .map-search-control { z-index: 1000; }
 .msc-wrapper { position: relative; width: 260px; font-family: 'Google Sans Flex', Arial, sans-serif; }
 .msc-input-row { display: flex; align-items: center; background: #fff; border: 2px solid #ccc; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.18); padding: 4px 6px; gap: 4px; }
@@ -216,17 +216,17 @@ flex-shrink: 0; line-height: 1.6;
 .msc-label { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .msc-label strong { color: #2563EB; font-weight: 700; }
 .msc-type { font-size: 10px; color: #888; background: #F3F4F6; border-radius: 3px; padding: 1px 4px; flex-shrink: 0; }
-/* ââ End Map Search Control âââââââââââââââââââââââââââ */
+/* ── End Map Search Control ─────────────────────────── */
 
-/* ââ Map Overlay Radio Section âââââââââââââââââââââââââ */
+/* ── Map Overlay Radio Section ───────────────────────── */
 .rb-group { display: flex; flex-direction: column; gap: 3px; }
 .rb-row { display: flex; align-items: center; gap: 7px; cursor: pointer;
   padding: 3px 4px; border-radius: var(--radius); transition: background var(--trans); }
 .rb-row:hover { background: var(--mist); }
 .rb-row input[type=radio] { width: 13px; height: 13px; flex-shrink: 0; accent-color: var(--fern); }
-/* ââ End Map Overlay Radio Section âââââââââââââââââââââ */
+/* ── End Map Overlay Radio Section ───────────────────── */
 
-/* ââ VBPV Contextual Panel (inside Leaflet popup) ââââ */
+/* ── VBPV Contextual Panel (inside Leaflet popup) ──── */
 .vbpv-loading { color: var(--stone,#888); font-style: italic; font-size: 10.5px; margin-top: 6px; }
 .vbpv-panel { margin-top: 7px; }
 .vbpv-divider { border: none; border-top: 1px solid var(--rule,#ddd); margin: 6px 0; }
@@ -237,8 +237,8 @@ flex-shrink: 0; line-height: 1.6;
 .vbpv-s2 { color: #1565c0; }
 .vbpv-s1 { color: #e65c00; }
 .vbpv-s0 { color: #546e7a; }
-/* ââ End VBPV Panel ââââââââââââââââââââââââââââââââââââ */
-/* ── Zoom level display ────────────────────────────────────────── */
+/* ── End VBPV Panel ──────────────────────────────────── */
+/* ── Zoom level display ───────────────────────────────────────────── */
 #zoom-display {
   position: absolute;
   top: 10px;
@@ -270,20 +270,20 @@ flex-shrink: 0; line-height: 1.6;
 <div class="map-intro">
 <div>
 <div class="map-intro__title">\u2600 UK Solar Pipeline &amp; Agricultural Land Classification</div>
-<div class="map-intro__sub">REPD Q4 Jan 2026 Â· Natural England ALC</div>
+<div class="map-intro__sub">REPD Q4 Jan 2026 · Natural England ALC</div>
 </div>
-<div class="map-intro__note">Every dot is a real UK solar planning application. ALC grade shading loads automatically â no action needed. Click any dot for site details. Data: <a href="/sources.html">Evidence Library â</a></div>
+<div class="map-intro__note">Every dot is a real UK solar planning application. ALC grade shading loads automatically — no action needed. Click any dot for site details. Data: <a href="/sources.html">Evidence Library →</a></div>
 </div>
 
 <!-- FILE LOADER BANNER -->
 <div id="csv-banner" style="background:var(--forest);border-bottom:2px solid var(--moss);padding:8px 16px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;gap:12px;">
 <div style="display:flex;align-items:center;gap:8px;">
 <span style="font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:0.06em;">Live Data</span>
-<span id="repd-status" style="font-size:11px;color:var(--mist);">Loading REPD sitesâ¦</span>
+<span id="repd-status" style="font-size:11px;color:var(--mist);">Loading REPD sites…</span>
 </div>
 <div style="font-size:10.5px;color:var(--sage);font-style:italic;">
-REPD Q4 Jan 2026 Â· Natural England ALC Â· Next REPD update: ~August 2026 Â·
-<a href="/sources.html" style="color:var(--gold);">Evidence Library â</a>
+REPD Q4 Jan 2026 · Natural England ALC · Next REPD update: ~August 2026 ·
+<a href="/sources.html" style="color:var(--gold);">Evidence Library →</a>
 </div>
 </div>
 
@@ -293,7 +293,7 @@ REPD Q4 Jan 2026 Â· Natural England ALC Â· Next REPD update: ~August 2026 Â
 <!-- SIDE PANEL -->
 <div id="panel">
 
-<!-- ââ MAP OVERLAY (radio, single-select) ââââââââââââââââââââââ -->
+<!-- ── MAP OVERLAY (radio, single-select) ────────────────────── -->
 <div>
   <div class="sec">Map Overlay</div>
   <div class="rb-group" id="overlay-rbs">
@@ -306,7 +306,7 @@ REPD Q4 Jan 2026 Â· Natural England ALC Â· Next REPD update: ~August 2026 Â
   <div id="overlay-notice" style="display:none;font-size:10.5px;padding:6px 7px;margin-top:5px;border-radius:4px;background:var(--straw,#f5edcc);color:var(--graphite,#444);line-height:1.5;border:1px solid var(--gold,#c9a84c)"></div>
 </div>
 
-<!-- ââ ALC-SPECIFIC CONTROLS (shown only when ALC overlay selected) ââ -->
+<!-- ── ALC-SPECIFIC CONTROLS (shown only when ALC overlay selected) ── -->
 <div id="alc-controls" style="display:none">
 
 <div>
@@ -318,11 +318,11 @@ REPD Q4 Jan 2026 Â· Natural England ALC Â· Next REPD update: ~August 2026 Â
 <div>
 <div class="sec">ALC Grade Filter</div>
 <div class="cb-group" id="alc-cbs">
-<label class="cb-row"><input type="checkbox" data-grade="Grade 1" checked><span class="swatch" style="background:#3CE1FE"></span>Grade 1 â Best (BMV)</label>
-<label class="cb-row"><input type="checkbox" data-grade="Grade 2" checked><span class="swatch" style="background:#C1FAFE"></span>Grade 2 â Very Good (BMV)</label>
-<label class="cb-row"><input type="checkbox" data-grade="Grade 3" checked><span class="swatch" style="background:#B2FE99"></span>Grade 3 â Good/Moderate</label>
-<label class="cb-row"><input type="checkbox" data-grade="Grade 4" checked><span class="swatch" style="background:#FEF8A4"></span>Grade 4 â Poor</label>
-<label class="cb-row"><input type="checkbox" data-grade="Grade 5" checked><span class="swatch" style="background:#B28764"></span>Grade 5 â Very Poor</label>
+<label class="cb-row"><input type="checkbox" data-grade="Grade 1" checked><span class="swatch" style="background:#3CE1FE"></span>Grade 1 — Best (BMV)</label>
+<label class="cb-row"><input type="checkbox" data-grade="Grade 2" checked><span class="swatch" style="background:#C1FAFE"></span>Grade 2 — Very Good (BMV)</label>
+<label class="cb-row"><input type="checkbox" data-grade="Grade 3" checked><span class="swatch" style="background:#B2FE99"></span>Grade 3 — Good/Moderate</label>
+<label class="cb-row"><input type="checkbox" data-grade="Grade 4" checked><span class="swatch" style="background:#FEF8A4"></span>Grade 4 — Poor</label>
+<label class="cb-row"><input type="checkbox" data-grade="Grade 5" checked><span class="swatch" style="background:#B28764"></span>Grade 5 — Very Poor</label>
 <label class="cb-row"><input type="checkbox" data-grade="Non-Agricultural" checked><span class="swatch" style="background:#FED586"></span>Non-Agricultural</label>
 <label class="cb-row"><input type="checkbox" data-grade="Urban" checked><span class="swatch" style="background:#FF907C"></span>Urban</label>
 </div>
@@ -330,15 +330,15 @@ REPD Q4 Jan 2026 Â· Natural England ALC Â· Next REPD update: ~August 2026 Â
 
 <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--rule);font-size:10.5px;color:var(--stone);line-height:1.9;">
 <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--sage);margin-bottom:4px;">ALC Grade Key</div>
-<div><span style="display:inline-block;width:11px;height:11px;background:#3CE1FE;border-radius:2px;vertical-align:middle;margin-right:5px;"></span>Grade 1 â Best (BMV)</div>
-<div><span style="display:inline-block;width:11px;height:11px;background:#C1FAFE;border-radius:2px;vertical-align:middle;margin-right:5px;"></span>Grade 2 â Very Good (BMV)</div>
-<div><span style="display:inline-block;width:11px;height:11px;background:#B2FE99;border-radius:2px;vertical-align:middle;margin-right:5px;"></span>Grade 3 â Good/Moderate</div>
-<div><span style="display:inline-block;width:11px;height:11px;background:#FEF8A4;border-radius:2px;vertical-align:middle;margin-right:5px;"></span>Grade 4 â Poor</div>
-<div><span style="display:inline-block;width:11px;height:11px;background:#B28764;border-radius:2px;vertical-align:middle;margin-right:5px;"></span>Grade 5 â Very Poor</div>
+<div><span style="display:inline-block;width:11px;height:11px;background:#3CE1FE;border-radius:2px;vertical-align:middle;margin-right:5px;"></span>Grade 1 — Best (BMV)</div>
+<div><span style="display:inline-block;width:11px;height:11px;background:#C1FAFE;border-radius:2px;vertical-align:middle;margin-right:5px;"></span>Grade 2 — Very Good (BMV)</div>
+<div><span style="display:inline-block;width:11px;height:11px;background:#B2FE99;border-radius:2px;vertical-align:middle;margin-right:5px;"></span>Grade 3 — Good/Moderate</div>
+<div><span style="display:inline-block;width:11px;height:11px;background:#FEF8A4;border-radius:2px;vertical-align:middle;margin-right:5px;"></span>Grade 4 — Poor</div>
+<div><span style="display:inline-block;width:11px;height:11px;background:#B28764;border-radius:2px;vertical-align:middle;margin-right:5px;"></span>Grade 5 — Very Poor</div>
 <div><span style="display:inline-block;width:11px;height:11px;background:#888;border-radius:2px;vertical-align:middle;margin-right:5px;"></span>Not Surveyed</div>
 <div><span style="display:inline-block;width:11px;height:11px;background:#FED586;border-radius:2px;vertical-align:middle;margin-right:5px;"></span>Non-Agricultural</div>
 <div><span style="display:inline-block;width:11px;height:11px;background:#FF907C;border-radius:2px;vertical-align:middle;margin-right:5px;"></span>Urban</div>
-<div style="margin-top:4px;font-style:italic;font-size:9.5px;color:var(--stone);">Â© Natural England. Provisional 1:250,000. Not for site decisions.</div>
+<div style="margin-top:4px;font-style:italic;font-size:9.5px;color:var(--stone);">© Natural England. Provisional 1:250,000. Not for site decisions.</div>
 </div>
 
 </div><!-- /alc-controls -->
@@ -349,16 +349,16 @@ REPD Q4 Jan 2026 Â· Natural England ALC Â· Next REPD update: ~August 2026 Â
 <div>
 <div class="sec">BMV Farmland Highlight</div>
 <div style="font-size:10.5px;color:var(--stone,#777);margin-bottom:7px;line-height:1.5">
-Best &amp; Most Versatile land (Grades 1, 2 &amp; 3a) â the planning threshold for irreversible loss.
+Best &amp; Most Versatile land (Grades 1, 2 &amp; 3a) — the planning threshold for irreversible loss.
 </div>
 <label class="cb-row" id="bmv-toggle-row" style="cursor:pointer;padding:5px 7px;border-radius:4px;background:var(--straw,#f5edcc);border:1.5px solid var(--gold,#c9a84c)">
 <input type="checkbox" id="bmv-toggle">
-<span style="font-weight:700;color:var(--forest,#1a3a2a);font-size:12px">â¡ Highlight BMV land</span>
+<span style="font-weight:700;color:var(--forest,#1a3a2a);font-size:12px">⚡ Highlight BMV land</span>
 </label>
 <div id="bmv-legend" style="display:none;margin-top:6px;font-size:10.5px;line-height:1.8;color:var(--graphite,#444)">
-<div><span style="display:inline-block;width:12px;height:12px;background:#3CE1FE;border:2px solid #fff;border-radius:2px;margin-right:5px;vertical-align:middle"></span>Grade 1 â Best</div>
-<div><span style="display:inline-block;width:12px;height:12px;background:#C1FAFE;border:2px solid #fff;border-radius:2px;margin-right:5px;vertical-align:middle"></span>Grade 2 â Very Good</div>
-<div><span style="display:inline-block;width:12px;height:12px;background:#B2FE99;border:2px solid #fff;border-radius:2px;margin-right:5px;vertical-align:middle"></span>Grade 3a â Good</div>
+<div><span style="display:inline-block;width:12px;height:12px;background:#3CE1FE;border:2px solid #fff;border-radius:2px;margin-right:5px;vertical-align:middle"></span>Grade 1 — Best</div>
+<div><span style="display:inline-block;width:12px;height:12px;background:#C1FAFE;border:2px solid #fff;border-radius:2px;margin-right:5px;vertical-align:middle"></span>Grade 2 — Very Good</div>
+<div><span style="display:inline-block;width:12px;height:12px;background:#B2FE99;border:2px solid #fff;border-radius:2px;margin-right:5px;vertical-align:middle"></span>Grade 3a — Good</div>
 <div style="margin-top:4px;font-style:italic;color:var(--stone,#888)">All other grades dimmed to 15%</div>
 </div>
 <div style="margin-top:10px;padding-top:8px;border-top:1px solid var(--rule);">
@@ -402,7 +402,7 @@ Best &amp; Most Versatile land (Grades 1, 2 &amp; 3a) â the planning thresh
 <button onclick="setAllCounties(false)" style="font-size:10px;padding:2px 8px;cursor:pointer;border:1px solid var(--rule);border-radius:var(--radius);background:var(--straw);color:var(--forest)">None</button>
 </div>
 <div class="cb-group" id="county-cbs">
-<div style="font-size:10px;color:var(--stone);font-style:italic">Load CSV â  to populateâ¦</div>
+<div style="font-size:10px;color:var(--stone);font-style:italic">Load CSV ① to populate…</div>
 </div>
 </div>
 
@@ -418,25 +418,25 @@ Best &amp; Most Versatile land (Grades 1, 2 &amp; 3a) â the planning thresh
 
 <!-- Footer strip -->
 <div class="map-footer">
-Data: <a href="https://www.gov.uk/government/publications/renewable-energy-planning-database-monthly-extract" target="_blank">REPD Q4 Jan 2026</a> Â·
-<a href="https://environment.data.gov.uk/dataset/af1b847b-037b-4772-9c31-7edf584522aa" target="_blank">Natural England ALC</a> Â·
-Map Â© <a href="https://carto.com/" target="_blank">CARTO</a> / OpenStreetMap Â·
-<a href="sources.html">Campaign Evidence Library â</a>
+Data: <a href="https://www.gov.uk/government/publications/renewable-energy-planning-database-monthly-extract" target="_blank">REPD Q4 Jan 2026</a> ·
+<a href="https://environment.data.gov.uk/dataset/af1b847b-037b-4772-9c31-7edf584522aa" target="_blank">Natural England ALC</a> ·
+Map © <a href="https://carto.com/" target="_blank">CARTO</a> / OpenStreetMap ·
+<a href="sources.html">Campaign Evidence Library →</a>
 </div>
 
 </div><!-- /map-page-wrap -->
 
 <!-- ALC loading badge -->
-<span id="alc-badge-msg">Loading ALCâ¦</span>
+<span id="alc-badge-msg">Loading ALC…</span>
 </div>
 
-<!-- REPD Solar Data â Q1 2026 â full dataset â updated 24/06/2026 -->
+<!-- REPD Solar Data — Q1 2026 — full dataset — updated 24/06/2026 -->
 <script src="js/repd_solar_data.js"></script>
 <script>
 const STATUS_LEGEND = {"O":"Operational","UC":"Under Construction","AC":"Awaiting Construction","PP":"Planning Permission Granted","AS":"Application Submitted","SC":"Scoping","RF":"Refused","WD":"Withdrawn","AB":"Abandoned","RV":"Revised","EX":"Expired","AG":"Appeal Granted","AL":"Appeal Lodged","SS":"Sec of State","OT":"Other"};
 </script>
 <script>
-// ââ BNG â WGS84 ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ── BNG → WGS84 ──────────────────────────────────────────────────────────────
 proj4.defs('EPSG:27700','+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs');
 function bngToLatLng(e,n){const[lon,lat]=proj4('EPSG:27700','EPSG:4326',[e,n]);return[lat,lon];}
 function reprojectCoord(c){const[lon,lat]=proj4('EPSG:27700','EPSG:4326',[c[0],c[1]]);return[lon,lat];}
@@ -453,7 +453,7 @@ const c=f.geometry.type==='Polygon'?f.geometry.coordinates[0][0]:f.geometry.coor
 return c&&Math.abs(c[0])>100;
 }
 
-// ââ Colour helpers ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ── Colour helpers ────────────────────────────────────────────────────────────
 function alcFill(grade){
 const g=(grade||'').toString().trim();
 if(/grade\s*1\b/i.test(g))return'#3CE1FE';
@@ -477,7 +477,7 @@ if(/grade\s*5\b/i.test(s))return'Grade 5';
 if(/urban/i.test(s))return'Urban';
 return'Non-Agricultural';
 }
-// Status code â display
+// Status code → display
 function statusLabel(sc){return STATUS_LEGEND[sc]||'Other';}
 function solarColour(sc){
 const m={'O':'#1b7e24','UC':'#e65c00','AC':'#1565c0','PP':'#0288d1','AS':'#6a1b9a',
@@ -492,10 +492,10 @@ return active.includes(sc)?sc:'other';
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function pr(l,v){return'<div class="pr"><span class="pl">'+l+':</span><span>'+esc(String(v))+'</span></div>';}
 
-// ââ Map âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ── Map ───────────────────────────────────────────────────────────────────────
 const map=L.map('map',{center:[54.0,-2.5],zoom:6,zoomSnap:0.25,zoomDelta:0.5});
 initNsipLayer(map);
-// Initialise map search â must be called after REPD data and NSIP layer are ready
+// Initialise map search — must be called after REPD data and NSIP layer are ready
 if (typeof initMapSearch === 'function') { initMapSearch(map); }
 document.getElementById('nsip-legend-container').innerHTML = getNsipLegendHTML();
 document.getElementById('nsip-toggle').addEventListener('change', function() {
@@ -517,7 +517,7 @@ let solarData=[];
 let alcOpacity=0.70;
 let bmvHighlight=false;
 
-// ââ Map Overlay management ââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ── Map Overlay management ────────────────────────────────────────────────────
 // Radio buttons enforce single-selection; one overlay visible at a time.
 //
 // WMS endpoints confirmed via GetCapabilities (25 Jun 2026):
@@ -526,7 +526,7 @@ let bmvHighlight=false;
 //   Surface water: https://environment.data.gov.uk/spatialdata/nafra2-risk-of-flooding-from-surface-water/wms
 //                 Layer: rofsw
 //   Solar GHI:    https://globalsolaratlas.info/api/wms  Layer: GHI
-//                 *** CORS/availability unverified â tiles load via <img> so CORS not required
+//                 *** CORS/availability unverified — tiles load via <img> so CORS not required
 //                 for tile display, but if the service is unavailable a proxy at
 //                 /api/solar-proxy may be required. ***
 
@@ -534,9 +534,9 @@ let activeOverlay = 'none';
 let wmsLayer      = null;
 
 const OVERLAY_WMS = {
-  // Proxied via /api/flood-wms â converts EPSG:3857 bbox â EPSG:27700 (BNG)
+  // Proxied via /api/flood-wms — converts EPSG:3857 bbox → EPSG:27700 (BNG)
   // because the EA WMS does not support EPSG:3857 directly.
-  // minZoom:13 keeps tiles â¤ ~3 km wide in BNG; the service returns blank below that.
+  // minZoom:13 keeps tiles ≤ ~3 km wide in BNG; the service returns blank below that.
   flood: {
     url: '/api/flood-wms',
     options: {
@@ -546,12 +546,12 @@ const OVERLAY_WMS = {
       opacity: 0.65,
       pane: 'alcPane',
       minZoom: 13,
-      attribution: 'Â© <a href="https://environment.data.gov.uk">Environment Agency</a>'
+      attribution: '© <a href="https://environment.data.gov.uk">Environment Agency</a>'
     }
   },
   // solar: no public GHI WMS tile service is available. Handled as info notice in setOverlay.
   surfacewater: {
-    // Must use WMS 1.3.0 (CRS= param) â the NaFRA2 service does not accept SRS= from v1.1.1.
+    // Must use WMS 1.3.0 (CRS= param) — the NaFRA2 service does not accept SRS= from v1.1.1.
     url: 'https://environment.data.gov.uk/spatialdata/nafra2-risk-of-flooding-from-surface-water/wms',
     options: {
       layers: 'rofsw',
@@ -561,7 +561,7 @@ const OVERLAY_WMS = {
       pane: 'alcPane',
       version: '1.3.0',
       minZoom: 13,
-      attribution: 'Â© <a href="https://environment.data.gov.uk">Environment Agency</a>'
+      attribution: '© <a href="https://environment.data.gov.uk">Environment Agency</a>'
     }
   }
 };
@@ -571,9 +571,9 @@ function updateOverlayNotice() {
   if (!notice) return;
   var msg = '';
   if (activeOverlay === 'solar') {
-    msg = '\u2600\uFE0F No public GHI tile service is available. Per-site solar data appears in the VBPV panel â click any site marker.';
+    msg = '\u2600\uFE0F No public GHI tile service is available. Per-site solar data appears in the VBPV panel — click any site marker.';
   } else if ((activeOverlay === 'flood' || activeOverlay === 'surfacewater') && map.getZoom() < 13) {
-    msg = '\uD83D\uDD0D Zoom in to levelÂ 13 or higher to see this overlay.';
+    msg = '\uD83D\uDD0D Zoom in to level 13 or higher to see this overlay.';
   }
   notice.textContent = msg;
   notice.style.display = msg ? 'block' : 'none';
@@ -604,20 +604,20 @@ function setOverlay(value) {
 
 map.on('zoomend', updateOverlayNotice);
 
-// ── Zoom level display ──────────────────────────────────────────
+// ── Zoom level display ───────────────────────────────────────────
 (function() {
   var zd = document.createElement('div');
   zd.id = 'zoom-display';
-  zd.textContent = 'Level\u00a0' + map.getZoom();
+  zd.textContent = 'Level ' + map.getZoom();
   document.getElementById('map').appendChild(zd);
-  map.on('zoomend', function() { zd.textContent = 'Level\u00a0' + map.getZoom(); });
+  map.on('zoomend', function() { zd.textContent = 'Level ' + map.getZoom(); });
 }());
 
 document.getElementById('overlay-rbs').addEventListener('change', function(e) {
   setOverlay(e.target.value);
 });
 
-// ââ Load embedded REPD data on startup âââââââââââââââââââââââââââââââââââââââ
+// ── Load embedded REPD data on startup ───────────────────────────────────────
 function loadEmbeddedREPD(){
 // REPD_DATA format: [lat,lng,statusCode,siteName,county,capacity]
 solarData = REPD_DATA.map(d=>({
@@ -627,7 +627,7 @@ operator:'', planRef:''
 window.solarData = solarData;
 
 const el=document.getElementById('repd-status');
-el.textContent='â '+solarData.length+' sites loaded (REPD Q1 2026)';
+el.textContent='✓ '+solarData.length+' sites loaded (REPD Q1 2026)';
 el.className='file-status ok';
 
 // Build county checkboxes
@@ -646,24 +646,24 @@ renderSolar();
 updateStats();
 }
 
-// ââ Auto-fetch ALC from OGC API âââââââââââââââââââââââââââââââââââââââââââââââ
+// ── Auto-fetch ALC from OGC API ───────────────────────────────────────────────
 const ALC_API='https://environment.data.gov.uk/spatialdata/agricultural-land-classification-provisional-england/ogc/features/v1/collections/Agricultural_Land_Classification_Provisional_England/items';
 const ALC_LIMIT=500;
 
 async function fetchALCData() {
 const statusEl = document.getElementById('repd-status');
-if (statusEl) statusEl.textContent = 'Loading ALC dataâ¦';
+if (statusEl) statusEl.textContent = 'Loading ALC data…';
 const url = '/api/alc';
 try {
 const resp = await fetch(url);
 if (!resp.ok) throw new Error('HTTP ' + resp.status);
 const data = await resp.json();
 if (!data.features || data.features.length === 0) {
-if (statusEl) statusEl.textContent = 'â 6769 sites loaded (REPD Q1 2026) Â· ALC: no features returned';
+if (statusEl) statusEl.textContent = '✓ 6769 sites loaded (REPD Q1 2026) · ALC: no features returned';
 return;
 }
 if (window.alcLayer) window.alcLayer.remove();
-// Build per-grade layers â stored in alcPolygons but NOT added to map yet.
+// Build per-grade layers — stored in alcPolygons but NOT added to map yet.
 // setOverlay('alc') calls applyALCFilters() to show them when user selects ALC overlay.
 const byGrade = {};
 data.features.forEach(f => {
@@ -680,13 +680,13 @@ pane: 'alcPane',
 style: feat => { const g = (feat.properties.ALC_GRADE||feat.properties.Grade||'').toString().trim(); return {fillColor:alcFill(g),fillOpacity:alcOpacity,color:alcFill(g),weight:0.3,opacity:0.4}; },
 onEachFeature: (feat,lyr) => { const g = feat.properties.ALC_GRADE||feat.properties.Grade||'Unknown'; lyr.bindPopup('<div class="pt">ALC '+esc(g)+'</div>'+pr('Grade',g)); }
 });
-// Store layer but do NOT add to map â ALC overlay is off by default
+// Store layer but do NOT add to map — ALC overlay is off by default
 alcPolygons.push({bucket,layer});
 });
 window.alcLayer = { remove: function() { alcPolygons.forEach(function(p) { if (map.hasLayer(p.layer)) map.removeLayer(p.layer); }); } };
-if (statusEl) statusEl.textContent = 'â 6769 sites loaded Â· ALC: ' + data.features.length + ' polygons loaded';
+if (statusEl) statusEl.textContent = '✓ 6769 sites loaded · ALC: ' + data.features.length + ' polygons loaded';
 } catch(err) {
-if (statusEl) statusEl.textContent = 'â 6769 sites loaded (REPD Q1 2026) Â· ALC unavailable';
+if (statusEl) statusEl.textContent = '✓ 6769 sites loaded (REPD Q1 2026) · ALC unavailable';
 console.warn('ALC fetch failed:', err);
 }
 }
@@ -712,7 +712,7 @@ alcPolygons.push({bucket,layer});
 });
 }
 
-// ââ Manual file handlers (override/update) ââââââââââââââââââââââââââââââââââââ
+// ── Manual file handlers (override/update) ────────────────────────────────────
 function handleALCFile(file){
 if(!file)return;
 const reader=new FileReader();
@@ -733,7 +733,7 @@ reader.readAsText(file);
 function handleCSVFile(file){
 if(!file)return;
 const el=document.getElementById('repd-status');
-el.textContent='Reading '+file.name+'â¦'; el.className='file-status wait';
+el.textContent='Reading '+file.name+'…'; el.className='file-status wait';
 const reader=new FileReader();
 reader.onload=function(e){
 Papa.parse(e.target.result,{
@@ -749,7 +749,7 @@ return{name:r['Site Name']||'',county:r['County']||'',
 status:r['Development Status']||'',capacity:parseFloat(r['Installed Capacity (MWelec)']||'0')||0,
 operator:r['Operator (or Applicant)']||'',planRef:r['Planning Application Reference']||'',lat,lng};
 }).filter(r=>r.lat!==null);
-el.textContent='â '+solarData.length+' sites from '+file.name;
+el.textContent='✓ '+solarData.length+' sites from '+file.name;
 el.className='file-status ok';
 // Rebuild county list
 const countySet=new Set(solarData.map(s=>(s.county||'').toLowerCase().trim()).filter(Boolean));
@@ -771,7 +771,7 @@ reader.readAsText(file);
 function handleCSVDrop(e){const f=e.dataTransfer.files&&e.dataTransfer.files[0];if(f)handleCSVFile(f);}
 function handleALCDrop(e){const f=e.dataTransfer.files&&e.dataTransfer.files[0];if(f)handleALCFile(f);}
 
-// ââ VBPV Suitability â contextual panel helpers âââââââââââââââââââââââââââââââ
+// ── VBPV Suitability — contextual panel helpers ───────────────────────────────
 
 // ALC grade descriptor
 function alcGradeDesc(grade) {
@@ -826,11 +826,11 @@ function buildInitialPopup(s) {
   var sc     = isCode ? s.status : csvStatusCode(s.status);
   var cap    = typeof s.capacity === 'number' ? s.capacity : parseFloat(s.capacity || 0);
   return (
-    '<div class="pt">ð ' + esc(s.name || '') + '</div>' +
+    '<div class="pt">📍 ' + esc(s.name || '') + '</div>' +
     '<div style="font-size:11px;color:var(--stone,#888);margin-bottom:4px;">' +
-      (cap ? cap.toFixed(1) + ' MW' : 'â') + ' Â· ' + esc(s.county || '') + ' Â· ' + esc(statusLabel(sc)) +
+      (cap ? cap.toFixed(1) + ' MW' : '—') + ' · ' + esc(s.county || '') + ' · ' + esc(statusLabel(sc)) +
     '</div>' +
-    '<div class="vbpv-loading">â³ Analysing site dataâ¦</div>'
+    '<div class="vbpv-loading">⏳ Analysing site data…</div>'
   );
 }
 
@@ -847,35 +847,35 @@ function buildFullPopup(s, alc, flood, solar, score) {
 
   var factors = [];
   if (score.alc)    factors.push('BMV land (Grades 1/2/3a)');
-  if (score.flood)  factors.push('Flood Zone 2/3 â ideal for agrivoltaics');
-  if (score.diffuse) factors.push('High diffuse fraction â favours VBPV');
+  if (score.flood)  factors.push('Flood Zone 2/3 — ideal for agrivoltaics');
+  if (score.diffuse) factors.push('High diffuse fraction — favours VBPV');
 
   var alcLabel   = esc(alc.grade || 'Not surveyed');
   var alcDesc    = alcGradeDesc(alc.grade);
   var floodLabel = esc(flood.label || 'No data');
-  var ghiVal     = solar.ghi ? solar.ghi.toFixed(0) + ' kWh/mÂ²/yr' : 'â';
+  var ghiVal     = solar.ghi ? solar.ghi.toFixed(0) + ' kWh/m²/yr' : '—';
   var diffVal    = (solar.diffuseFraction !== null && solar.diffuseFraction !== undefined)
                     ? (solar.diffuseFraction * 100).toFixed(0) + '%'
-                    : 'â';
+                    : '—';
 
   return (
-    '<div class="pt">ð ' + esc(s.name || '') + '</div>' +
+    '<div class="pt">📍 ' + esc(s.name || '') + '</div>' +
     '<div style="font-size:11px;color:var(--stone,#888);margin-bottom:4px;">' +
-      (cap ? cap.toFixed(1) + ' MW' : 'â') + ' Â· ' + esc(s.county || '') + ' Â· ' + esc(statusLabel(sc)) +
+      (cap ? cap.toFixed(1) + ' MW' : '—') + ' · ' + esc(s.county || '') + ' · ' + esc(statusLabel(sc)) +
     '</div>' +
     '<hr class="vbpv-divider">' +
     '<div class="vbpv-panel">' +
-      '<div class="vbpv-row">ð¾ <b>ALC:</b> ' + alcLabel + (alcDesc ? ' â ' + esc(alcDesc) : '') + '</div>' +
-      '<div class="vbpv-row">ð <b>Flood:</b> ' + floodLabel + '</div>' +
-      '<div class="vbpv-row">\u2600\uFE0F <b>GHI:</b> ' + ghiVal + (diffVal !== 'â' ? ' Â· Diffuse: ' + diffVal : '') + '</div>' +
+      '<div class="vbpv-row">🌾 <b>ALC:</b> ' + alcLabel + (alcDesc ? ' — ' + esc(alcDesc) : '') + '</div>' +
+      '<div class="vbpv-row">🌊 <b>Flood:</b> ' + floodLabel + '</div>' +
+      '<div class="vbpv-row">\u2600\uFE0F <b>GHI:</b> ' + ghiVal + (diffVal !== '—' ? ' · Diffuse: ' + diffVal : '') + '</div>' +
     '</div>' +
     '<hr class="vbpv-divider">' +
-    '<div class="vbpv-verdict ' + scoreClass + '">â¡ VBPV SUITABILITY: ' + esc(verdict) + '</div>' +
-    (factors.length ? '<div class="vbpv-factors">' + factors.join(' Â· ') + '</div>' : '')
+    '<div class="vbpv-verdict ' + scoreClass + '">⚡ VBPV SUITABILITY: ' + esc(verdict) + '</div>' +
+    (factors.length ? '<div class="vbpv-factors">' + factors.join(' · ') + '</div>' : '')
   );
 }
 
-// API Call 1 â ALC grade for clicked site (via Vercel proxy, same pattern as /api/alc)
+// API Call 1 — ALC grade for clicked site (via Vercel proxy, same pattern as /api/alc)
 async function fetchALCGrade(lat, lng) {
   try {
     var r = await fetch('/api/alc-point?lat=' + lat + '&lng=' + lng);
@@ -887,9 +887,9 @@ async function fetchALCGrade(lat, lng) {
   }
 }
 
-// API Call 2 â EA Flood Risk point query
+// API Call 2 — EA Flood Risk point query
 // Source: https://environment.data.gov.uk/flood-monitoring/id/floodAreas
-// Returns flood warning/alert areas within 0.5 km. Presence â Zone 2/3.
+// Returns flood warning/alert areas within 0.5 km. Presence → Zone 2/3.
 async function fetchFloodRisk(lat, lng) {
   try {
     var url = 'https://environment.data.gov.uk/flood-monitoring/id/floodAreas' +
@@ -920,11 +920,11 @@ async function fetchFloodRisk(lat, lng) {
   }
 }
 
-// API Call 3 â NASA POWER solar resource
+// API Call 3 — NASA POWER solar resource
 // Provides GHI and diffuse horizontal irradiance for accurate&Hd/Hg calculation.
 // Note: PVGIS PVcalc (task spec) does not expose diffuse fraction in its JSON output;
 // NASA POWER is used instead for both GHI and diffuse data. Both are EU/NASA public APIs.
-// Units: ANN values are kWh/mÂ²/day â multiply by 365 for annual total.
+// Units: ANN values are kWh/m²/day → multiply by 365 for annual total.
 async function fetchSolarResource(lat, lng) {
   try {
     var url = 'https://power.larc.nasa.gov/api/temporal/climatology/point' +
@@ -937,8 +937,8 @@ async function fetchSolarResource(lat, lng) {
     if (!params) throw new Error('Unexpected response structure');
     var ghiDay  = params['ALLSKY_SFC_SW_DWN'] && params['ALLSKY_SFC_SW_DWN']['ANN'];
     var difDay  = params['ALLSKY_SFC_SW_DIFF'] && params['ALLSKY_SFC_SW_DIFF']['ANN'];
-    var ghi     = ghiDay ? ghiDay * 365 : null;   // kWh/mÂ²/yr
-    var diffuse = difDay ? difDay * 365 : null;   // kWh/mÂ²/yr
+    var ghi     = ghiDay ? ghiDay * 365 : null;   // kWh/m²/yr
+    var diffuse = difDay ? difDay * 365 : null;   // kWh/m²/yr
     var diffuseFraction = (ghi && diffuse) ? diffuse / ghi : null;
     return { ghi: ghi, diffuse: diffuse, diffuseFraction: diffuseFraction };
   } catch (e) {
@@ -947,7 +947,7 @@ async function fetchSolarResource(lat, lng) {
   }
 }
 
-// ââ Render solar dots âââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ── Render solar dots ─────────────────────────────────────────────────────────
 function renderSolar(){
 solarGroup.clearLayers();
 // Handle both embedded format (has .status as code) and CSV format (has .status as text)
@@ -977,7 +977,7 @@ var mk = L.circleMarker([s.lat,s.lng],{
   radius:5,fillColor:solarColour(sc),fillOpacity:0.9,color:'#fff',weight:1.5,pane:'solarPane'
 }).addTo(solarGroup);
 
-// ââ Enhancement 2: VBPV Contextual Panel âââââââââââââââââââââââââââââââââ
+// ── Enhancement 2: VBPV Contextual Panel ─────────────────────────────────
 // On click: show loading popup, then fire three parallel API calls,
 // then update popup with full VBPV suitability panel.
 (function(site) {
@@ -1007,17 +1007,17 @@ visible++;totalMW+=cap;
 updateStats(visible,totalMW);
 }
 
-// ââ Stats âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ── Stats ─────────────────────────────────────────────────────────────────────
 function updateStats(visible,totalMW){
 const alcLoaded=alcPolygons.length>0;
 const csvLoaded=solarData.length>0;
 document.getElementById('stats').innerHTML=
-'<b>Solar sites:</b> '+(csvLoaded?(visible||0)+' visible / '+solarData.length+' total':'Loadingâ¦')+'<br>'+
-'<b>Total capacity:</b> '+(csvLoaded?((totalMW||0).toFixed(1))+' MWp':'â')+'<br>'+
-'<b>ALC polygons:</b> '+(alcLoaded?alcPolygons.length:'Loadingâ¦');
+'<b>Solar sites:</b> '+(csvLoaded?(visible||0)+' visible / '+solarData.length+' total':'Loading…')+'<br>'+
+'<b>Total capacity:</b> '+(csvLoaded?((totalMW||0).toFixed(1))+' MWp':'—')+'<br>'+
+'<b>ALC polygons:</b> '+(alcLoaded?alcPolygons.length:'Loading…');
 }
 
-// ââ ALC controls ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ── ALC controls ──────────────────────────────────────────────────────────────
 function applyALCFilters(){
   // Only show ALC polygon layers when the ALC overlay is active
   if (activeOverlay !== 'alc') {
@@ -1038,7 +1038,7 @@ alcPolygons.forEach(({layer})=>{if(map.hasLayer(layer))layer.setStyle({fillOpaci
 });
 document.getElementById('alc-cbs').addEventListener('change',applyALCFilters);
 
-// ââ BMV Highlight âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ── BMV Highlight ─────────────────────────────────────────────────────────────
 const BMU_GRADES=new Set(['Grade 1','Grade 2','Grade 3']);
 function applyBMVHighlight(){
 bmvHighlight=document.getElementById('bmv-toggle').checked;
@@ -1057,7 +1057,7 @@ layer.setStyle({fillOpacity:alcOpacity,opacity:0.4,weight:0.3,color:alcFill(buck
 }
 document.getElementById('bmv-toggle').addEventListener('change',applyBMVHighlight);
 
-// ââ County + status controls ââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ── County + status controls ──────────────────────────────────────────────────
 function setAllCounties(checked){
 document.querySelectorAll('#county-cbs input[type=checkbox]').forEach(cb=>cb.checked=checked);
 renderSolar();
@@ -1069,7 +1069,7 @@ document.getElementById('cap-val').textContent = ['0 MW','5 MW','25 MW','50 MW']
 renderSolar();
 });
 
-// ââ Auto-load on startup ââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ── Auto-load on startup ──────────────────────────────────────────────────────
 loadEmbeddedREPD();
 fetchALCData();
 </script>
@@ -1077,7 +1077,7 @@ fetchALCData();
 <!-- ALC loading badge -->
 <div id="alc-badge">
 <div class="spin"></div>
-<span id="alc-badge-msg">Loading ALCâ¦</span>
+<span id="alc-badge-msg">Loading ALC…</span>
 </div>
 
 <script src="/js/nav-footer.js"></script>
