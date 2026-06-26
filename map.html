@@ -251,7 +251,7 @@ flex-shrink: 0; line-height: 1.6;
 <!-- Page intro strip -->
 <div class="map-intro">
 <div>
-<div class="map-intro__title">☀ UK Solar Pipeline &amp; Agricultural Land Classification</div>
+<div class="map-intro__title">\u2600 UK Solar Pipeline &amp; Agricultural Land Classification</div>
 <div class="map-intro__sub">REPD Q4 Jan 2026 · Natural England ALC</div>
 </div>
 <div class="map-intro__note">Every dot is a real UK solar planning application. ALC grade shading loads automatically — no action needed. Click any dot for site details. Data: <a href="/sources.html">Evidence Library →</a></div>
@@ -369,8 +369,8 @@ Best &amp; Most Versatile land (Grades 1, 2 &amp; 3a) — the planning threshold
 <div class="cb-group" id="status-cbs">
 <label class="cb-row"><input type="checkbox" data-s="O" checked><span class="dot" style="background:#1b7e24"></span>Operational</label>
 <label class="cb-row"><input type="checkbox" data-s="UC" checked><span class="dot" style="background:#e65c00"></span>Under Construction</label>
-<label class="cb'row"><input type="checkbox" data-s="AC" checked><span class="dot" style="background:#1565c0"></span>Awaiting Construction</label>
-<label class="cb'row"><input type="checkbox" data-s="PP" checked><span class="dot" style="background:#0288d1"></span>Planning Permission Granted</label>
+<label class="cb-row"><input type="checkbox" data-s="AC" checked><span class="dot" style="background:#1565c0"></span>Awaiting Construction</label>
+<label class="cb-row"><input type="checkbox" data-s="PP" checked><span class="dot" style="background:#0288d1"></span>Planning Permission Granted</label>
 <label class="cb-row"><input type="checkbox" data-s="AS" checked><span class="dot" style="background:#6a1b9a"></span>Application Submitted</label>
 <label class="cb-row"><input type="checkbox" data-s="SC" checked><span class="dot" style="background:#c62828"></span>Scoping</label>
 <label class="cb-row"><input type="checkbox" data-s="other" checked><span class="dot" style="background:#546e7a"></span>Other</label>
@@ -553,9 +553,9 @@ function updateOverlayNotice() {
   if (!notice) return;
   var msg = '';
   if (activeOverlay === 'solar') {
-    msg = '☀️ No public GHI tile service is available. Per-site solar data appears in the VBPV panel — click any site marker.';
+    msg = '\u2600\uFE0F No public GHI tile service is available. Per-site solar data appears in the VBPV panel — click any site marker.';
   } else if ((activeOverlay === 'flood' || activeOverlay === 'surfacewater') && map.getZoom() < 13) {
-    msg = '🔍 Zoom in to level 13 or higher to see this overlay.';
+    msg = '\uD83D\uDD0D Zoom in to level 13 or higher to see this overlay.';
   }
   notice.textContent = msg;
   notice.style.display = msg ? 'block' : 'none';
@@ -648,10 +648,10 @@ byGrade[bucket].push(f);
 alcPolygons.forEach(({layer}) => map.hasLayer(layer) && map.removeLayer(layer));
 alcPolygons = [];
 Object.entries(byGrade).forEach(([bucket, feats]) => {
-const layer = L.geoJSON({type:'FeatureCollection',features:feats},{
+const layer = L.geoJSON({type:'FeatureCollection',features:feats}, {
 pane: 'alcPane',
 style: feat => { const g = (feat.properties.ALC_GRADE||feat.properties.Grade||'').toString().trim(); return {fillColor:alcFill(g),fillOpacity:alcOpacity,color:alcFill(g),weight:0.3,opacity:0.4}; },
-onEachFeature: (feat,lyr) => { const g = feat.properties.ALC_GRADE||feat.properties.Grade||'Unknown'; lyr.bindPopup('<div class="pt">ALC '+esc(g)+'</div>'+p�,'Grade',g)); }
+onEachFeature: (feat,lyr) => { const g = feat.properties.ALC_GRADE||feat.properties.Grade||'Unknown'; lyr.bindPopup('<div class="pt">ALC '+esc(g)+'</div>'+pr('Grade',g)); }
 });
 // Store layer but do NOT add to map — ALC overlay is off by default
 alcPolygons.push({bucket,layer});
@@ -669,7 +669,8 @@ alcPolygons.forEach(({layer})=>map.hasLayer(layer)&&map.removeLayer(layer));
 alcPolygons=[];
 const proj=needsBNG(features)?features.map(f=>({...f,geometry:reprojectGeom(f.geometry)})):features;
 const byBucket={};
-proj.forEach(f=>{ {const g=(f.properties||{}).alc_grade||(f.properties||{}).ALC_GRADE||(f.properties||{}).Grade||'Non-Agricultural';
+proj.forEach(f=>{
+const g=(f.properties||{}).alc_grade||(f.properties||{}).ALC_GRADE||(f.properties||{}).Grade||'Non-Agricultural';
 const b=gradeBucket(g);
 (byBucket[b]=byBucket[b]||[]).push(f);
 });
@@ -839,7 +840,7 @@ function buildFullPopup(s, alc, flood, solar, score) {
     '<div class="vbpv-panel">' +
       '<div class="vbpv-row">🌾 <b>ALC:</b> ' + alcLabel + (alcDesc ? ' — ' + esc(alcDesc) : '') + '</div>' +
       '<div class="vbpv-row">🌊 <b>Flood:</b> ' + floodLabel + '</div>' +
-      '<div class="vbpv-row">☀️ <b>GHI:</b> ' + ghiVal + (diffVal !== '—' ? ' · Diffuse: ' + diffVal : '') + '</div>' +
+      '<div class="vbpv-row">\u2600\uFE0F <b>GHI:</b> ' + ghiVal + (diffVal !== '—' ? ' · Diffuse: ' + diffVal : '') + '</div>' +
     '</div>' +
     '<hr class="vbpv-divider">' +
     '<div class="vbpv-verdict ' + scoreClass + '">⚡ VBPV SUITABILITY: ' + esc(verdict) + '</div>' +
@@ -893,7 +894,7 @@ async function fetchFloodRisk(lat, lng) {
 }
 
 // API Call 3 — NASA POWER solar resource
-// Provides GHI and diffuse horizontal irradiance for accurate Hd/Hg calculation.
+// Provides GHI and diffuse horizontal irradiance for accurate&Hd/Hg calculation.
 // Note: PVGIS PVcalc (task spec) does not expose diffuse fraction in its JSON output;
 // NASA POWER is used instead for both GHI and diffuse data. Both are EU/NASA public APIs.
 // Units: ANN values are kWh/m²/day → multiply by 365 for annual total.
@@ -929,7 +930,7 @@ const activeS=new Set([...document.querySelectorAll('#status-cbs input:checked')
 const activeC=new Set([...document.querySelectorAll('#county-cbs input:checked')].map(i=>i.dataset.c));
 let visible=0,totalMW=0;
 solarData.forEach(s=>{
-if(&s.lat||!s.lng)return;
+if(!s.lat||!s.lng)return;
 // Minimum capacity filter
 const _capThresholds=[0,5,25,50];
 const _capMin=_capThresholds[parseInt(document.getElementById('cap-filter')?.value||0)];
@@ -1011,7 +1012,7 @@ alcPolygons.forEach(({layer})=>{if(map.hasLayer(layer))layer.setStyle({fillOpaci
 document.getElementById('alc-cbs').addEventListener('change',applyALCFilters);
 
 // ── BMV Highlight ─────────────────────────────────────────────────────────────
-const BMV_GRADES=new Set(['Grade 1','Grade 2','Grade 3']);
+const BMU_GRADES=new Set(['Grade 1','Grade 2','Grade 3']);
 function applyBMVHighlight(){
 bmvHighlight=document.getElementById('bmv-toggle').checked;
 document.getElementById('bmv-legend').style.display=bmvHighlight?'block':'none';
