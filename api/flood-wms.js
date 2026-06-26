@@ -9,7 +9,7 @@
 //   3. Forwards to the EA WMS with CRS=EPSG:27700 using WMS 1.3.0
 //   4. Streams the PNG tile back to Leaflet
 //
-// The EA WMS only renders tiles where the bbox is roughly ≤ 5 km wide (BNG).
+// The EA WMS only renders tiles where the bbox is roughly ≤ 3.5 km wide (BNG).
 // Set minZoom:13 on the Leaflet layer to ensure tiles stay within that limit.
 //
 // No npm dependencies required — all transform maths is inline.
@@ -117,7 +117,10 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET');
 
-  const { BBOX, WIDTH = '256', HEIGHT = '256' } = req.query;
+  // Leaflet sends lowercase param names (bbox, width, height); accept both cases
+  const BBOX   = req.query.bbox   || req.query.BBOX;
+  const WIDTH  = req.query.width  || req.query.WIDTH  || '256';
+  const HEIGHT = req.query.height || req.query.HEIGHT || '256';
 
   if (!BBOX) {
     return res.status(400).json({ error: 'BBOX query parameter required' });
@@ -171,7 +174,7 @@ export default async function handler(req, res) {
     res.setHeader('Cache-Control', 'public, max-age=86400, s-maxage=86400');
     res.status(200).send(buf);
   } catch (err) {
-    // Return a 1×1 transparent PNG so Leaflet doesn't log a tile error
+    // Return a 1x1 transparent PNG so Leaflet does not log a tile error
     const transparentPng = Buffer.from(
       'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==',
       'base64'
