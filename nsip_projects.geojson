@@ -2,7 +2,7 @@
   "type": "FeatureCollection",
   "metadata": {
     "title": "HTST NSIP Solar Projects Layer",
-    "description": "NSIP solar projects absent from REPD — updated June 2026.",
+    "description": "NSIP solar projects absent from REPD â updated June 2026.",
     "last_updated": "2026-06-28",
     "total_projects": 13,
     "total_mw_approx": 6800
@@ -82,8 +82,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -0.3821,
-          53.1174
+          -0.1,
+          52.7
         ]
       },
       "properties": {
@@ -93,7 +93,7 @@
         "capacity_mw": 750,
         "status": "Pre-Examination",
         "status_code": "pre_examination",
-        "location": "Near Crowland, South Lincolnshire — approximately 6km south of Spalding and 2km north-east of Crowland",
+        "location": "Near Crowland, South Lincolnshire â approximately 6km south of Spalding and 2km north-east of Crowland",
         "county": "Lincolnshire",
         "notes": "~2,232 ha across 10 sites. DCO application accepted for examination April 2026.",
         "pins_url": "https://national-infrastructure-consenting.planninginspectorate.gov.uk/projects/EN010169",
@@ -135,13 +135,13 @@
       "properties": {
         "name": "Clean Air Solar Farm",
         "pins_ref": "EN0110018",
-        "developer": "PS Renewables / Ørsted Onshore",
+        "developer": "PS Renewables / Ãrsted Onshore",
         "capacity_mw": 500,
         "status": "Pre-Application",
         "status_code": "pre_application",
         "location": "North of Beverley, south of Hutton Cranswick, east of A164, East Riding of Yorkshire",
         "county": "East Riding of Yorkshire",
-        "notes": "Previously Kingfisher Solar Farm (Ørsted). Public Information Days June 2026. HTST engagement letter sent; webinar 29 June 2026.",
+        "notes": "Previously Kingfisher Solar Farm (Ãrsted). Public Information Days June 2026. HTST engagement letter sent; webinar 29 June 2026.",
         "pins_url": "https://national-infrastructure-consenting.planninginspectorate.gov.uk/projects/EN0110018",
         "website": "https://cleanairsolarfarm.co.uk/"
       }
