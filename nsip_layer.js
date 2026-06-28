@@ -57,6 +57,7 @@ function buildNsipPopup(props) {
     <td><span style="background:${statusColor};color:#fff;font-size:0.82em;padding:1px 6px;border-radius:3px;font-weight:bold;">${statusLabel}</span></td></tr>
     <tr><td style="color:#666;padding:2px 6px 2px 0;white-space:nowrap;"><strong>PINS Ref</strong></td>
     <td>${pinsRef !== 'TBC' ? `<a href="${pinsUrl}" target="_blank" rel="noopener" style="color:#2980B9;">${pinsRef} ↗</a>` : 'TBC'}</td></tr>
+    ${props.website ? `<tr><td style="color:#666;padding:2px 6px 2px 0;white-space:nowrap;"><strong>Website</strong></td><td><a href="${props.website}" target="_blank" rel="noopener" style="color:#2980B9;">Project website ↗</a></td></tr>` : ''}
   </table>
   ${props.notes ? `<div style="margin-top:7px;padding:6px 8px;background:#f5f5f5;border-left:3px solid ${statusColor};font-size:0.82em;color:#444;border-radius:0 3px 3px 0;">${props.notes}</div>` : ''}
   <div style="margin-top:6px;font-size:0.75em;color:#999;text-align:right;">NSIP layer · harvestingthesuntwice.org</div>
