@@ -300,7 +300,6 @@ REPD Q4 Jan 2026 · Natural England ALC · Next REPD update: ~August 2026 ·
     <label class="rb-row"><input type="radio" name="overlay" value="none" checked> None</label>
     <label class="rb-row"><input type="radio" name="overlay" value="alc"> Agricultural Land Classification</label>
     <label class="rb-row"><input type="radio" name="overlay" value="flood"> Flood Risk (Zones 2 &amp; 3)</label>
-    <label class="rb-row"><input type="radio" name="overlay" value="solar"> Solar Irradiance (GHI)</label>
     <label class="rb-row"><input type="radio" name="overlay" value="surfacewater"> Surface Water Risk</label>
   </div>
   <div id="overlay-notice" style="display:none;font-size:10.5px;padding:6px 7px;margin-top:5px;border-radius:4px;background:var(--straw,#f5edcc);color:var(--graphite,#444);line-height:1.5;border:1px solid var(--gold,#c9a84c)"></div>
@@ -549,7 +548,6 @@ const OVERLAY_WMS = {
       attribution: '© <a href="https://environment.data.gov.uk">Environment Agency</a>'
     }
   },
-  // solar: no public GHI WMS tile service is available. Handled as info notice in setOverlay.
   surfacewater: {
     // Must use WMS 1.3.0 (CRS= param) — the NaFRA2 service does not accept SRS= from v1.1.1.
     url: 'https://environment.data.gov.uk/spatialdata/nafra2-risk-of-flooding-from-surface-water/wms',
@@ -570,9 +568,7 @@ function updateOverlayNotice() {
   var notice = document.getElementById('overlay-notice');
   if (!notice) return;
   var msg = '';
-  if (activeOverlay === 'solar') {
-    msg = '\u2600\uFE0F No public GHI tile service is available. Per-site solar data appears in the VBPV panel — click any site marker.';
-  } else if ((activeOverlay === 'flood' || activeOverlay === 'surfacewater') && map.getZoom() < 13) {
+  if ((activeOverlay === 'flood' || activeOverlay === 'surfacewater') && map.getZoom() < 13) {
     msg = '\uD83D\uDD0D Zoom in to level 13 or higher to see this overlay.';
   }
   notice.textContent = msg;
@@ -596,7 +592,7 @@ function setOverlay(value) {
 
   if (value === 'alc') {
     applyALCFilters();
-  } else if (value !== 'none' && value !== 'solar' && OVERLAY_WMS[value]) {
+  } else if (value !== 'none' && OVERLAY_WMS[value]) {
     wmsLayer = L.tileLayer.wms(OVERLAY_WMS[value].url, OVERLAY_WMS[value].options).addTo(map);
   }
   updateOverlayNotice();
