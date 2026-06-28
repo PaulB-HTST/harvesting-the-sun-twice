@@ -3,46 +3,64 @@
   "metadata": {
     "title": "HTST NSIP Solar Projects Layer",
     "description": "NSIP solar projects absent from REPD — updated June 2026.",
-    "last_updated": "2026-06-23",
+    "last_updated": "2026-06-28",
     "total_projects": 13,
-    "total_mw_approx": 6740
+    "total_mw_approx": 6800
   },
   "features": [
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [-2.09, 51.57] },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.09,
+          51.57
+        ]
+      },
       "properties": {
         "name": "Lime Down Solar Park",
         "pins_ref": "EN010168",
         "developer": "Island Green Power",
-        "capacity_mw": 840,
+        "capacity_mw": 500,
         "status": "In Examination",
         "status_code": "examination",
         "location": "North of Hullavington, Wiltshire",
         "county": "Wiltshire",
-        "notes": "Five sites ~878 ha, grid connection at Melksham Substation.",
+        "notes": "Five sites ~857 ha, grid connection at Melksham Substation. SW of Malmesbury, north of M4.",
         "pins_url": "https://national-infrastructure-consenting.planninginspectorate.gov.uk/projects/EN010168"
       }
     },
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [-0.77, 53.87] },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.77,
+          53.87
+        ]
+      },
       "properties": {
         "name": "Mylen Leah Solar Farm",
         "pins_ref": "EN0110002",
         "developer": "Statkraft",
         "capacity_mw": 350,
-        "status": "Pre-Examination",
-        "status_code": "pre_examination",
-        "location": "Between Seaton Ross, Melbourne and Foggathorpe, East Riding of Yorkshire",
+        "status": "Pre-Application",
+        "status_code": "pre_application",
+        "location": "South of Melbourne, west of Seaton Ross, north of A163, East Riding of Yorkshire",
         "county": "East Riding of Yorkshire",
-        "notes": "Statutory consultation April–May 2026. DCO expected end of 2026.",
+        "notes": "DCO submission expected December 2026.",
         "pins_url": "https://national-infrastructure-consenting.planninginspectorate.gov.uk/projects/EN0110002"
       }
     },
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [0.73, 52.69] },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.661,
+          52.679
+        ]
+      },
       "properties": {
         "name": "The Droves Solar Farm",
         "pins_ref": "EN0110013",
@@ -50,31 +68,43 @@
         "capacity_mw": 400,
         "status": "Pre-Examination",
         "status_code": "pre_examination",
-        "location": "North of Swaffham, south of Castle Acre, West Norfolk",
+        "location": "800m north of Swaffham, 800m south-west of Castle Acre, West Norfolk",
         "county": "Norfolk",
-        "notes": "Accepted for examination 16 December 2025. ~770 ha.",
+        "notes": "Accepted for examination 16 December 2025. ~770 ha (2,800 acres).",
         "pins_url": "https://national-infrastructure-consenting.planninginspectorate.gov.uk/projects/EN0110013"
       }
     },
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [1.22, 52.50] },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.3821,
+          53.1174
+        ]
+      },
       "properties": {
         "name": "Meridian Solar Farm",
         "pins_ref": "EN010169",
         "developer": "Island Green Power",
-        "capacity_mw": 500,
-        "status": "Pre-examination",
+        "capacity_mw": 750,
+        "status": "Pre-Examination",
         "status_code": "pre_examination",
-        "location": "Near Long Stratton, South Norfolk",
-        "county": "Norfolk",
-        "notes": "Status: Pre-examination (registration period). DCO application accepted for examination 2 April 2026. ~2,232 ha across 10 sites.",
+        "location": "Near Crowland, South Lincolnshire — approximately 6km south of Spalding and 2km north-east of Crowland",
+        "county": "Lincolnshire",
+        "notes": "~2,232 ha across 10 sites. DCO application accepted for examination April 2026.",
         "pins_url": "https://national-infrastructure-consenting.planninginspectorate.gov.uk/projects/EN010169"
       }
     },
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [0.91, 50.97] },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.91,
+          50.97
+        ]
+      },
       "properties": {
         "name": "South Brooks Solar Farm",
         "pins_ref": "TBC",
@@ -90,7 +120,13 @@
     },
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [-0.46, 53.88] },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.46,
+          53.88
+        ]
+      },
       "properties": {
         "name": "Clean Air Solar Farm",
         "pins_ref": "EN0110018",
@@ -98,15 +134,21 @@
         "capacity_mw": 500,
         "status": "Pre-Application",
         "status_code": "pre_application",
-        "location": "Two sites near Beverley, East Riding of Yorkshire",
+        "location": "North of Beverley, south of Hutton Cranswick, east of A164, East Riding of Yorkshire",
         "county": "East Riding of Yorkshire",
-        "notes": "Previously Kingfisher Solar Farm. Public Information Days June 2026. HTST engagement letter sent; webinar 29 June 2026.",
+        "notes": "Previously Kingfisher Solar Farm (Ørsted). Public Information Days June 2026. HTST engagement letter sent; webinar 29 June 2026.",
         "pins_url": "https://national-infrastructure-consenting.planninginspectorate.gov.uk/projects/EN0110018"
       }
     },
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [0.39, 52.12] },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.39,
+          52.12
+        ]
+      },
       "properties": {
         "name": "Kingsway Solar Farm",
         "pins_ref": "EN010165",
@@ -116,77 +158,107 @@
         "status_code": "withdrawn",
         "location": "Near Balsham and West Wratting, South East Cambridgeshire",
         "county": "Cambridgeshire / Suffolk",
-        "notes": "Application withdrawn 17/06/2026 on day of acceptance decision. ~1,246 ha. 15km 400kV overhead grid connection proposed.",
+        "notes": "Application withdrawn 17/06/2026 on day of acceptance decision. ~1,246 ha.",
         "pins_url": "https://national-infrastructure-consenting.planninginspectorate.gov.uk/projects/EN010165"
       }
     },
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [-1.280, 53.467] },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.28,
+          53.43
+        ]
+      },
       "properties": {
         "name": "Whitestone Solar Farm",
         "pins_ref": "EN0110020",
         "developer": "Green Nation",
         "capacity_mw": 750,
-        "status": "Accepted",
-        "status_code": "accepted",
-        "location": "Yorkshire",
-        "county": "Yorkshire",
-        "notes": "Status: Accepted for Examination",
+        "status": "Pre-Application",
+        "status_code": "pre_application",
+        "location": "Approximately 8km east of Rotherham, between Rotherham and Doncaster, South Yorkshire",
+        "county": "South Yorkshire",
+        "notes": "Three sections: Whitestone 1 near Conisbrough, Whitestone 2 near Ulley, Whitestone 3 near Harthill/Woodall. Grid at Brinsworth Substation. DCO submission expected May 2026.",
         "pins_url": "https://national-infrastructure-consenting.planninginspectorate.gov.uk/projects/EN0110020"
       }
     },
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [-1.5, 52.5] },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.46,
+          53.093
+        ]
+      },
       "properties": {
         "name": "Springwell Solar Farm",
         "pins_ref": "EN010149",
-        "developer": "TBC",
-        "capacity_mw": 500,
+        "developer": "EDF Power Solutions / Luminous Energy",
+        "capacity_mw": 800,
         "status": "Approved",
         "status_code": "approved",
-        "location": "TBC",
-        "county": "TBC",
-        "notes": "Status: Development Consent Granted (8 April 2026)",
+        "location": "Near Navenby, between Navenby, Ashby de la Launde and Metheringham, North Kesteven, Lincolnshire",
+        "county": "Lincolnshire",
+        "notes": "Development Consent Granted 8 April 2026. ~1,280 ha (3,163 acres).",
         "pins_url": "https://national-infrastructure-consenting.planninginspectorate.gov.uk/projects/EN010149"
       }
     },
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [-1.2, 52.8] },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.82,
+          53.137
+        ]
+      },
       "properties": {
         "name": "One Earth Solar Farm",
         "pins_ref": "EN010159",
-        "developer": "TBC",
+        "developer": "One Earth Solar Farm",
         "capacity_mw": 500,
-        "status": "Decision",
-        "status_code": "decision",
-        "location": "TBC",
-        "county": "TBC",
-        "notes": "Status: Decision Stage (deadline 8 July 2026)",
+        "status": "Recommendation",
+        "status_code": "recommendation",
+        "location": "Land surrounding River Trent, north of South Clifton, east of Skegby, west of Thorney",
+        "county": "Nottinghamshire",
+        "notes": "Examination closed 8 January 2026. Recommendation report in progress.",
         "pins_url": "https://national-infrastructure-consenting.planninginspectorate.gov.uk/projects/EN010159"
       }
     },
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [-1.1, 52.6] },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.37,
+          53.84
+        ]
+      },
       "properties": {
         "name": "Peartree Hill Solar Farm",
         "pins_ref": "EN010157",
-        "developer": "TBC",
+        "developer": "RWE Renewables UK Solar and Storage Limited",
         "capacity_mw": 500,
         "status": "Decision",
         "status_code": "decision",
-        "location": "TBC",
-        "county": "TBC",
-        "notes": "Status: Decision Stage (deadline 2 July 2026)",
+        "location": "North-west of Leven, between Tickton, Riston, Wawne and Woodmansey, East Riding of Yorkshire",
+        "county": "East Riding of Yorkshire",
+        "notes": "At decision stage.",
         "pins_url": "https://national-infrastructure-consenting.planninginspectorate.gov.uk/projects/EN010157"
       }
     },
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [0.870, 50.990] },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.87,
+          50.99
+        ]
+      },
       "properties": {
         "name": "South Kent Energy Park",
         "pins_ref": "TBC",
@@ -202,17 +274,23 @@
     },
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [-0.930, 53.340] },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.93,
+          53.34
+        ]
+      },
       "properties": {
         "name": "Great North Road Solar and Biodiversity Park",
         "pins_ref": "EN010162",
-        "developer": "GNR Solar Park Ltd",
-        "capacity_mw": 1000,
+        "developer": "Elements Green Trent Limited",
+        "capacity_mw": 800,
         "status": "Recommendation",
         "status_code": "recommendation",
-        "location": "Nottinghamshire, near A1 Great North Road",
+        "location": "North-west of Newark on Trent, west of A1, north of A617, Newark and Sherwood district, Nottinghamshire",
         "county": "Nottinghamshire",
-        "notes": "Examination completed. SoS decision expected October 2026.",
+        "notes": "Examination completed. Recommendation report deadline 28 July 2026.",
         "pins_url": "https://national-infrastructure-consenting.planninginspectorate.gov.uk/projects/EN010162"
       }
     }
