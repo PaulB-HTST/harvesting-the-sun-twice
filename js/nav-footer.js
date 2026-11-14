@@ -77,7 +77,7 @@ footerEl.innerHTML = `
 </div>
 </div>
 <div class="footer-base">
-<span>© 2026 Harvesting the Sun Twice</span>
+<span>© 2026 Harvesting the Sun Twice · <a href="/cookies.html" style="color:inherit;text-decoration:underline">Cookies</a></span>
 <span>All figures indicative — not a substitute for a site-specific EYA</span>
 </div>
 `;
