@@ -269,7 +269,7 @@ flex-shrink: 0; line-height: 1.6;
 <!-- Page intro strip -->
 <div class="map-intro">
 <div>
-<div class="map-intro__title">\u2600 UK Solar Pipeline &amp; Agricultural Land Classification</div>
+<div class="map-intro__title">☀ UK Solar Pipeline &amp; Agricultural Land Classification</div>
 <div class="map-intro__sub">REPD Q4 Jan 2026 · Natural England ALC</div>
 </div>
 <div class="map-intro__note">Every dot is a real UK solar planning application. ALC grade shading loads automatically — no action needed. Click any dot for site details. Data: <a href="/sources.html">Evidence Library →</a></div>
@@ -311,7 +311,7 @@ REPD Q4 Jan 2026 · Natural England ALC · Next REPD update: ~August 2026 ·
 <div>
 <div class="sec">ALC Opacity</div>
 <div id="opacity-row"><span>Opacity</span><span id="opacity-val">70%</span></div>
-<input type="range" id="alc-opacity" min="0" max="100" value="70">
+<input type="range" id="alc-opacity" aria-label="ALC layer opacity" min="0" max="100" value="70">
 </div>
 
 <div>
@@ -366,7 +366,7 @@ Best &amp; Most Versatile land (Grades 1, 2 &amp; 3a) — the planning threshold
 <span style="font-size:11px;color:var(--stone);">Show sites &ge;</span>
 <strong id="cap-val" style="font-size:12px;color:var(--forest);min-width:48px;">5 MW</strong>
 </div>
-<input type="range" id="cap-filter" min="0" max="3" value="1" step="1" style="width:100%;accent-color:var(--moss);">
+<input type="range" id="cap-filter" aria-label="Minimum site capacity" aria-describedby="cap-val" min="0" max="3" value="1" step="1" style="width:100%;accent-color:var(--moss);">
 <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--stone);margin-top:1px;">
 <span>All</span><span>5 MW</span><span>25 MW</span><span>50 MW</span>
 </div>

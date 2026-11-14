@@ -275,8 +275,8 @@ em { font-style: italic; }
   transition: opacity 1s ease-in-out;
 }
 .hero__slide.is-active { opacity: 1; }
-.hero__slide--1 { background-image: url('../images/hero-harvest-vbpv.png'); }
-.hero__slide--2 { background-image: url('../images/VBPV_-_Potatos___Wild_flowers.png'); }
+.hero__slide--1 { background-image: url('../images/hero-harvest-vbpv.jpg'); }
+.hero__slide--2 { background-image: url('../images/VBPV_-_Potatos___Wild_flowers.jpg'); }
 .hero__slide::before {
   content: '';
   position: absolute;

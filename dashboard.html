@@ -718,7 +718,7 @@ input[type="range"]{flex:1;accent-color:var(--campaign-green);cursor:pointer}
   <div class="control-bar mb-13">
     <div class="ctrl-group">
       <div class="lbl">Location</div>
-      <select id="loc-sel"></select>
+      <select autocomplete="off" id="loc-sel" aria-label="Location"></select>
     </div>
     <div class="ctrl-group">
       <div class="lbl">Calculation mode</div>
@@ -730,7 +730,7 @@ input[type="range"]{flex:1;accent-color:var(--campaign-green);cursor:pointer}
     <div class="ctrl-group">
       <div class="lbl" id="inp-lbl">Target AC capacity</div>
       <div style="display:flex;align-items:center;gap:7px">
-        <input type="number" id="p-inp" value="17" min="0.1" step="0.5" class="inp-large">
+        <input autocomplete="off" type="number" id="p-inp" aria-labelledby="inp-lbl" value="17" min="0.1" step="0.5" class="inp-large">
         <span id="inp-unit" style="font-size:13px;font-weight:500;color:var(--color-text-secondary)">MW</span>
       </div>
     </div>
@@ -744,7 +744,7 @@ input[type="range"]{flex:1;accent-color:var(--campaign-green);cursor:pointer}
   <div class="pitch-row mb-16">
     <span class="pitch-row-label">VBPV row pitch (E-W inter-row spacing)</span>
     <span style="font-size:9px;color:var(--color-text-tertiary)">8m (Szarek min.)</span>
-    <input type="range" id="pitch-sl" min="8" max="20" value="10" step="1">
+    <input autocomplete="off" type="range" id="pitch-sl" aria-label="VBPV row pitch, metres" min="8" max="20" value="10" step="1">
     <span style="font-size:9px;color:var(--color-text-tertiary)">20m</span>
     <span style="font-size:15px;font-weight:500;font-family:var(--font-mono);min-width:32px;color:var(--color-text-primary)" id="pitch-val">10m</span>
     <span id="pitch-badge" class="badge bg" style="flex-shrink:0"></span>
@@ -898,10 +898,10 @@ input[type="range"]{flex:1;accent-color:var(--campaign-green);cursor:pointer}
       <div class="info-box-text">VBPV generates into high-value morning and evening demand peaks. TBPV generates into low-value midday — sometimes at negative wholesale prices in high-solar summers. Adjust prices below to match your PPA, wholesale exposure, or CfD structure. Default values are representative UK half-hourly wholesale averages (2024–25).</div>
     </div>
     <div class="g4 mb-14">
-      <div class="pi"><label>Morning peak (06–10h) £/MWh</label><input type="number" id="r-morn" value="80" min="0" step="5"></div>
-      <div class="pi"><label>Daytime (10–16h) £/MWh</label><input type="number" id="r-day" value="45" min="0" step="5"></div>
-      <div class="pi"><label>Evening peak (16–21h) £/MWh</label><input type="number" id="r-eve" value="90" min="0" step="5"></div>
-      <div class="pi"><label>Night (21–06h) £/MWh</label><input type="number" id="r-night" value="40" min="0" step="5"></div>
+      <div class="pi"><label for="r-morn">Morning peak (06–10h) £/MWh</label><input autocomplete="off" type="number" id="r-morn" value="80" min="0" step="5"></div>
+      <div class="pi"><label for="r-day">Daytime (10–16h) £/MWh</label><input autocomplete="off" type="number" id="r-day" value="45" min="0" step="5"></div>
+      <div class="pi"><label for="r-eve">Evening peak (16–21h) £/MWh</label><input autocomplete="off" type="number" id="r-eve" value="90" min="0" step="5"></div>
+      <div class="pi"><label for="r-night">Night (21–06h) £/MWh</label><input autocomplete="off" type="number" id="r-night" value="40" min="0" step="5"></div>
     </div>
     <div class="g4 mb-14">
       <div class="mc" style="border-top:2px solid #0F6E56"><div class="lbl">VBPV value factor</div><div class="big cv" id="rv-vf">—</div><div class="sm">£/MWh generated · annual avg</div></div>
@@ -960,13 +960,13 @@ input[type="range"]{flex:1;accent-color:var(--campaign-green);cursor:pointer}
 
     <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px;align-items:end">
       <div class="pi">
-        <label>Crop income (£/ha/yr)</label>
-        <input type="number" id="a-crop" value="350" min="0" step="25">
+        <label for="a-crop">Crop income (£/ha/yr)</label>
+        <input autocomplete="off" type="number" id="a-crop" value="350" min="0" step="25">
         <div class="sm" style="margin-top:4px">UK arable refs: wheat ~£280, OSR ~£340, vegetables £600–1,200+. Use Farm Business Survey or FBS regional average for your crop type.</div>
       </div>
       <div class="pi">
-        <label>VBPV crop retention (%)</label>
-        <input type="number" id="a-ret" value="78" min="0" max="100" step="1">
+        <label for="a-ret">VBPV crop retention (%)</label>
+        <input autocomplete="off" type="number" id="a-ret" value="78" min="0" max="100" step="1">
         <div class="sm" style="margin-top:4px">Default 78% · Szarek et al. 2026 range: 70–85% at 8–12m pitch. Adjust for your pitch and crop type.</div>
       </div>
       <div class="mc" style="border-top:2px solid #3B6D11;align-self:stretch">
@@ -1104,10 +1104,10 @@ input[type="range"]{flex:1;accent-color:var(--campaign-green);cursor:pointer}
       <div class="info-box-text">TBPV generates 61% of output in the low-demand midday window — requiring substantial battery storage to reach peak markets. VBPV's peak-aligned output needs significantly less storage. This model calculates BESS capital cost, annual revenue from peak-spreading, and simple payback for each configuration. Price spread used from the Revenue tab.</div>
     </div>
     <div class="g4 mb-14">
-      <div class="pi"><label>BESS installed cost (£/kWh)</label><input type="number" id="b-cost" value="100" min="50" step="10"></div>
-      <div class="pi"><label>TBPV shift fraction (%)</label><input type="number" id="b-tfr" value="35" min="5" max="80" step="5"></div>
-      <div class="pi"><label>VBPV shift fraction (%)</label><input type="number" id="b-vfr" value="15" min="0" max="50" step="5"></div>
-      <div class="pi"><label>System lifetime (years)</label><input type="number" id="b-life" value="15" min="5" max="30" step="1"></div>
+      <div class="pi"><label for="b-cost">BESS installed cost (£/kWh)</label><input autocomplete="off" type="number" id="b-cost" value="100" min="50" step="10"></div>
+      <div class="pi"><label for="b-tfr">TBPV shift fraction (%)</label><input autocomplete="off" type="number" id="b-tfr" value="35" min="5" max="80" step="5"></div>
+      <div class="pi"><label for="b-vfr">VBPV shift fraction (%)</label><input autocomplete="off" type="number" id="b-vfr" value="15" min="0" max="50" step="5"></div>
+      <div class="pi"><label for="b-life">System lifetime (years)</label><input autocomplete="off" type="number" id="b-life" value="15" min="5" max="30" step="1"></div>
     </div>
     <div class="g4 mb-14">
       <div class="mc" style="border-top:2px solid #0F6E56"><div class="lbl">VBPV BESS capacity</div><div class="big cv" id="b-v-mwh">—</div><div class="sm">MWh · daily cycling basis</div></div>
@@ -1204,6 +1204,7 @@ const WIN=[0,1,9,10,11];
 const HOURS=Array.from({length:24},(_,i)=>(i<10?'0':'')+i+':00');
 const AC_DC=1.1,TD=783,HRS=8760,RTE=0.85;
 let mode='mw',loc='london',pitch=10,seas='annual';
+const INIT={mode:mode,loc:loc,pitch:pitch,seas:seas};
 const dk=window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches;
 const C={
   v:dk?'#5DCAA5':'#0F6E56',
@@ -1592,9 +1593,30 @@ document.querySelectorAll('[data-s]').forEach(btn=>{
   });
 });
 
+// ── Reset to defaults ──
+// Defaults come from the HTML value attributes (defaultValue) and INIT above, never from browser form restoration.
+const PRINT_IDS=['cover-date','cover-location','cover-mode','cover-input','cover-pitch','params-ref-date','p-loc','p-vy','p-ty','p-pitch','p-mode','p-inp2','p-vden','ps-v-land','ps-v-land-s','ps-t-land','ps-t-land-s','ps-v-mwh','ps-t-mwh','ps-v-cf','ps-t-cf','ps-land-diff','ps-land-diff-s','ps-mwh-diff','ps-mwh-diff-s','ps-homes','ps-v-vf','ps-t-vf','ps-v-rev','ps-t-rev','ps-vf-prem','ps-v-bess','ps-t-bess','ps-v-cx','ps-t-cx','ps-v-brv','ps-t-brv','ps-v-pb','ps-t-pb','ps-bess-save'];
+const PRINT_INIT={};
+PRINT_IDS.forEach(id=>{const el=document.getElementById(id);if(el)PRINT_INIT[id]=el.textContent;});
+function resetDashboard(){
+  try{
+    mode=INIT.mode;loc=INIT.loc;pitch=INIT.pitch;seas=INIT.seas;
+    document.querySelectorAll('input').forEach(el=>{el.value=el.defaultValue;});
+    selEl.value=INIT.loc;
+    document.getElementById('btn-mw').classList.add('on');document.getElementById('btn-ha').classList.remove('on');
+    document.getElementById('inp-lbl').textContent='Target AC capacity';document.getElementById('inp-unit').textContent='MW';
+    document.querySelectorAll('[data-s]').forEach(b=>b.classList.toggle('on',b.dataset.s===INIT.seas));
+    PRINT_IDS.forEach(id=>{const el=document.getElementById(id);if(el&&id in PRINT_INIT)el.textContent=PRINT_INIT[id];});
+    uPitch();
+    compute();
+    sT('proj');
+  }catch(e){console.error('resetDashboard failed',e);}
+}
+window.addEventListener('pageshow',resetDashboard);   // fires on first load and on Back/Forward (persisted or not)
+window.addEventListener('pagehide',resetDashboard);   // so a bfcache snapshot holds defaults, not the last session
+
 // Initialise
-uPitch();
-compute();
+resetDashboard();
 
 // ── Print / Save PDF ──
 function printDashboard(){
