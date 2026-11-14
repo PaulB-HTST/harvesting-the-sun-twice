@@ -901,7 +901,7 @@ input[type="range"]{flex:1;accent-color:var(--campaign-green);cursor:pointer}
       <div class="mc" style="border-top:2px solid #0F6E56"><div class="lbl">VBPV value factor</div><div class="big cv" id="rv-vf">—</div><div class="sm">£/MWh generated · annual avg</div></div>
       <div class="mc" style="border-top:2px solid #BA7517"><div class="lbl">TBPV value factor</div><div class="big ct" id="rv-tf">—</div><div class="sm">£/MWh generated · annual avg</div></div>
       <div class="mc" style="border-top:2px solid var(--color-border-secondary)"><div class="lbl">VBPV value premium</div><div class="big" id="rv-prem">—</div><div class="sm">% more revenue per MWh vs TBPV</div></div>
-      <div class="mc" style="border-top:2px solid var(--color-border-secondary)"><div class="lbl">Annual revenue gap</div><div class="big" id="rv-gap">—</div><div class="sm">£/yr VBPV vs TBPV at project scale</div></div>
+      <div class="mc" style="border-top:2px solid var(--color-border-secondary)"><div class="lbl">Annual revenue gap</div><div class="big" id="rv-gap">—</div><div class="sm" id="rv-gap-s">£/yr VBPV vs TBPV at project scale</div></div>
     </div>
     <div class="g2 mb-14">
       <div class="rc" style="border-top:3px solid #0F6E56">
@@ -1336,7 +1336,8 @@ function uRevenue(l,mwv,mwt,hav,hat){
   document.getElementById('rv-vf').textContent='£'+vfA.toFixed(2);
   document.getElementById('rv-tf').textContent='£'+tfA.toFixed(2);
   const rpEl=document.getElementById('rv-prem');rpEl.textContent=(pct>=0?'+':'')+pct.toFixed(1)+'%';rpEl.style.color=pct>=0?C.v:'#E24B4A';
-  const rgEl=document.getElementById('rv-gap');rgEl.textContent=(gap>=0?'+':'')+'£'+fmt(Math.round(Math.abs(gap)));rgEl.style.color=gap>=0?C.v:'#E24B4A';
+  const rgEl=document.getElementById('rv-gap');rgEl.textContent=(gap>=0?'+':'\u2212')+'£'+fmt(Math.round(Math.abs(gap)));rgEl.style.color=gap>=0?C.v:'#E24B4A';
+  document.getElementById('rv-gap-s').textContent=(gap>=0?'VBPV earns more per year than TBPV':'TBPV earns more per year than VBPV')+' at project scale';
   document.getElementById('rv-v-ann').textContent='£'+fmt(Math.round(rv));
   document.getElementById('rv-t-ann').textContent='£'+fmt(Math.round(rt));
   document.getElementById('rv-v-mwh').textContent=fmt(mwv);
