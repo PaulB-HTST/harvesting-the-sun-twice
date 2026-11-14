@@ -730,7 +730,7 @@ input[type="range"]{flex:1;accent-color:var(--campaign-green);cursor:pointer}
     <div class="ctrl-group">
       <div class="lbl" id="inp-lbl">Target AC capacity</div>
       <div style="display:flex;align-items:center;gap:7px">
-        <input autocomplete="off" type="number" id="p-inp" aria-labelledby="inp-lbl" value="17" min="0.1" step="0.5" class="inp-large">
+        <input autocomplete="off" type="number" id="p-inp" aria-labelledby="inp-lbl" value="20" min="0.1" step="0.5" class="inp-large">
         <span id="inp-unit" style="font-size:13px;font-weight:500;color:var(--color-text-secondary)">MW</span>
       </div>
     </div>
@@ -1567,17 +1567,17 @@ document.getElementById('p-inp').addEventListener('input',compute);
 document.getElementById('btn-mw').addEventListener('click',()=>{
   mode='mw';document.getElementById('btn-mw').classList.add('on');document.getElementById('btn-ha').classList.remove('on');
   document.getElementById('inp-lbl').textContent='Target AC capacity';document.getElementById('inp-unit').textContent='MW';
-  document.getElementById('p-inp').value='17';compute();
+  document.getElementById('p-inp').value='20';compute();
 });
 document.getElementById('btn-ha').addEventListener('click',()=>{
   mode='ha';document.getElementById('btn-ha').classList.add('on');document.getElementById('btn-mw').classList.remove('on');
   document.getElementById('inp-lbl').textContent='Available site area';document.getElementById('inp-unit').textContent='ha';
-  document.getElementById('p-inp').value='15';compute();
+  document.getElementById('p-inp').value='20';compute();
 });
 document.getElementById('pitch-sl').addEventListener('input',e=>{pitch=parseInt(e.target.value);uPitch();compute();});
 ['r-morn','r-day','r-eve','r-night','a-crop','a-ret'].forEach(id=>document.getElementById(id).addEventListener('input',compute));
 ['b-cost','b-tfr','b-vfr','b-life'].forEach(id=>document.getElementById(id).addEventListener('input',()=>{
-  const l=gL();const inp=parseFloat(document.getElementById('p-inp').value)||17;const den=vden(pitch);
+  const l=gL();const inp=parseFloat(document.getElementById('p-inp').value)||20;const den=vden(pitch);
   const mvAC=mode==='mw'?inp:(inp*den/1000)/AC_DC;
   const mtAC=mode==='mw'?inp:(inp*TD/1000)/AC_DC;
   const mwv=mvAC*AC_DC*1000*l.vbpv/1000,mwt=mtAC*AC_DC*1000*l.tbpv/1000;
