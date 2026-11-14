@@ -1,5 +1,5 @@
-// consent.js — cookie notice and consent-gated Google Analytics.
-// Google Analytics is loaded ONLY after the visitor presses Accept. Until then no analytics
+// consent.js — cookie notice and consent-gated analytics (Google Analytics and Vercel Web Analytics).
+// Both are loaded ONLY after the visitor presses Accept. Until then no analytics
 // script is requested and no analytics cookies are set. The only thing stored by this file is
 // the visitor's choice, in localStorage under 'htst_cookie_consent'.
 (function () {
@@ -28,6 +28,11 @@
     document.head.appendChild(s);
     window.gtag('js', new Date());
     window.gtag('config', GA_ID);
+    // Vercel Web Analytics (cookieless page-view counts), also only after consent.
+    var v = document.createElement('script');
+    v.defer = true;
+    v.src = '/_vercel/insights/script.js';
+    document.head.appendChild(v);
   }
 
   // Remove any Google Analytics cookies (used if someone withdraws consent after accepting).
@@ -94,8 +99,8 @@
     b.setAttribute('aria-label', 'Cookie notice');
     b.innerHTML =
       '<div class="htst-c-inner">' +
-      '<p>We would like to use Google Analytics cookies to understand how this site is used. ' +
-      'They are only set if you accept. <a href="/cookies.html">Find out more about cookies</a>.</p>' +
+      '<p>We would like to use analytics (Google Analytics, which sets cookies, and Vercel Web Analytics) to understand how this site is used. ' +
+      'Nothing is loaded unless you accept. <a href="/cookies.html">Find out more about cookies</a>.</p>' +
       '<div class="htst-c-btns">' +
       '<button type="button" class="htst-c-accept">Accept</button>' +
       '<button type="button" class="htst-c-decline">Decline</button>' +
