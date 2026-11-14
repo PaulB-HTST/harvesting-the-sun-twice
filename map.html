@@ -155,7 +155,7 @@ box-shadow: var(--shadow-md);
 .leaflet-popup-content { margin: 10px 13px; }
 .pt { font-weight: 700; font-size: 13px; color: var(--forest); margin-bottom: 5px; }
 .pr { display: flex; gap: 5px; margin-bottom: 2px; }
-.pl { color: var(--stone); min-width: 82px; flex-shrink: 0; }
+.pl { color: var(--stone-on-light); min-width: 82px; flex-shrink: 0; }
 
 /* Footer strip */
 .map-footer {
@@ -199,17 +199,17 @@ flex-shrink: 0; line-height: 1.6;
 .msc-input-row:focus-within { border-color: #2563EB; box-shadow: 0 2px 10px rgba(37,99,235,0.18); }
 .msc-icon { font-size: 14px; color: #666; flex-shrink: 0; }
 .msc-input { flex: 1; border: none; outline: none; font-size: 13px; color: #222; background: transparent; min-width: 0; }
-.msc-input::placeholder { color: #aaa; }
-.msc-clear { display: none; align-items: center; justify-content: center; border: none; background: none; cursor: pointer; color: #999; font-size: 12px; padding: 0 2px; flex-shrink: 0; }
+.msc-input::placeholder { color: #6b6b66; }
+.msc-clear { display: none; align-items: center; justify-content: center; border: none; background: none; cursor: pointer; color: var(--stone-on-light); font-size: 12px; padding: 0 2px; flex-shrink: 0; }
 .msc-clear:hover { color: #333; }
 .msc-dropdown { display: none; position: absolute; top: calc(100% + 4px); left: 0; width: 100%; background: #fff; border: 1px solid #ddd; border-radius: 6px; box-shadow: 0 4px 16px rgba(0,0,0,0.15); max-height: 320px; overflow-y: auto; padding: 4px 0; margin: 0; list-style: none; z-index: 9999; }
-.msc-divider { font-size: 10px; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 0.05em; padding: 6px 10px 2px; pointer-events: none; }
+.msc-divider { font-size: 10px; font-weight: 700; color: var(--stone-on-light); text-transform: uppercase; letter-spacing: 0.05em; padding: 6px 10px 2px; pointer-events: none; }
 .msc-item { display: flex; align-items: center; gap: 7px; padding: 6px 10px; cursor: pointer; font-size: 13px; color: #222; }
 .msc-item:hover, .msc-item.active { background: #EFF6FF; }
 .msc-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; border: 1px solid rgba(0,0,0,0.15); }
 .msc-label { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .msc-label strong { color: #2563EB; font-weight: 700; }
-.msc-type { font-size: 10px; color: #888; background: #F3F4F6; border-radius: 3px; padding: 1px 4px; flex-shrink: 0; }
+.msc-type { font-size: 10px; color: var(--stone-on-light); background: #F3F4F6; border-radius: 3px; padding: 1px 4px; flex-shrink: 0; }
 /* ── End Map Search Control ─────────────────────────── */
 
 /* ── Map Overlay Radio Section ───────────────────────── */
@@ -221,12 +221,12 @@ flex-shrink: 0; line-height: 1.6;
 /* ── End Map Overlay Radio Section ───────────────────── */
 
 /* ── VBPV Contextual Panel (inside Leaflet popup) ──── */
-.vbpv-loading { color: var(--stone,#888); font-style: italic; font-size: 10.5px; margin-top: 6px; }
+.vbpv-loading { color: var(--stone-on-light,#5f5f5a); font-style: italic; font-size: 10.5px; margin-top: 6px; }
 .vbpv-panel { margin-top: 7px; }
 .vbpv-divider { border: none; border-top: 1px solid var(--rule,#ddd); margin: 6px 0; }
 .vbpv-row { margin-bottom: 3px; line-height: 1.5; font-size: 11.5px; }
 .vbpv-verdict { font-weight: 700; font-size: 12px; margin-bottom: 2px; }
-.vbpv-factors { font-size: 10px; color: var(--stone,#888); font-style: italic; line-height: 1.5; }
+.vbpv-factors { font-size: 10px; color: var(--stone-on-light,#5f5f5a); font-style: italic; line-height: 1.5; }
 .vbpv-s3 { color: #1b7e24; }
 .vbpv-s2 { color: #1565c0; }
 .vbpv-s1 { color: #e65c00; }
@@ -321,7 +321,7 @@ REPD Q4 Jan 2026 · Natural England ALC · Next REPD update: ~August 2026 ·
 </div>
 </div>
 
-<div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--rule);font-size:10.5px;color:var(--stone);line-height:1.9;">
+<div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--rule);font-size:10.5px;color:var(--stone-on-light);line-height:1.9;">
 <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--sage);margin-bottom:4px;">ALC Grade Key</div>
 <div><span style="display:inline-block;width:11px;height:11px;background:#3CE1FE;border-radius:2px;vertical-align:middle;margin-right:5px;"></span>Grade 1 — Best (BMV)</div>
 <div><span style="display:inline-block;width:11px;height:11px;background:#C1FAFE;border-radius:2px;vertical-align:middle;margin-right:5px;"></span>Grade 2 — Very Good (BMV)</div>
@@ -331,7 +331,7 @@ REPD Q4 Jan 2026 · Natural England ALC · Next REPD update: ~August 2026 ·
 <div><span style="display:inline-block;width:11px;height:11px;background:#888;border-radius:2px;vertical-align:middle;margin-right:5px;"></span>Not Surveyed</div>
 <div><span style="display:inline-block;width:11px;height:11px;background:#FED586;border-radius:2px;vertical-align:middle;margin-right:5px;"></span>Non-Agricultural</div>
 <div><span style="display:inline-block;width:11px;height:11px;background:#FF907C;border-radius:2px;vertical-align:middle;margin-right:5px;"></span>Urban</div>
-<div style="margin-top:4px;font-style:italic;font-size:9.5px;color:var(--stone);">© Natural England. Provisional 1:250,000. Not for site decisions.</div>
+<div style="margin-top:4px;font-style:italic;font-size:9.5px;color:var(--stone-on-light);">© Natural England. Provisional 1:250,000. Not for site decisions.</div>
 </div>
 
 </div><!-- /alc-controls -->
@@ -341,7 +341,7 @@ REPD Q4 Jan 2026 · Natural England ALC · Next REPD update: ~August 2026 ·
 <!-- BMV HIGHLIGHT -->
 <div>
 <div class="sec">BMV Farmland Highlight</div>
-<div style="font-size:10.5px;color:var(--stone,#777);margin-bottom:7px;line-height:1.5">
+<div style="font-size:10.5px;color:var(--stone-on-light,#5f5f5a);margin-bottom:7px;line-height:1.5">
 Best &amp; Most Versatile land (Grades 1, 2 &amp; 3a) — the planning threshold for irreversible loss.
 </div>
 <label class="cb-row" id="bmv-toggle-row" style="cursor:pointer;padding:5px 7px;border-radius:4px;background:var(--straw,#f5edcc);border:1.5px solid var(--gold,#c9a84c)">
@@ -352,25 +352,25 @@ Best &amp; Most Versatile land (Grades 1, 2 &amp; 3a) — the planning threshold
 <div><span style="display:inline-block;width:12px;height:12px;background:#3CE1FE;border:2px solid #fff;border-radius:2px;margin-right:5px;vertical-align:middle"></span>Grade 1 — Best</div>
 <div><span style="display:inline-block;width:12px;height:12px;background:#C1FAFE;border:2px solid #fff;border-radius:2px;margin-right:5px;vertical-align:middle"></span>Grade 2 — Very Good</div>
 <div><span style="display:inline-block;width:12px;height:12px;background:#B2FE99;border:2px solid #fff;border-radius:2px;margin-right:5px;vertical-align:middle"></span>Grade 3a — Good</div>
-<div style="margin-top:4px;font-style:italic;color:var(--stone,#888)">All other grades dimmed to 15%</div>
+<div style="margin-top:4px;font-style:italic;color:var(--stone-on-light,#5f5f5a)">All other grades dimmed to 15%</div>
 </div>
 <div style="margin-top:10px;padding-top:8px;border-top:1px solid var(--rule);">
 <div class="sec">Minimum Capacity</div>
 <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
-<span style="font-size:11px;color:var(--stone);">Show sites &ge;</span>
+<span style="font-size:11px;color:var(--stone-on-light);">Show sites &ge;</span>
 <strong id="cap-val" style="font-size:12px;color:var(--forest);min-width:48px;">5 MW</strong>
 </div>
 <input type="range" id="cap-filter" aria-label="Minimum site capacity" aria-describedby="cap-val" min="0" max="3" value="1" step="1" style="width:100%;accent-color:var(--moss);">
-<div style="display:flex;justify-content:space-between;font-size:9px;color:var(--stone);margin-top:1px;">
+<div style="display:flex;justify-content:space-between;font-size:9px;color:var(--stone-on-light);margin-top:1px;">
 <span>All</span><span>5 MW</span><span>25 MW</span><span>50 MW</span>
 </div>
-<div style="font-size:10px;color:var(--stone);margin-top:4px;line-height:1.4;">Filters by registered capacity. Large ground-mount farms are typically &gt;5 MW.</div>
+<div style="font-size:10px;color:var(--stone-on-light);margin-top:4px;line-height:1.4;">Filters by registered capacity. Large ground-mount farms are typically &gt;5 MW.</div>
 </div>
 <div style="margin-top:10px;padding-top:8px;border-top:1px solid #eee;">
 <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-weight:600;">
 <input type="checkbox" id="nsip-toggle" checked style="width:16px;height:16px;">
 <span>NSIP Projects</span>
-<span style="font-size:0.78em;color:#888;font-weight:normal;">(not in REPD)</span>
+<span style="font-size:0.78em;color:var(--stone-on-light);font-weight:normal;">(not in REPD)</span>
 </label>
 </div>
 </div>
@@ -395,7 +395,7 @@ Best &amp; Most Versatile land (Grades 1, 2 &amp; 3a) — the planning threshold
 <button onclick="setAllCounties(false)" style="font-size:10px;padding:2px 8px;cursor:pointer;border:1px solid var(--rule);border-radius:var(--radius);background:var(--straw);color:var(--forest)">None</button>
 </div>
 <div class="cb-group" id="county-cbs">
-<div style="font-size:10px;color:var(--stone);font-style:italic">Load CSV ① to populate…</div>
+<div style="font-size:10px;color:var(--stone-on-light);font-style:italic">Load CSV ① to populate…</div>
 </div>
 </div>
 
@@ -818,7 +818,7 @@ function buildInitialPopup(s) {
   var cap    = typeof s.capacity === 'number' ? s.capacity : parseFloat(s.capacity || 0);
   return (
     '<div class="pt">📍 ' + esc(s.name || '') + '</div>' +
-    '<div style="font-size:11px;color:var(--stone,#888);margin-bottom:4px;">' +
+    '<div style="font-size:11px;color:var(--stone-on-light,#5f5f5a);margin-bottom:4px;">' +
       (cap ? cap.toFixed(1) + ' MW' : '—') + ' · ' + esc(s.county || '') + ' · ' + esc(statusLabel(sc)) +
     '</div>' +
     '<div class="vbpv-loading">⏳ Analysing site data…</div>'
@@ -851,7 +851,7 @@ function buildFullPopup(s, alc, flood, solar, score) {
 
   return (
     '<div class="pt">📍 ' + esc(s.name || '') + '</div>' +
-    '<div style="font-size:11px;color:var(--stone,#888);margin-bottom:4px;">' +
+    '<div style="font-size:11px;color:var(--stone-on-light,#5f5f5a);margin-bottom:4px;">' +
       (cap ? cap.toFixed(1) + ' MW' : '—') + ' · ' + esc(s.county || '') + ' · ' + esc(statusLabel(sc)) +
     '</div>' +
     '<hr class="vbpv-divider">' +

@@ -22,6 +22,7 @@
   --ink:       #1c1c1a;
   --graphite:  #3d3d3a;
   --stone:     #7a7a75;
+  --stone-on-light: #5f5f5a; /* muted text on --chalk/white/--straw; 6.1:1 on chalk */
   --stone-on-dark: #9a9a94; /* muted text on --ink/--forest; 6.0:1 on ink */
   --rule:      #d0d0c8;
 
@@ -602,7 +603,7 @@ em { font-style: italic; }
 .stat-card--dark .stat-card__num { color: var(--gold); }
 .stat-card__label {
   font-size: 0.85rem;
-  color: var(--stone);
+  color: var(--stone-on-light);
   line-height: 1.4;
 }
 .stat-card--dark .stat-card__label { color: var(--sage); }
@@ -868,7 +869,7 @@ em { font-style: italic; }
 .source-entry__tag--gov { background: #e8f0ff; color: #3050a0; }
 .source-entry h3 { font-size: 1.1rem; margin-bottom: 0.4rem; }
 .source-entry p { font-size: 0.9rem; color: var(--graphite); line-height: 1.6; }
-.source-entry .doi { font-size: 0.82rem; color: var(--stone); font-style: italic; }
+.source-entry .doi { font-size: 0.82rem; color: var(--stone-on-light); font-style: italic; }
 .source-entry .findings {
   margin-top: 0.75rem;
   background: var(--straw);
@@ -918,7 +919,7 @@ em { font-style: italic; }
 .form-group textarea { min-height: 140px; resize: vertical; }
 .form-hint {
   font-size: 0.78rem;
-  color: var(--stone);
+  color: var(--stone-on-light);
   font-style: italic;
   margin-top: 0.35rem;
 }

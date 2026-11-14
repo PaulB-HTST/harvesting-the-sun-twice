@@ -19,7 +19,7 @@
     .ctrl-block{display:flex;flex-direction:column;gap:.35rem}
     .ctrl-label{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--graphite)}
     .ctrl-value{font-size:1.25rem;font-weight:700;color:var(--forest);line-height:1}
-    .ctrl-unit{font-size:.75rem;color:var(--stone);font-weight:400}
+    .ctrl-unit{font-size:.75rem;color:var(--stone-on-light);font-weight:400}
     input[type=range]{-webkit-appearance:none;width:180px;height:5px;border-radius:3px;background:var(--rule);outline:none}
     input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--forest);cursor:pointer}
     .scen-group{display:flex;flex-direction:column;gap:.35rem}
@@ -31,7 +31,7 @@
     @media(max-width:800px){.cfd-grid{grid-template-columns:1fr}}
     .chart-panel{background:var(--chalk);border:1px solid var(--rule);border-radius:var(--radius-lg);padding:1.25rem 1.25rem 1rem}
     .chart-title{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--graphite);margin-bottom:.2rem}
-    .chart-sub{font-size:.72rem;color:var(--stone);margin-bottom:1rem}
+    .chart-sub{font-size:.72rem;color:var(--stone-on-light);margin-bottom:1rem}
     canvas{display:block;width:100%!important;height:180px!important}
     .legend{display:flex;gap:1rem;margin-top:.6rem;flex-wrap:wrap}
     .leg-item{display:flex;align-items:center;gap:5px;font-size:.72rem;color:var(--graphite)}
@@ -41,9 +41,9 @@
     .metrics-row{max-width:var(--max-w);margin:1.5rem auto 0;padding:0 2rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem}
     .metric-card{background:var(--chalk);border:1px solid var(--rule);border-radius:var(--radius-lg);padding:1rem 1.1rem}
     .metric-card.highlight{border-color:var(--wheat);background:#fefdf5}
-    .metric-label{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--stone);margin-bottom:.3rem}
+    .metric-label{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--stone-on-light);margin-bottom:.3rem}
     .metric-val{font-size:1.5rem;font-weight:700;color:var(--forest);line-height:1.1}
-    .metric-sub{font-size:.72rem;color:var(--stone);margin-top:.2rem}
+    .metric-sub{font-size:.72rem;color:var(--stone-on-light);margin-top:.2rem}
     .metric-badge{display:inline-block;font-size:.68rem;padding:2px 7px;border-radius:20px;margin-top:.4rem;font-weight:600}
     .badge-green{background:rgba(45,90,61,.12);color:var(--fern)}
     .badge-amber{background:rgba(200,168,75,.18);color:#7a6020}
@@ -58,8 +58,8 @@
     .bess-bar{height:10px;border-radius:5px;background:var(--mist);overflow:hidden}
     .bess-fill{height:100%;border-radius:5px;transition:width .4s ease}
     .disclaimer{max-width:var(--max-w);margin:2rem auto 0;padding:0 2rem}
-    .disclaimer p{font-size:.78rem;color:var(--stone);line-height:1.55;background:var(--straw);padding:1rem 1.25rem;border-radius:var(--radius);border-left:3px solid var(--wheat)}
-    .chart-caption{font-size:.68rem;color:var(--stone);margin-top:.4rem}
+    .disclaimer p{font-size:.78rem;color:var(--stone-on-light);line-height:1.55;background:var(--straw);padding:1rem 1.25rem;border-radius:var(--radius);border-left:3px solid var(--wheat)}
+    .chart-caption{font-size:.68rem;color:var(--stone-on-light);margin-top:.4rem}
   </style>
 </head>
 <body class="page-body">
@@ -122,7 +122,7 @@
       <div class="bess-card">
         <div class="bess-title">⚡ Daily BESS Requirement — Generation During Negative-Price Hours</div>
         <div id="bess-rows"></div>
-        <div style="font-size:.75rem;color:var(--stone);margin-top:.5rem">VBPV BESS reduction based on Next2Sun / Schüler et al. (IPV Conference 2026) — Löffingen, Germany.</div>
+        <div style="font-size:.75rem;color:var(--stone-on-light);margin-top:.5rem">VBPV BESS reduction based on Next2Sun / Schüler et al. (IPV Conference 2026) — Löffingen, Germany.</div>
       </div>
     </div>
     <div class="disclaimer">

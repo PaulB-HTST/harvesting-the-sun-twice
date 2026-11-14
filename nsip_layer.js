@@ -60,7 +60,7 @@ function buildNsipPopup(props) {
     ${props.website ? `<tr><td style="color:#666;padding:2px 6px 2px 0;white-space:nowrap;"><strong>Website</strong></td><td><a href="${props.website}" target="_blank" rel="noopener" style="color:#2980B9;">Project website ↗</a></td></tr>` : ''}
   </table>
   ${props.notes ? `<div style="margin-top:7px;padding:6px 8px;background:#f5f5f5;border-left:3px solid ${statusColor};font-size:0.82em;color:#444;border-radius:0 3px 3px 0;">${props.notes}</div>` : ''}
-  <div style="margin-top:6px;font-size:0.75em;color:#999;text-align:right;">NSIP layer · harvestingthesuntwice.org</div>
+  <div style="margin-top:6px;font-size:0.75em;color:#5f5f5a;text-align:right;">NSIP layer · harvestingthesuntwice.org</div>
 </div>`;
 }
 let nsipLayerGroup = null;
@@ -124,6 +124,6 @@ function getNsipLegendHTML() {
   return `<div id="nsip-legend" style="margin-top:12px;padding:8px;border-top:1px solid #ddd;">
 <div style="font-weight:bold;font-size:0.85em;margin-bottom:6px;color:#333;">● NSIP Projects (not in REPD)</div>
 ${rows}
-<div style="font-size:0.75em;color:#888;margin-top:5px;">Larger markers · white border · updated June 2026</div>
+<div style="font-size:0.75em;color:#5f5f5a;margin-top:5px;">Larger markers · white border · updated June 2026</div>
 </div>`;
 }
