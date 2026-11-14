@@ -502,6 +502,11 @@ input[type="range"]{flex:1;accent-color:var(--campaign-green);cursor:pointer}
   [style*="height:230px"]{ height:230px !important; position:relative !important; }
   [style*="height:270px"]{ height:260px !important; position:relative !important; }
   [style*="height:200px"]{ height:200px !important; position:relative !important; }
+  /* Module 4: a slightly shorter cashflow chart and a tighter disclaimer margin keep the
+     disclaimer box on the same page in both modes (ha mode wraps more text and used to spill it onto its own page) */
+  #t-bess [style*="height:270px"]{ height:190px !important; }
+  #t-bess canvas{ height:190px !important; }
+  main.container > .warn-box{ margin-top:3mm !important; }   /* the shared disclaimer sits after the last tab panel */
 
   /* ══════════════════════════════════════
      COLOUR TOKENS
