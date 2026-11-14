@@ -52,34 +52,43 @@ ${navLinks}
 const footerEl = document.getElementById('site-footer') || document.getElementById('footer-placeholder');
 if (footerEl) {
 footerEl.innerHTML = `
-<div class="footer-inner">
-<div class="footer-col">
-<img src="/HTST_Logo_Blue_transparent.png" alt="Harvesting the Sun Twice" height="28" style="margin-bottom:10px;opacity:0.7">
-<p style="font-size:12px;color:#888;line-height:1.6">A UK campaign advocating for Vertical Bifacial PV agrivoltaic systems on Best and Most Versatile agricultural land.</p>
+<footer class="footer">
+<div class="container">
+<div class="footer__grid">
+<div class="footer__brand">
+<img src="/HTST_Logo_Blue_transparent.png" alt="Harvesting the Sun Twice" height="56" style="margin-bottom:1rem;background:var(--chalk);border-radius:var(--radius);padding:6px 10px">
+<p>A UK campaign advocating for Vertical Bifacial PV agrivoltaic systems on Best and Most Versatile agricultural land.</p>
 </div>
-<div class="footer-col">
-<div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:#666;margin-bottom:8px">Pages</div>
-<div style="display:flex;flex-direction:column;gap:5px">
-<a href="/technology.html" class="footer-link">Technology</a>
-<a href="/compare.html" class="footer-link">Compare</a>
-<a href="/dashboard.html" class="footer-link">Analysis Tool</a>
-<a href="/map.html" class="footer-link">Pipeline Map</a>
-<a href="/sources.html" class="footer-link">Evidence</a>
-<a href="/library.html" class="footer-link">Library</a>
-<a href="/faq.html" class="footer-link">FAQ</a>
+<div class="footer__col">
+<h4>Explore</h4>
+<ul>
+<li><a href="/technology.html">Technology</a></li>
+<li><a href="/compare.html">Compare</a></li>
+<li><a href="/sources.html">Evidence</a></li>
+<li><a href="/library.html">Library</a></li>
+<li><a href="/faq.html">FAQ</a></li>
+</ul>
+</div>
+<div class="footer__col">
+<h4>Tools</h4>
+<ul>
+<li><a href="/dashboard.html">Analysis Tool</a></li>
+<li><a href="/map.html">Pipeline Map</a></li>
+</ul>
+</div>
+<div class="footer__col footer__contact">
+<h4>Contact</h4>
+<a href="mailto:harvestingthesuntwice@gmail.com">harvestingthesuntwice@gmail.com</a>
+<p style="font-size:0.8rem;color:var(--stone-on-dark);margin:0.75rem 0 0.15rem">Campaign Director: Paul Bird</p>
+<p style="font-size:0.8rem;color:var(--stone-on-dark);margin:0">Sawtry, Cambridgeshire</p>
 </div>
 </div>
-<div class="footer-col">
-<div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:#666;margin-bottom:8px">Contact</div>
-<a href="mailto:harvestingthesuntwice@gmail.com" class="footer-link">harvestingthesuntwice@gmail.com</a>
-<div style="margin-top:8px;font-size:11px;color:#888">Campaign Director: Paul Bird</div>
-<div style="font-size:11px;color:#888">Sawtry, Cambridgeshire</div>
+<div class="footer__bottom">
+<p>© 2026 Harvesting the Sun Twice · <a href="/cookies.html">Cookies</a></p>
+<p>All figures indicative — not a substitute for a site-specific EYA</p>
 </div>
 </div>
-<div class="footer-base">
-<span>© 2026 Harvesting the Sun Twice</span>
-<span>All figures indicative — not a substitute for a site-specific EYA</span>
-</div>
+</footer>
 `;
 }
 })();

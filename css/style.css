@@ -15,13 +15,15 @@
   --moss:      #4a7c5f;
   --sage:      #8aab96;
   --mist:      #d4e4d8;
-  --wheat:     #c8a84b
+  --wheat:     #c8a84b;
   --gold:      #e0b84e;
   --straw:     #f5edcc;
   --chalk:     #fafaf7;
-  --ink:       #1c1c1a
+  --ink:       #1c1c1a;
   --graphite:  #3d3d3a;
   --stone:     #7a7a75;
+  --stone-on-light: #5f5f5a; /* muted text on --chalk/white/--straw; 6.1:1 on chalk */
+  --stone-on-dark: #9a9a94; /* muted text on --ink/--forest; 6.0:1 on ink */
   --rule:      #d0d0c8;
 
 
@@ -275,8 +277,8 @@ em { font-style: italic; }
   transition: opacity 1s ease-in-out;
 }
 .hero__slide.is-active { opacity: 1; }
-.hero__slide--1 { background-image: url('../images/hero-harvest-vbpv.png'); }
-.hero__slide--2 { background-image: url('../images/VBPV_-_Potatos___Wild_flowers.png'); }
+.hero__slide--1 { background-image: url('../images/hero-harvest-vbpv.jpg'); }
+.hero__slide--2 { background-image: url('../images/VBPV_-_Potatos___Wild_flowers.jpg'); }
 .hero__slide::before {
   content: '';
   position: absolute;
@@ -601,7 +603,7 @@ em { font-style: italic; }
 .stat-card--dark .stat-card__num { color: var(--gold); }
 .stat-card__label {
   font-size: 0.85rem;
-  color: var(--stone);
+  color: var(--stone-on-light);
   line-height: 1.4;
 }
 .stat-card--dark .stat-card__label { color: var(--sage); }
@@ -867,7 +869,7 @@ em { font-style: italic; }
 .source-entry__tag--gov { background: #e8f0ff; color: #3050a0; }
 .source-entry h3 { font-size: 1.1rem; margin-bottom: 0.4rem; }
 .source-entry p { font-size: 0.9rem; color: var(--graphite); line-height: 1.6; }
-.source-entry .doi { font-size: 0.82rem; color: var(--stone); font-style: italic; }
+.source-entry .doi { font-size: 0.82rem; color: var(--stone-on-light); font-style: italic; }
 .source-entry .findings {
   margin-top: 0.75rem;
   background: var(--straw);
@@ -917,7 +919,7 @@ em { font-style: italic; }
 .form-group textarea { min-height: 140px; resize: vertical; }
 .form-hint {
   font-size: 0.78rem;
-  color: var(--stone);
+  color: var(--stone-on-light);
   font-style: italic;
   margin-top: 0.35rem;
 }
@@ -925,7 +927,7 @@ em { font-style: italic; }
 /* ---- Footer ---- */
 .footer {
   background: var(--ink);
-  color: var(--stone);
+  color: var(--stone-on-dark);
   padding: 3.5rem 0 2rem;
 }
 .footer__grid {
@@ -943,7 +945,7 @@ em { font-style: italic; }
 .footer__brand p {
   font-size: 0.88rem;
   line-height: 1.65;
-  color: var(--stone);
+  color: var(--stone-on-dark);
   margin-bottom: 1rem;
 }
 .footer__contact a {
@@ -966,7 +968,7 @@ em { font-style: italic; }
 .footer__col ul li { margin-bottom: 0.5rem; }
 .footer__col ul a {
   font-size: 0.88rem;
-  color: var(--stone);
+  color: var(--stone-on-dark);
   transition: color var(--trans);
 }
 .footer__col ul a:hover { color: var(--gold); }
@@ -981,7 +983,7 @@ em { font-style: italic; }
 }
 .footer__bottom p {
   font-size: 0.8rem;
-  color: var(--stone);
+  color: var(--stone-on-dark);
   margin: 0;
 }
 .footer__bottom a { color: var(--sage); }

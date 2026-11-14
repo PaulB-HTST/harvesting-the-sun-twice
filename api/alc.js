@@ -18,11 +18,19 @@ export default async function handler(req, res) {
 
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), 20000);
-      const response = await fetch(url, { signal: controller.signal });
-      clearTimeout(timeout);
+      let page;
+      try {
+        const response = await fetch(url, { signal: controller.signal });
+        if (!response.ok) throw new Error('Upstream ' + response.status);
+        page = await response.json();
+      } finally {
+        clearTimeout(timeout);
+      }
 
-      if (!response.ok) throw new Error('Upstream ' + response.status);
-      const page = await response.json();
+      // ArcGIS can return HTTP 200 with an error body
+      if (page.error) {
+        throw new Error('Upstream error: ' + (page.error.message || page.error.code || 'unknown'));
+      }
 
       if (page.features && page.features.length > 0) {
         allFeatures.push(...page.features);
