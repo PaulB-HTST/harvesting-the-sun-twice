@@ -1,3 +1,25 @@
 {
-  "cleanUrls": true
+  "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/financial-model",
+      "destination": "/dashboard",
+      "permanent": false
+    },
+    {
+      "source": "/financial-model.html",
+      "destination": "/dashboard",
+      "permanent": false
+    },
+    {
+      "source": "/financial-model-protected",
+      "destination": "/dashboard",
+      "permanent": false
+    },
+    {
+      "source": "/financial-model-protected.html",
+      "destination": "/dashboard",
+      "permanent": false
+    }
+  ]
 }
