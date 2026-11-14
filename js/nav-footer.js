@@ -79,8 +79,8 @@ footerEl.innerHTML = `
 <div class="footer__col footer__contact">
 <h4>Contact</h4>
 <a href="mailto:harvestingthesuntwice@gmail.com">harvestingthesuntwice@gmail.com</a>
-<p style="font-size:0.8rem;color:var(--stone);margin:0.75rem 0 0.15rem">Campaign Director: Paul Bird</p>
-<p style="font-size:0.8rem;color:var(--stone);margin:0">Sawtry, Cambridgeshire</p>
+<p style="font-size:0.8rem;color:var(--stone-on-dark);margin:0.75rem 0 0.15rem">Campaign Director: Paul Bird</p>
+<p style="font-size:0.8rem;color:var(--stone-on-dark);margin:0">Sawtry, Cambridgeshire</p>
 </div>
 </div>
 <div class="footer__bottom">

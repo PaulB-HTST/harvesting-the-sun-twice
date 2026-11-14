@@ -22,6 +22,7 @@
   --ink:       #1c1c1a;
   --graphite:  #3d3d3a;
   --stone:     #7a7a75;
+  --stone-on-dark: #9a9a94; /* muted text on --ink/--forest; 6.0:1 on ink */
   --rule:      #d0d0c8;
 
 
@@ -925,7 +926,7 @@ em { font-style: italic; }
 /* ---- Footer ---- */
 .footer {
   background: var(--ink);
-  color: var(--stone);
+  color: var(--stone-on-dark);
   padding: 3.5rem 0 2rem;
 }
 .footer__grid {
@@ -943,7 +944,7 @@ em { font-style: italic; }
 .footer__brand p {
   font-size: 0.88rem;
   line-height: 1.65;
-  color: var(--stone);
+  color: var(--stone-on-dark);
   margin-bottom: 1rem;
 }
 .footer__contact a {
@@ -966,7 +967,7 @@ em { font-style: italic; }
 .footer__col ul li { margin-bottom: 0.5rem; }
 .footer__col ul a {
   font-size: 0.88rem;
-  color: var(--stone);
+  color: var(--stone-on-dark);
   transition: color var(--trans);
 }
 .footer__col ul a:hover { color: var(--gold); }
@@ -981,7 +982,7 @@ em { font-style: italic; }
 }
 .footer__bottom p {
   font-size: 0.8rem;
-  color: var(--stone);
+  color: var(--stone-on-dark);
   margin: 0;
 }
 .footer__bottom a { color: var(--sage); }
