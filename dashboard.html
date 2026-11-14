@@ -286,7 +286,7 @@ input[type="range"]{flex:1;accent-color:var(--campaign-green);cursor:pointer}
     break-after:page;
     /* Fill the printable area of one A4 page:
        297mm − 18mm top − 16mm bottom = 263mm usable */
-    min-height:263mm;
+    min-height:258mm;   /* a little under the 263mm printable height so rounding can't spill onto a blank page */
     background:#ffffff !important;
     color:#1a1a18 !important;
     padding:0;
@@ -373,11 +373,7 @@ input[type="range"]{flex:1;accent-color:var(--campaign-green);cursor:pointer}
      so .print-params starts on page 2 (the fixed cover
      occupies page 1 via position:fixed + break-after) */
   .print-cover-flow-spacer{
-    display:block !important;
-    page-break-after:always !important;
-    break-after:page !important;
-    height:0 !important;
-    overflow:hidden !important;
+    display:none !important;   /* cover already ends with its own page break; a second break here printed a blank page */
   }
   .print-params{
     display:block !important;
@@ -385,31 +381,35 @@ input[type="range"]{flex:1;accent-color:var(--campaign-green);cursor:pointer}
     padding:0;
   }
   .print-params-header{
-    border-bottom:2pt solid #0F6E56; padding-bottom:3mm; margin-bottom:5mm;
+    border-bottom:2pt solid #0F6E56; padding-bottom:3mm; margin-bottom:3mm;
     display:flex; align-items:baseline; justify-content:space-between;
   }
   .print-params-header-title{ font-size:13pt; font-weight:600; color:#0F6E56; }
   .print-params-header-ref{ font-size:8pt; font-family:'SF Mono','Consolas','Monaco',monospace; color:#888780; }
   .print-params-subhead{
     font-size:7.5pt; text-transform:uppercase; letter-spacing:0.08em;
-    color:#888780; margin-bottom:2mm; margin-top:4mm;
+    color:#888780; margin-bottom:2mm; margin-top:3mm;
     border-bottom:0.5pt solid #e0dfd8; padding-bottom:1mm;
+    break-after:avoid; page-break-after:avoid;
   }
-  .print-params-table{ width:100%; border-collapse:collapse; font-size:9pt; margin-bottom:3mm; }
+  .print-params-table{ width:100%; border-collapse:collapse; font-size:9pt; margin-bottom:2mm;
+    break-inside:avoid; page-break-inside:avoid; }
+  .print-params-table tr{ break-inside:avoid; page-break-inside:avoid; }
+  .print-params-table thead{ display:table-header-group; }
   .print-params-table th{
     text-align:left; font-size:8pt; font-weight:500; color:#4a4945;
     padding:1.5mm 2.5mm; border-bottom:0.5pt solid #ccc; background:#f7f6f2;
   }
   .print-params-table td{
-    padding:1.5mm 2.5mm; border-bottom:0.3pt solid #e8e7e0; vertical-align:top;
+    padding:1.2mm 2.5mm; border-bottom:0.3pt solid #e8e7e0; vertical-align:top;
   }
-  .print-params-table td:first-child{ color:#4a4945; font-size:8.5pt; width:45%; }
+  .print-params-table td:first-child{ color:#4a4945; font-size:8.5pt; width:38%; }
   .print-params-table td.val{ font-family:'SF Mono','Consolas','Monaco',monospace; font-weight:500; font-size:9pt; }
   .print-params-table td.val-v{ color:#0F6E56 }
   .print-params-table td.val-t{ color:#854F0B }
   .print-params-table td.val-n{ color:#1a1a18 }
-  .print-kv-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:3mm; margin-bottom:4mm; }
-  .print-kv-cell{ border:0.5pt solid #dddbd4; border-radius:3pt; padding:3mm; background:#f7f6f2; }
+  .print-kv-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:2.5mm; margin-bottom:3mm; }
+  .print-kv-cell{ border:0.5pt solid #dddbd4; border-radius:3pt; padding:2.2mm 3mm; background:#f7f6f2; }
   .print-kv-label{ font-size:7.5pt; color:#888780; margin-bottom:1mm; }
   .print-kv-value{ font-size:11pt; font-weight:600; font-family:'SF Mono','Consolas','Monaco',monospace; }
   .print-kv-sub{ font-size:7pt; color:#888780; margin-top:0.5mm; }
@@ -620,17 +620,17 @@ input[type="range"]{flex:1;accent-color:var(--campaign-green);cursor:pointer}
 
   <div class="print-params-subhead">Module 1 — Project Size &amp; Energy Yield</div>
   <div class="print-kv-grid">
-    <div class="print-kv-cell"><div class="print-kv-label">VBPV — Land Required</div><div class="print-kv-value cv-pr" id="ps-v-land">—</div><div class="print-kv-sub" id="ps-v-land-s"></div></div>
-    <div class="print-kv-cell"><div class="print-kv-label">VBPV — Annual MWh</div><div class="print-kv-value cv-pr" id="ps-v-mwh">—</div><div class="print-kv-sub">MWh/yr</div></div>
-    <div class="print-kv-cell"><div class="print-kv-label">VBPV — Capacity Factor</div><div class="print-kv-value cv-pr" id="ps-v-cf">—</div><div class="print-kv-sub">%</div></div>
-    <div class="print-kv-cell"><div class="print-kv-label">TBPV — Land Required</div><div class="print-kv-value ct-pr" id="ps-t-land">—</div><div class="print-kv-sub" id="ps-t-land-s"></div></div>
-    <div class="print-kv-cell"><div class="print-kv-label">TBPV — Annual MWh</div><div class="print-kv-value ct-pr" id="ps-t-mwh">—</div><div class="print-kv-sub">MWh/yr</div></div>
-    <div class="print-kv-cell"><div class="print-kv-label">TBPV — Capacity Factor</div><div class="print-kv-value ct-pr" id="ps-t-cf">—</div><div class="print-kv-sub">%</div></div>
+    <div class="print-kv-cell"><div class="print-kv-label" id="ps-v-land-l">VBPV — Land Required</div><div class="print-kv-value cv-pr" id="ps-v-land">—</div><div class="print-kv-sub" id="ps-v-land-s"></div></div>
+    <div class="print-kv-cell"><div class="print-kv-label">VBPV — Annual MWh</div><div class="print-kv-value cv-pr" id="ps-v-mwh">—</div><div class="print-kv-sub"></div></div>
+    <div class="print-kv-cell"><div class="print-kv-label">VBPV — Capacity Factor</div><div class="print-kv-value cv-pr" id="ps-v-cf">—</div><div class="print-kv-sub"></div></div>
+    <div class="print-kv-cell"><div class="print-kv-label" id="ps-t-land-l">TBPV — Land Required</div><div class="print-kv-value ct-pr" id="ps-t-land">—</div><div class="print-kv-sub" id="ps-t-land-s"></div></div>
+    <div class="print-kv-cell"><div class="print-kv-label">TBPV — Annual MWh</div><div class="print-kv-value ct-pr" id="ps-t-mwh">—</div><div class="print-kv-sub"></div></div>
+    <div class="print-kv-cell"><div class="print-kv-label">TBPV — Capacity Factor</div><div class="print-kv-value ct-pr" id="ps-t-cf">—</div><div class="print-kv-sub"></div></div>
   </div>
   <table class="print-params-table">
     <thead><tr><th>Differential Metric</th><th>Value</th><th>Notes</th></tr></thead>
     <tbody>
-      <tr><td>Land differential (VBPV vs TBPV)</td><td class="val val-n" id="ps-land-diff">—</td><td style="font-size:8pt;color:#888780" id="ps-land-diff-s"></td></tr>
+      <tr><td id="ps-land-diff-l">Land differential (VBPV vs TBPV)</td><td class="val val-n" id="ps-land-diff">—</td><td style="font-size:8pt;color:#888780" id="ps-land-diff-s"></td></tr>
       <tr><td>MWh differential (VBPV vs TBPV)</td><td class="val val-n" id="ps-mwh-diff">—</td><td style="font-size:8pt;color:#888780" id="ps-mwh-diff-s"></td></tr>
       <tr><td>UK homes powered (VBPV output)</td><td class="val val-v" id="ps-homes">—</td><td style="font-size:8pt;color:#888780">@ 3,100 kWh/yr average household</td></tr>
     </tbody>
@@ -1591,7 +1591,7 @@ document.querySelectorAll('[data-s]').forEach(btn=>{
 
 // ── Reset to defaults ──
 // Defaults come from the HTML value attributes (defaultValue) and INIT above, never from browser form restoration.
-const PRINT_IDS=['cover-date','cover-location','cover-mode','cover-input','cover-pitch','params-ref-date','p-loc','p-vy','p-ty','p-pitch','p-mode','p-inp2','p-vden','ps-v-land','ps-v-land-s','ps-t-land','ps-t-land-s','ps-v-mwh','ps-t-mwh','ps-v-cf','ps-t-cf','ps-land-diff','ps-land-diff-s','ps-mwh-diff','ps-mwh-diff-s','ps-homes','ps-v-vf','ps-t-vf','ps-v-rev','ps-t-rev','ps-vf-prem','ps-v-bess','ps-t-bess','ps-v-cx','ps-t-cx','ps-v-brv','ps-t-brv','ps-v-pb','ps-t-pb','ps-bess-save'];
+const PRINT_IDS=['cover-date','cover-location','cover-mode','cover-input','cover-pitch','params-ref-date','p-loc','p-vy','p-ty','p-pitch','p-mode','p-inp2','p-vden','ps-v-land-l','ps-t-land-l','ps-land-diff-l','ps-v-land','ps-v-land-s','ps-t-land','ps-t-land-s','ps-v-mwh','ps-t-mwh','ps-v-cf','ps-t-cf','ps-land-diff','ps-land-diff-s','ps-mwh-diff','ps-mwh-diff-s','ps-homes','ps-v-vf','ps-t-vf','ps-v-rev','ps-t-rev','ps-vf-prem','ps-v-bess','ps-t-bess','ps-v-cx','ps-t-cx','ps-v-brv','ps-t-brv','ps-v-pb','ps-t-pb','ps-bess-save'];
 const PRINT_INIT={};
 PRINT_IDS.forEach(id=>{const el=document.getElementById(id);if(el)PRINT_INIT[id]=el.textContent;});
 function resetDashboard(){
@@ -1615,6 +1615,28 @@ window.addEventListener('pagehide',resetDashboard);   // so a bfcache snapshot h
 resetDashboard();
 
 // ── Print / Save PDF ──
+// Charts in tabs that were hidden when drawn print empty (or mid-animation) unless they are redrawn
+// without animation just before printing. Used by the Print button and by Ctrl+P / File > Print.
+let _printRestore=null;
+function prepChartsForPrint(showPanels){
+  if(_printRestore)return;
+  const saved=[],panels=[],classes=[];
+  if(showPanels){
+    document.querySelectorAll('.tab-panel').forEach(p=>{panels.push(p);classes.push(p.className);p.className='tab-panel active';});
+  }
+  Object.values(CHS).forEach(c=>{
+    try{saved.push([c,c.options.animation]);c.options.animation=false;c.resize();c.update('none');}catch(e){}
+  });
+  _printRestore=()=>{
+    saved.forEach(([c,a])=>{try{c.options.animation=a;}catch(e){}});
+    panels.forEach((p,i)=>{p.className=classes[i];});
+    _printRestore=null;
+  };
+}
+function restoreChartsAfterPrint(){ if(_printRestore)_printRestore(); }
+window.addEventListener('beforeprint',()=>{ if(!window._htstPrinting)prepChartsForPrint(true); });
+window.addEventListener('afterprint',()=>{ if(!window._htstPrinting)restoreChartsAfterPrint(); });
+
 function printDashboard(){
   // Populate cover page metadata
   const now=new Date();
@@ -1651,30 +1673,35 @@ function printDashboard(){
   set('ps-t-land-s',clone('t-sub'));
   set('ps-v-mwh',clone('v-mwh')+' MWh/yr');
   set('ps-t-mwh',clone('t-mwh')+' MWh/yr');
-  set('ps-v-cf',clone('v-cf')+'%');
-  set('ps-t-cf',clone('t-cf')+'%');
+  set('ps-v-cf',clone('v-cf'));
+  set('ps-t-cf',clone('t-cf'));
   set('ps-land-diff',clone('c-land'));
   set('ps-land-diff-s',clone('c-land-s'));
+  // Labels follow the active mode, as in Module 1 (MW mode shows hectares, ha mode shows MW)
+  const capMode=mode!=='mw';
+  set('ps-v-land-l','VBPV — '+(capMode?'Max AC capacity':'Land Required'));
+  set('ps-t-land-l','TBPV — '+(capMode?'Max AC capacity':'Land Required'));
+  set('ps-land-diff-l',(capMode?'Capacity differential':'Land differential')+' (VBPV vs TBPV)');
   set('ps-mwh-diff',clone('c-mwh'));
   set('ps-mwh-diff-s',clone('c-mwh-s'));
   set('ps-homes',clone('c-homes'));
 
   // Params page — Module 3 revenue (correct IDs)
-  set('ps-v-vf','£'+clone('rv-vf')+' /MWh');
-  set('ps-t-vf','£'+clone('rv-tf')+' /MWh');
-  set('ps-v-rev','£'+clone('rv-v-ann'));
-  set('ps-t-rev','£'+clone('rv-t-ann'));
+  set('ps-v-vf',clone('rv-vf')+' /MWh');
+  set('ps-t-vf',clone('rv-tf')+' /MWh');
+  set('ps-v-rev',clone('rv-v-ann'));
+  set('ps-t-rev',clone('rv-t-ann'));
   set('ps-vf-prem',clone('rv-prem'));
 
   // Params page — Module 4 BESS (correct IDs)
-  set('ps-v-bess',clone('b-v-mwh')+' MWh');
-  set('ps-t-bess',clone('b-t-mwh')+' MWh');
+  set('ps-v-bess',clone('b-v-mwh'));
+  set('ps-t-bess',clone('b-t-mwh'));
   set('ps-v-cx',clone('b-v-cx'));
   set('ps-t-cx',clone('b-t-cx'));
-  set('ps-v-brv',clone('b-v-rv')+'k/yr');
-  set('ps-t-brv',clone('b-t-rv')+'k/yr');
-  set('ps-v-pb',clone('b-v-pb')+' yr');
-  set('ps-t-pb',clone('b-t-pb')+' yr');
+  set('ps-v-brv',clone('b-v-rv')+'/yr');
+  set('ps-t-brv',clone('b-t-rv')+'/yr');
+  set('ps-v-pb',clone('b-v-pb'));
+  set('ps-t-pb',clone('b-t-pb'));
   set('ps-bess-save',clone('b-save')+' less CAPEX vs TBPV');
 
   // Also update footer doc ref
@@ -1690,13 +1717,16 @@ function printDashboard(){
     p.className='tab-panel active';
   });
 
-  // 2. Resize all Chart.js instances so canvases paint fully
-  Object.values(CHS).forEach(c=>{try{c.resize();}catch(e){}});
+  // 2. Render every chart in its final state (no animation) so none is captured mid-animation or empty
+  window._htstPrinting=true;
+  prepChartsForPrint(false);
 
   // 3. Short delay to allow canvas repaint, then open print dialog
   setTimeout(()=>{
     window.print();
     // 4. Restore original tab state after dialog closes
+    window._htstPrinting=false;
+    restoreChartsAfterPrint();
     panels.forEach((p,i)=>{p.className=prevClasses[i];});
     const activeBtn=document.querySelector('.tab-btn.on');
     if(activeBtn){
